@@ -1,9 +1,12 @@
 package com.trouvaille.aladdin.entity;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 public class Store implements Serializable {
@@ -14,7 +17,7 @@ public class Store implements Serializable {
     private Long id;
 
     // 手机号
-    private Integer phone;
+    private Long phone;
 
     // 门店名称
     private String name;
@@ -24,6 +27,21 @@ public class Store implements Serializable {
 
     // 地址
     private String address;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
+
+
+    @TableField(fill = FieldFill.INSERT)
+    private Long createUser;
+
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updateUser;
 
 
 }

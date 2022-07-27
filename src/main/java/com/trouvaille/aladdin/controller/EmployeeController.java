@@ -12,6 +12,7 @@ package com.trouvaille.aladdin.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
+import com.trouvaille.aladdin.entity.Employee;
 import com.trouvaille.aladdin.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,6 @@ public class EmployeeController {
         lqw.orderByDesc(Employee::getUpdateTime);
         employeeService.page(pageInfo, lqw);
         return R.success(pageInfo);
-
     }
 
 
@@ -147,8 +147,6 @@ public class EmployeeController {
         boolean flag = employeeService.updateById(employee);
 
         return R.flag(flag, "员工信息更改成功!", "员工信息更改失败,请重试!");
-
-
     }
 
 }

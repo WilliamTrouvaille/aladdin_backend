@@ -86,12 +86,13 @@
             </div>
             <div>
                 <el-form-item
-                        label="商品价格:"
+                        label="商品价格(只读):"
                         prop="price"
                 >
                     <el-input
                             v-model="ruleForm.price"
                             placeholder="请设置商品价格"
+                            :readonly="true"
                     />
                 </el-form-item>
                 <el-form-item
@@ -103,21 +104,6 @@
                             placeholder="请设置商品促销价"
                     />
                 </el-form-item>
-            </div>
-
-            <div>
-                <el-form-item
-                        label="供应商编号:"
-                        prop="supplier"
-                >
-                    <el-input
-                            v-model="ruleForm.supplier"
-                            placeholder="请填写供应商编号"
-                            maxlength="50"
-                    />
-                    <el-button slot="append" icon="el-icon-search" @click="getSupplier"></el-button>
-                </el-form-item>
-
             </div>
             <div>
                 <el-form-item
@@ -147,11 +133,11 @@
             </div>
             <div>
                 <el-form-item
-                        label="供应商名称(只读):"
-                        prop="supplierName"
+                        label="规格(只读):"
+                        prop="specification"
                 >
                     <el-input
-                            v-model="ruleForm.supplierName"
+                            v-model="ruleForm.specification"
                             maxlength="50"
                             :readonly="true"
                     />
@@ -259,15 +245,12 @@
                     'discount': '',
                     'image': '',
                     'description': '',
+                    'specification':'',
                     'number': '',
-                    'status': true,
-                },
-                supplierForm: {
                     'code': '',
-                    'supplier': '',
-                    'supplierName': '',
                     'produceplace': '',
                     'purchase_price': '',
+                    'status': true,
                 },
                 mak: false
             }

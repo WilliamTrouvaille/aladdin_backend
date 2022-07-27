@@ -17,7 +17,7 @@ public class Supplier implements Serializable {
     private Long id;
 
     // 供应商名称
-    private String supplierName;
+    private String name;
 
     // 手机
     private String phone;

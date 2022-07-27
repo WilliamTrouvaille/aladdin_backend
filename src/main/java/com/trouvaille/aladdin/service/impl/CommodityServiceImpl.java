@@ -10,7 +10,6 @@
 package com.trouvaille.aladdin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.trouvaille.aladdin.entity.Commodity;
 import com.trouvaille.aladdin.mapper.CommodityMapper;
 import com.trouvaille.aladdin.service.CommodityService;
 import org.springframework.stereotype.Service;

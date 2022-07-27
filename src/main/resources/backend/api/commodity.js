@@ -1,60 +1,62 @@
 // 查询列表接口
-const getDishPage = (params) => {
+const getCommodityPage = (params) => {
     return $axios({
-        url: '/dish/page',
+        url: '/commodity/page',
+        method: 'get',
+        params
+    })
+}
+
+
+// 查询供应商接口
+const getSupplier = (params) => {
+    return $axios({
+        url: '/commodity/supplier',
         method: 'get',
         params
     })
 }
 
 // 删除接口
-const deleteDish = (ids) => {
+const deleteCommodity = (ids) => {
     return $axios({
-        url: '/dish',
+        url: '/commodity',
         method: 'delete',
         params: {ids}
     })
 }
 
 // 修改接口
-const editDish = (params) => {
+const editCommodity = (params) => {
     return $axios({
-        url: '/dish',
+        url: '/commodity',
         method: 'put',
         data: {...params}
     })
 }
 
 // 新增接口
-const addDish = (params) => {
+const addCommodity = (params) => {
     return $axios({
-        url: '/dish',
+        url: '/commodity',
         method: 'post',
         data: {...params}
     })
 }
 
 // 查询详情
-const queryDishById = (id) => {
+const queryCommodityById = (id) => {
     return $axios({
-        url: `/dish/${id}`,
+        url: `/commodity/${id}`,
         method: 'get'
     })
 }
 
-// 获取菜品分类列表
-const getCategoryList = (params) => {
-    return $axios({
-        url: '/category/list',
-        method: 'get',
-        params
-    })
-}
 
-// 查菜品列表的接口
-const queryDishList = (params) => {
+// 查商品列表的接口
+const queryCommodityList = (params) => {
     return $axios({
-        url: '/dish/list',
+        url: '/commodity/list',
         method: 'get',
         params
     })
@@ -73,9 +75,9 @@ const commonDownload = (params) => {
 }
 
 // 起售停售---批量起售停售接口
-const dishStatusByStatus = (params) => {
+const CommodityStatusByStatus = (params) => {
     return $axios({
-        url: `/dish/status/${params.status}`,
+        url: `/commodity/status/${params.status}`,
         method: 'post',
         params: {ids: params.id}
     })

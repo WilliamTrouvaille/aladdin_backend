@@ -2,8 +2,8 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.common
  * @className: R
- * @author: Eric
- * @description: TODO
+ * @author: William_Trouvaille
+ * @description: 服务端返回结果类
  * @date: 2022/7/26 15:06
  * @version: 1.0
  */
@@ -40,11 +40,19 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    public static R<String> flag(boolean flag) {
+    public static R<String> flag(boolean flag, String msg_suc, String msg_err) {
         if (flag) {
-            return R.success("操作成功!");
+            return R.success(msg_suc);
         } else {
-            return R.error("操作失败,请重试!");
+            return R.error(msg_err);
+        }
+    }
+
+    public R<Object> flag(boolean flag, T object, String msg) {
+        if (flag) {
+            return R.success(object);
+        } else {
+            return R.error(msg);
         }
     }
 

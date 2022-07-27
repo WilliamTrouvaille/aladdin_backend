@@ -2,8 +2,8 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.common
  * @className: JacksonObjectMapper
- * @author: Eric
- * @description: TODO
+ * @author: William_Trouvaille
+ * @description: 对象映射器
  * @date: 2022/7/26 15:07
  * @version: 1.0
  */

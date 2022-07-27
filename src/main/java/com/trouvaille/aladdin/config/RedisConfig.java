@@ -2,7 +2,7 @@
  * @projectName: aladdin
  * @package: com.example.aladdin.config
  * @className: RedisConfig
- * @author: Eric
+ * @author: William_Trouvaille
  * @description: Redis设置
  * @date: 2022/7/26 14:59
  * @version: 1.0

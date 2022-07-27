@@ -2,8 +2,8 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.common
  * @className: BaseContext
- * @author: Eric
- * @description: TODO
+ * @author: William_Trouvaille
+ * @description: 线程工具类
  * @date: 2022/7/26 15:09
  * @version: 1.0
  */

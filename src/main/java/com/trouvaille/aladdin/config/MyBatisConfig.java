@@ -2,7 +2,7 @@
  * @projectName: aladdin
  * @package: com.example.aladdin.config
  * @className: MyBatisConfig
- * @author: Eric
+ * @author: William_Trouvaille
  * @description: MyBatis(+)设置
  * @date: 2022/7/26 14:57
  * @version: 1.0

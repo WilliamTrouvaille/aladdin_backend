@@ -65,24 +65,25 @@
                     </el-image>
                 </template>
             </el-table-column>
-            <el-table-column
-                    prop="categoryName"
-                    label="商品分类"
-            ></el-table-column>
-            <el-table-column label="售价">
+
+            <el-table-column label="当前售价">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">￥{{ scope.row.price / 100 }}</span>
                 </template>
             </el-table-column>
+            <el-table-column
+                    prop="producePlace"
+                    label="产地"
+            ></el-table-column>
+            <el-table-column
+                    prop="number"
+                    label="当前数量"
+            ></el-table-column>
             <el-table-column label="售卖状态">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售' }}</span>
                 </template>
             </el-table-column>
-            <el-table-column
-                    prop="updateTime"
-                    label="最后操作时间"
-            >
             </el-table-column>
             <el-table-column
                     label="操作"
@@ -148,11 +149,13 @@
                 pageSize: 10,
                 tableData: [],
                 commodityState: '',
+
                 checkList: []
             }
         },
         computed: {},
         created() {
+
             this.init()
         },
         mounted() {

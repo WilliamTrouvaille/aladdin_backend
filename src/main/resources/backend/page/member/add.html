@@ -22,7 +22,11 @@
                 class="demo-ruleForm"
         >
             <el-form-item label="账号:" prop="username">
-                <el-input v-model="ruleForm.username" placeholder="请输入账号" maxlength="20"/>
+                <el-input clearable v-model="ruleForm.username" placeholder="请输入账号" maxlength="20" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input clearable v-model="ruleForm.password" placeholder="请输入密码,保存设置密码" maxlength="20"
+                          clearable></el-input>
             </el-form-item>
             <el-form-item
                     label="员工姓名:"
@@ -32,7 +36,7 @@
                         v-model="ruleForm.name"
                         placeholder="请输入员工姓名"
                         maxlength="20"
-                />
+                        clearable></el-input>
             </el-form-item>
 
             <el-form-item
@@ -43,7 +47,7 @@
                         v-model="ruleForm.phone"
                         placeholder="请输入手机号"
                         maxlength="20"
-                />
+                        clearable></el-input>
             </el-form-item>
             <el-form-item
                     label="性别:"
@@ -62,7 +66,25 @@
                         v-model="ruleForm.idNumber"
                         placeholder="请输入身份证号"
                         maxlength="20"
-                />
+                        clearable></el-input>
+            </el-form-item>
+
+            <el-form-item
+                    label="所属门店:"
+                    prop="store"
+
+            >
+                <el-select
+                        v-model="ruleForm.store"
+                        placeholder="请选择门店名称">
+
+                    <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
             </el-form-item>
             <div class="subBox address">
                 <el-form-item>
@@ -98,6 +120,7 @@
 <script src="../../api/member.js"></script>
 <script src="../../js/validate.js"></script>
 <script src="../../js/index.js"></script>
+
 <script>
     new Vue({
         el: '#member-add-app',
@@ -105,11 +128,17 @@
             return {
                 id: '',
                 actionType: '',
+                loading: false,
+                options: [],
+                value: [],
+                list: [],
                 ruleForm: {
                     'name': '',
                     'phone': '',
+                    'password': '',
                     'sex': '男',
                     'idNumber': '',
+                    'store': '',
                     username: ''
                 }
             }
@@ -125,33 +154,38 @@
                     ],
                     //姓名
                     name: [{required: true, 'validator': checkName, 'trigger': 'blur'}],
+                    'password': [{required: true, 'message': '请输入密码!', 'trigger': 'blur'}],
                     'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
-                    'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}]
+                    'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}],
+                    'store': [{'required': true, 'message': '请输入所属门店!', 'trigger': 'blur'}]
                 }
             }
         },
         created() {
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
+            this.getStore()
             if (this.id) {
                 this.init()
             }
         },
         mounted() {
+
         },
         methods: {
             async init() {
                 queryEmployeeById(this.id).then(res => {
-                    console.log(res)
-                    if (String(res.code) === '1') {
-                        console.log(res.data)
-                        this.ruleForm = res.data
-                        this.ruleForm.sex = res.data.sex === '0' ? '女' : '男'
-                        // this.ruleForm.password = ''
-                    } else {
-                        this.$message.error(res.msg || '操作失败')
-                    }
-                })
+                        console.log(res)
+                        if (String(res.code) === '1') {
+                            console.log(res.data)
+                            this.ruleForm = res.data
+                            this.ruleForm.sex = res.data.sex === '0' ? '女' : '男'
+                            this.ruleForm.password = ''
+                        } else {
+                            this.$message.error(res.msg || '操作失败')
+                        }
+                    },
+                )
             },
             submitForm(formName, st) {
                 this.$refs[formName].validate((valid) => {
@@ -211,6 +245,22 @@
                     url: '/backend/page/member/list.html',
                     name: '员工管理'
                 }, false)
+            },
+            getStore() {
+                getStoreListTest().then(res => {
+                    console.log(res);
+                    if (res.code === 1) {
+                        this.options = res.data.map((item) => {
+                            return {
+                                'value': item.id,
+                                'label': item.name
+                            };
+                        });
+                        console.log(this.options)
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
             }
         }
     })

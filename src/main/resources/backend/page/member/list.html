@@ -59,10 +59,10 @@
                     label="手机号"
             ></el-table-column>
             <el-table-column
-                    prop="store"
+                    prop="storeName"
                     label="所属门店"
             ></el-table-column>
-            <el-table-column label="账号状态">
+            <el-table-column label="状态">
                 <template slot-scope="scope">
                     {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
                 </template>
@@ -161,35 +161,15 @@
                     window.parent.menuHandle({
                         id: '2',
                         url: '/backend/page/member/add.html',
-                        name: '添加员工'
+                        name: '添加门店'
                     }, true)
                 } else {
                     window.parent.menuHandle({
                         id: '2',
                         url: '/backend/page/member/add.html?id=' + st,
-                        name: '修改员工'
+                        name: '修改门店'
                     }, true)
                 }
-            },
-            //状态修改
-            statusHandle(row) {
-                this.id = row.id
-                this.status = row.status
-                this.$confirm('确认调整该账号的状态?', '提示', {
-                    'confirmButtonText': '确定',
-                    'cancelButtonText': '取消',
-                    'type': 'warning'
-                }).then(() => {
-                    enableOrDisableEmployee({'id': this.id, 'status': !this.status ? 1 : 0}).then(res => {
-                        console.log('enableOrDisableEmployee', res)
-                        if (String(res.code) === '1') {
-                            this.$message.success('账号状态更改成功！')
-                            this.handleQuery()
-                        }
-                    }).catch(err => {
-                        this.$message.error('请求出错了：' + err)
-                    })
-                })
             },
             handleSizeChange(val) {
                 this.pageSize = val

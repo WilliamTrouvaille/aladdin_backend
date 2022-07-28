@@ -40,3 +40,19 @@ function queryEmployeeById(id) {
         method: 'get'
     })
 }
+
+// 查询所属门店接口
+function getStoreList() {
+    return $axios({
+        url: `/store`,
+        method: 'get'
+    })
+}
+
+// 查询所属门店接口
+function getStoreListTest() {
+    return $axios({
+        url: `/store/list`,
+        method: 'get'
+    })
+}

@@ -13,7 +13,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.Employee;
+import com.trouvaille.aladdin.entity.Store;
 import com.trouvaille.aladdin.service.EmployeeService;
+import com.trouvaille.aladdin.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -30,6 +31,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private StoreService storeService;
 
 
     /**
@@ -102,16 +106,20 @@ public class EmployeeController {
 
     /**
      * @param employee:
-     * @param request:
      * @return R<String>
      * @author William_Trouvaille
      * @description 新增员工
      * @date 2022/07/27 14:14
      */
     @PostMapping
-    public R<String> save(@RequestBody Employee employee, HttpServletRequest request) {
+    public R<String> save(@RequestBody Employee employee) {
         log.info("新增员工,员工信息:{}", employee);
 
+        Long storeId = employee.getStore();
+        Store store = storeService.getById(storeId);
+
+
+        employee.setStoreName(store.getName());
 //设置初始密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
         boolean save = employeeService.save(employee);
@@ -137,13 +145,18 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public R<String> update(@RequestBody Employee employee, HttpServletRequest request) {
+    public R<String> update(@RequestBody Employee employee) {
         log.info("更改员工信息,员工信息==>{}", employee.toString());
-        Long empID = (Long) request.getSession().getAttribute("employee");
 
-        employee.setUpdateUser(empID);
-        employee.setUpdateTime(LocalDateTime.now());
+        String pwd = employee.getPassword();
+        String password = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
+        employee.setPassword(password);
 
+        Long storeId = employee.getStore();
+        Store store = storeService.getById(storeId);
+
+
+        employee.setStoreName(store.getName());
         boolean flag = employeeService.updateById(employee);
 
         return R.flag(flag, "员工信息更改成功!", "员工信息更改失败,请重试!");

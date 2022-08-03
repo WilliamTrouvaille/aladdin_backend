@@ -5,17 +5,8 @@ const getCommodityPage = (params) => {
         method: 'get',
         params
     })
-}
+},
 
-
-// 查询供应商接口
-const getSupplier = (params) => {
-    return $axios({
-        url: '/commodity/supplier',
-        method: 'get',
-        params
-    })
-}
 
 // 删除接口
 const deleteCommodity = (ids) => {

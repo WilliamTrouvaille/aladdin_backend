@@ -79,9 +79,11 @@
                 >
                     <el-input
                             v-model="ruleForm.code"
-                            maxlength="20"
+                            maxlength=""
                             clearable
-                    />
+                    >
+                        <template slot="prepend">69-</template>
+                    </el-input>
                 </el-form-item>
 
             </div>
@@ -97,14 +99,21 @@
                     />
                 </el-form-item>
                 <el-form-item
-                        label="商品促销价:"
-                        prop="discount"
+                        label="供应商:"
+                        prop="supplierId"
+
                 >
-                    <el-input
-                            v-model="ruleForm.discount"
-                            placeholder="请设置商品促销价"
-                            clearable
-                    />
+                    <el-select
+                            v-model="ruleForm.supplierId"
+                            placeholder="请选择供应商">
+
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </div>
             <div>
@@ -140,6 +149,7 @@
                 >
                     <el-input
                             v-model="ruleForm.specification"
+                            placeholder="例如:500ml/瓶"
                             maxlength="50"
                             clearable
                     />
@@ -162,12 +172,13 @@
                 >
                     <el-input
                             v-model="ruleForm.purchase_price"
+                            placeholder="请设置进货价"
                             maxlength="50"
                             clearable
                     />
                 </el-form-item>
                 <el-form-item
-                        label="库存数量:"
+                        label="入库数量:"
                         prop="number"
                 >
                     <el-input
@@ -237,7 +248,7 @@
                 value: '',
                 imageUrl: '',
                 actionType: '',
-                dishList: [],
+                options: [],
                 vueRest: '1',
                 index: 0,
                 flag: false,
@@ -246,7 +257,6 @@
                     'name': '',
                     'id': '',
                     'price': '',
-                    'discount': '',
                     'image': '',
                     'description': '',
                     'specification': '',
@@ -254,6 +264,8 @@
                     'code': '',
                     'produceplace': '',
                     'purchase_price': '',
+                    'supplierName': '',
+                    'supplierId': '',
                     'status': true,
                 },
                 mak: false
@@ -262,32 +274,13 @@
         computed: {
             rules() {
                 return {
-                    'name': [
-                        {'required': true, 'message': '请填写商品名称', 'trigger': 'blur'}
-                    ],
-                    'price': [
-                        {
-                            'required': true,
-                            // 'message': '请填写商品价格',
-                            validator: (rules, value, callback) => {
-                                if (!value) {
-                                    callback(new Error('请填写商品价格'))
-                                } else {
-                                    const reg = /^\d+(\.\d{0,2})?$/
-                                    if (reg.test(value)) {
-                                        if (value < 10000) {
-                                            callback()
-                                        } else {
-                                            callback(new Error('商品价格小于10000'))
-                                        }
-                                    } else {
-                                        callback(new Error('商品价格格式只能为数字,且最多保留两位小数'))
-                                    }
-                                }
-                            },
-                            'trigger': 'blur'
-                        }
-                    ],
+                    'name': [{'required': true, 'validator': checkCommodity, 'trigger': 'blur'}],
+                    'price': [{'required': true, validator: checkPrice, 'trigger': 'blur'}],
+                    'purchase_price': [{'required': true, validator: checkPurchasePrice, 'trigger': 'blur'}],
+                    'supplierName': [{'required': true, message: '请选择供应商!', 'trigger': 'blur'}],
+                    'code': [{'required': true, validate: checkCode1, 'trigger': 'blur'}],
+                    'number': [{'required': true, validate: checkNumber, 'trigger': 'blur'}],
+                    'specification': [{'required': true, validate: checkSpecification, 'trigger': 'blur'}],
                 }
             }
         },
@@ -295,9 +288,10 @@
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
             console.log(this.actionType)
+
             if (this.id) {
                 this.flag = true
-                console.log("falg==>" + this.flag)
+                console.log("flag==>" + this.flag)
                 this.init()
             }
         },
@@ -345,6 +339,7 @@
             },
 
             submitForm(formName, st) {
+                console.log(this.ruleForm.code)
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let params = {...this.ruleForm}
@@ -370,7 +365,7 @@
                                             'name': '',
                                             'id': '',
                                             'price': '',
-                                            'discount': '',
+
                                             'image': '',
                                             'description': '',
                                             'number': '',
@@ -442,6 +437,22 @@
                     url: '/backend/page/commodity/list.html',
                     name: '商品管理'
                 }, false)
+            },
+            getSupplierList() {
+                getSupplier().then(res => {
+                    console.log(res);
+                    if (res.code === 1) {
+                        this.options = res.data.map((item) => {
+                            return {
+                                'value': item.id,
+                                'label': item.name
+                            };
+                        });
+                        console.log(this.options)
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
             }
         }
     })

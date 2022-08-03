@@ -41,19 +41,17 @@ public class R<T> implements Serializable {
     }
 
     public static R<String> flag(boolean flag, String msg_suc, String msg_err) {
-        if (flag) {
-            return R.success(msg_suc);
-        } else {
-            return R.error(msg_err);
-        }
+        if (flag) return R.success(msg_suc);
+        else return R.error(msg_err);
+    }
+
+    public static R<String> flag(boolean flag) {
+        return R.flag(flag, "操作成功!", "操作失败,请重试!");
     }
 
     public R<Object> flag(boolean flag, T object, String msg) {
-        if (flag) {
-            return R.success(object);
-        } else {
-            return R.error(msg);
-        }
+        if (flag) return R.success(object);
+        else return R.error(msg);
     }
 
     public R<T> add(String key, Object value) {

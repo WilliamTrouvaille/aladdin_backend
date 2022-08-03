@@ -29,20 +29,20 @@ public class LoginCheckFilter implements Filter {
     //            4、判断登录状态，如果已登录，则直接放行
 //            5、如果未登录则返回未登录结果
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+        final HttpServletRequest request = (HttpServletRequest) servletRequest;
+        final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        Long employeeId = (Long) request.getSession().getAttribute("employee");
-        Long userId = (Long) request.getSession().getAttribute("user");
+        final Long employeeId = (Long) request.getSession().getAttribute("employee");
+        final Long userId = (Long) request.getSession().getAttribute("user");
 
         //            1、获取本次请求的URI
-        String requestURL = request.getRequestURI();
-        log.info("拦截到请求链接为" + requestURL);
+        final String requestURL = request.getRequestURI();
+        LoginCheckFilter.log.info("拦截到请求链接为" + requestURL);
 
         //            2、判断本次请求是否需要处理
 //        不需要处理的资源路径
-        String[] urls = new String[]{
+        final String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
@@ -52,15 +52,15 @@ public class LoginCheckFilter implements Filter {
         };
 
         //            3、如果不需要处理，则直接放行
-        boolean check = check(urls, requestURL);
+        final boolean check = LoginCheckFilter.check(urls, requestURL);
         if (check) {
-            log.info("本次{}请求不需要拦截", requestURL);
+            LoginCheckFilter.log.info("本次{}请求不需要拦截", requestURL);
             filterChain.doFilter(request, response);
             return;
         }
 
         if (employeeId != null) {
-            log.info("{}已登录", requestURL);
+            LoginCheckFilter.log.info("{}已登录", requestURL);
 
             BaseContext.setCurrentId(employeeId);
 
@@ -69,7 +69,7 @@ public class LoginCheckFilter implements Filter {
         }
 
         if (userId != null) {
-            log.info("{}已登录", requestURL);
+            LoginCheckFilter.log.info("{}已登录", requestURL);
 
             BaseContext.setCurrentId(userId);
 
@@ -80,12 +80,10 @@ public class LoginCheckFilter implements Filter {
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
     }
 
-    public boolean check(String[] urls, String requestURL) {
-        for (String url : urls) {
-            boolean match = PATH_MATCHER.match(url, requestURL);
-            if (match) {
-                return true;
-            }
+    public static boolean check(final String[] urls, final String requestURL) {
+        for (final String url : urls) {
+            final boolean match = LoginCheckFilter.PATH_MATCHER.match(url, requestURL);
+            if (match) return true;
         }
         return false;
     }

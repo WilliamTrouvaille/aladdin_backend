@@ -99,7 +99,7 @@
 <!-- 引入axios -->
 <script src="../../plugins/axios/axios.min.js"></script>
 <script src="../../js/request.js"></script>
-<script src="../../api/member.js"></script>
+<script src="../../api/store.js"></script>
 <script src="../../js/validate.js"></script>
 <script src="../../js/index.js"></script>
 <script>
@@ -128,10 +128,10 @@
                         }
                     ],
                     //姓名
-                    name: [{required: true, 'message': '请输入门店名称', 'trigger': 'blur'}],
+                    name: [{required: true, 'validator': checkStoreName, 'trigger': 'blur'}],
                     'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
-                    'address': [{'required': true, 'message': '请输入联系地址', 'trigger': 'blur'}],
-                    'contact': [{'required': true, 'message': '请输入联系人', 'trigger': 'blur'}],
+                    'address': [{'required': true, 'validator': checkAddress, 'trigger': 'blur'}],
+                    'contact': [{'required': true, 'validator': checkContact, 'trigger': 'blur'}],
                     'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}]
                 }
             }
@@ -140,6 +140,7 @@
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
             if (this.id) {
+                console.log("id==>" + this.id)
                 this.init()
             }
         },

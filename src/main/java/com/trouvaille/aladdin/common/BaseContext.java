@@ -13,11 +13,15 @@ public class BaseContext {
     public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
     public static Long getCurrentId() {
-        return threadLocal.get();
+        return BaseContext.threadLocal.get();
     }
 
 
-    public static void setCurrentId(Long id) {
-        threadLocal.set(id);
+    public static void setCurrentId(final Long id) {
+        BaseContext.threadLocal.set(id);
+    }
+
+    public static void close() {
+        BaseContext.threadLocal.remove();
     }
 }

@@ -59,3 +59,131 @@ function validID(rule, value, callback) {
         callback(new Error('身份证号码不正确'))
     }
 }
+
+function checkContact(rule, value, callback) {
+    if (value == '') {
+        callback(new Error('请输入联系人'))
+    }
+}
+
+function checkAddress(rule, value, callback) {
+    if (value == '') {
+        callback(new Error('请输入联系地址'))
+    }
+}
+
+
+function checkStoreName(rule, value, callback) {
+    if (value == '') {
+        callback(new Error('请输入门店名称'))
+    }
+}
+
+
+function checkPrice(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写商品价格'))
+    } else {
+        const reg = /^\d+(\.\d{0,2})?$/
+        if (reg.test(value)) {
+            if (value < 10000) {
+                callback()
+            } else {
+                callback(new Error('商品价格应小于10000'))
+            }
+        } else {
+            callback(new Error('商品价格格式只能为数字,且最多保留两位小数'))
+        }
+    }
+}
+
+function checkPurchasePrice(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写商品进货价'))
+    } else {
+        const reg = /^\d+(\.\d{0,2})?$/
+        if (reg.test(value)) {
+            if (value < 10000) {
+                callback()
+            } else {
+                callback(new Error('商品进货价应小于10000'))
+            }
+        } else {
+            callback(new Error('商品价格格式只能为数字,且最多保留两位小数'))
+        }
+    }
+}
+
+function checkDiscount(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写商品折扣价'))
+    } else {
+        const reg = /^\d+(\.\d{0,2})?$/
+        if (reg.test(value)) {
+            if (value < 10000) {
+                callback()
+            } else {
+                callback(new Error('商品折扣价应小于10000'))
+            }
+        } else {
+            callback(new Error('商品折扣价格式只能为数字,且最多保留两位小数'))
+        }
+    }
+}
+
+// 商品条形码正则校验/^69\d{11}$/ 
+// 6902538004045
+function checkCode1(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写商品条形码'))
+    } else {
+        const reg = /69+\d{11}/g
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('请输入正确的商品条形码!'))
+        }
+    }
+}
+
+// 规格正则校验
+function checkSpecification(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写规格'))
+    } else {
+        const reg = /\d{0,4}.{0,3}/[\u4e00 - \u9fa5] / i
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('请输入正确的规格!'))
+        }
+    }
+}
+
+// 名称正则校验
+function checkCommodity(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写商品名称'))
+    } else {
+        const reg = /[\u4e00-\u9fa5]{0,20}/i
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('请输入正确的商品名称!'))
+        }
+    }
+}
+
+// 入库数量
+function checkNumber(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写入库数量'))
+    } else {
+        const reg = /\d{1,5}/i
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('请输入正确的入库数量!'))
+        }
+    }
+}

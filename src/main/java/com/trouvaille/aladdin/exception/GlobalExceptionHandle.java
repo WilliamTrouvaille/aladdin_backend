@@ -20,27 +20,27 @@ public class GlobalExceptionHandle {
 
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> exceptionHandle(SQLIntegrityConstraintViolationException ex) {
-        log.error(ex.getMessage());
+    public R<String> exceptionHandle(final SQLIntegrityConstraintViolationException ex) {
+        GlobalExceptionHandle.log.error(ex.getMessage());
 
         if (ex.getMessage().contains("Duplicate entry")) {
-            String[] split = ex.getMessage().split(" ");
-            String msg = split[2] + "已存在!";
+            final String[] split = ex.getMessage().split(" ");
+            final String msg = split[2] + "已存在!";
             return R.error(msg);
         }
         return R.error("操作失败!请检查重试!");
     }
 
     @ExceptionHandler(CustomException.class)
-    public R<String> customExceptionHandle(CustomException ex) {
-        log.error(ex.getMessage());
+    public R<String> customExceptionHandle(final CustomException ex) {
+        GlobalExceptionHandle.log.error(ex.getMessage());
         return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(FileNotFoundException.class)
-    public R<String> FileNotFoundExceptionHandle(FileNotFoundException ex) {
-//        log.error(ex.getMessage());
-//        return R.error(ex.getMessage());
-        return null;
+    public R<String> fileNotFoundExceptionHandle(final FileNotFoundException ex) {
+        GlobalExceptionHandle.log.error(ex.getMessage());
+        return R.error(ex.getMessage());
+
     }
 }

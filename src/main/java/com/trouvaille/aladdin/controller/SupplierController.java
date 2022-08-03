@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/supplier")
@@ -31,11 +33,11 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @GetMapping("/page")
-    public R<Page<Supplier>> page(int page, int pageSize, String name) {
-        log.info("Supplier:name, page, pageSize==>{},{},{}", name, page, pageSize);
+    public R<Page<Supplier>> page(final int page, final int pageSize, final String name) {
+        SupplierController.log.info("Supplier:name, page, pageSize==>{},{},{}", name, page, pageSize);
 
-        Page<Supplier> pageInfo = new Page<>(page, pageSize);
-        LambdaQueryWrapper<Supplier> lqw = new LambdaQueryWrapper<>();
+        final Page<Supplier> pageInfo = new Page<>(page, pageSize);
+        final LambdaQueryWrapper<Supplier> lqw = new LambdaQueryWrapper<>();
 
         lqw.like(name != null, Supplier::getName, name);
         lqw.orderByDesc(Supplier::getUpdateTime);
@@ -45,5 +47,11 @@ public class SupplierController {
 
     }
 
+    @GetMapping("/list")
+    public R<List<Supplier>> list() {
+        SupplierController.log.info("获取全部供应商信息");
+        final List<Supplier> suppliers = supplierService.list(null);
+        return R.success(suppliers);
+    }
 
 }

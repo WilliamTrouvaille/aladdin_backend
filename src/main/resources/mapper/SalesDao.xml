@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trouvaille.aladdin.dao.SalesDao">
+
+    <resultMap type="com.trouvaille.aladdin.entity.Sales" id="SalesMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="commodity" column="commodity" jdbcType="INTEGER"/>
+        <result property="employee" column="employee" jdbcType="INTEGER"/>
+        <result property="address" column="address" jdbcType="INTEGER"/>
+        <result property="number" column="number" jdbcType="INTEGER"/>
+        <result property="profit" column="profit" jdbcType="INTEGER"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
+        <result property="method" column="method" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price, method, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address}, #{entity.number},
+            #{entity.profit}, #{entity.price}, #{entity.method}, #{entity.createTime})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price, method, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address}, #{entity.number},
+            #{entity.profit}, #{entity.price}, #{entity.method}, #{entity.createTime})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , commodity = values(commodity) , employee = values(employee) , address =
+        values(address) , number = values(number) , profit = values(profit) , price = values(price) , method =
+        values(method) , create_time = values(create_time)
+    </insert>
+
+</mapper>
+

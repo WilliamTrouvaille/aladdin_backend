@@ -6,13 +6,13 @@ function isExternal(path) {
     return /^(https?:|mailto:|tel:)/.test(path);
 }
 
-function isCellPhone(val) {
-    if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
-        return false
-    } else {
-        return true
-    }
-}
+// function isCellPhone(val) {
+//     if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+//         return false
+//     } else {
+//         return true
+//     }
+// }
 
 //校验账号
 function checkUserName(rule, value, callback) {
@@ -36,14 +36,20 @@ function checkName(rule, value, callback) {
     }
 }
 
+// function checkPhone(rule, value, callback) {
+//     // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+//     if (value == "") {
+//         callback(new Error("请输入手机号"))
+//     } else if (!isCellPhone(value)) {//引入methods中封装的检查手机格式的方法
+//         callback(new Error("请输入正确的手机号!"))
+//     } else {
+//         callback()
+//     }
+// }
+
 function checkPhone(rule, value, callback) {
-    // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
-    if (value == "") {
-        callback(new Error("请输入手机号"))
-    } else if (!isCellPhone(value)) {//引入methods中封装的检查手机格式的方法
-        callback(new Error("请输入正确的手机号!"))
-    } else {
-        callback()
+    if (value == '') {
+        callback(new Error('请输入手机号码'))
     }
 }
 

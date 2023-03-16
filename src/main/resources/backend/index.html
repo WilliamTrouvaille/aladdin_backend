@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>瑞吉外卖管理端</title>
+    <title>Aladdin便利店管理端</title>
     <link rel="shortcut icon" href="favicon.ico">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="plugins/element-ui/index.css"/>
@@ -83,7 +83,8 @@
                 <div class="right-menu">
                     <div class="avatar-wrapper">{{ userInfo.name }}</div>
                     <!-- <div class="logout" @click="logout">退出</div> -->
-                    <img src="images/icons/btn_close@2x.png" class="outLogin" alt="退出" @click="logout"/>
+                    <img src="images/icons/btn_close@2x.png" class="outLogin" alt="退出"
+                         @click="logout"/>
                 </div>
             </div>
             <div class="app-main" v-loading="loading">
@@ -122,58 +123,37 @@
                 menuList: [
                     {
                         id: '1',
-                        name: '门店管理',
-                        children: [
-                            {
-                                id: '2',
-                                name: '员工管理',
-                                url: 'page/member/list.html',
-                            },
-                            {
-                                id: '3',
-                                name: '商品管理',
-                                url: 'page/commodity/list.html',
-                            },
-
-                            {
-                                id: '4',
-                                name: '门店地址管理',
-                                url: 'page/store/list.html',
-                            }
-                        ],
-                    },
-                    {
+                        name: '员工管理',
+                        url: 'page/member/list.html',
+                    }, {
+                        id: '2',
+                        name: '用户管理',
+                        url: 'page/user/list.html',
+                    }, {
+                        id: '3',
+                        name: '商品管理',
+                        url: 'page/commodity/list.html',
+                    }, {
+                        id: '4',
+                        name: '库存管理',
+                        url: 'page/inventory/list.html',
+                    }, {
                         id: '5',
-                        name: '采购管理',
-                        children: [
-                            {
-                                id: '6',
-                                name: '供应商管理',
-                                url: 'page/supplier/list.html',
-                            },
-                            {
-                                id: '7',
-                                name: '订单管理',
-                                url: 'page/order/list.html',
-                            },
-                        ],
-                    },
-                    {
+                        name: '供应管理',
+                        url: 'page/supplier/list.html',
+                    }, {
+                        id: '6',
+                        name: '门店管理',
+                        url: 'page/store/list.html',
+                    }, {
+                        id: '7',
+                        name: '订单管理',
+                        url: 'page/order/list.html',
+                    }, {
                         id: '8',
-                        name: '销售报表',
-                        children: [
-                            {
-                                id: '9',
-                                name: '销售统计报表',
-                                url: 'page/member/list.html',
-                            },
-                            {
-                                id: '10',
-                                name: '月度销售报表',
-                                url: 'page/food/list.html',
-                            },
-                        ],
-                    },
+                        name: '统计分析',
+                        url: 'page/analysis/list.html',
+                    }
                 ],
                 iframeUrl: 'page/member/list.html',
                 headTitle: '员工管理',

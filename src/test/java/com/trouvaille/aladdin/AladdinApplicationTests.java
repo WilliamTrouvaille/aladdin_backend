@@ -1,5 +1,6 @@
 package com.trouvaille.aladdin;
 
+import com.trouvaille.aladdin.entity.Employee;
 import com.trouvaille.aladdin.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

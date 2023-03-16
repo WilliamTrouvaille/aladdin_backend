@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品管理查看页面</title>
+    <title>库存管理查看页面</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
     <link rel="stylesheet" href="../../styles/common.css"/>
@@ -29,7 +29,8 @@
                 ></i>
             </el-input>
             <div class="tableLab">
-                <span class="span-btn delBut non" @click="deleteHandle('批量', null)">批量删除</span>
+                <span class="span-btn delBut non"
+                      @click="deleteHandle('批量', null)">批量删除</span>
                 <span class="span-btn blueBug non" @click="statusHandle('1')">批量启售</span>
                 <span style="border:none;" class="span-btn delBut non" @click="statusHandle('0')">批量停售</span>
                 <el-button
@@ -60,7 +61,8 @@
                               :src="getImage(row.image)"
                               :preview-src-list="[ `/common/download?name=${row.image}` ]">
                         <div slot="error" class="image-slot">
-                            <img src="../../images/noImg.png" style="width: auto; height: 40px; border:none;">
+                            <img src="../../images/noImg.png"
+                                 style="width: auto; height: 40px; border:none;">
                         </div>
                     </el-image>
                 </template>
@@ -85,7 +87,8 @@
             ></el-table-column>
             <el-table-column label="售卖状态">
                 <template slot-scope="scope">
-                    <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售' }}</span>
+                    <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售'
+                        }}</span>
                 </template>
             </el-table-column>
             </el-table-column>

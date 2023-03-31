@@ -5,7 +5,7 @@ const getCommodityPage = (params) => {
         method: 'get',
         params
     })
-},
+}
 
 
 // 删除接口

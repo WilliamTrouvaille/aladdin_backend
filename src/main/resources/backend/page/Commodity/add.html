@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>商品管理添加页面</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
     <link rel="stylesheet" href="../../styles/common.css"/>
@@ -276,11 +276,23 @@
                 return {
                     'name': [{'required': true, 'validator': checkCommodity, 'trigger': 'blur'}],
                     'price': [{'required': true, validator: checkPrice, 'trigger': 'blur'}],
-                    'purchase_price': [{'required': true, validator: checkPurchasePrice, 'trigger': 'blur'}],
-                    'supplierName': [{'required': true, message: '请选择供应商!', 'trigger': 'blur'}],
+                    'purchase_price': [{
+                        'required': true,
+                        validator: checkPurchasePrice,
+                        'trigger': 'blur'
+                    }],
+                    'supplierName': [{
+                        'required': true,
+                        message: '请选择供应商!',
+                        'trigger': 'blur'
+                    }],
                     'code': [{'required': true, validate: checkCode1, 'trigger': 'blur'}],
                     'number': [{'required': true, validate: checkNumber, 'trigger': 'blur'}],
-                    'specification': [{'required': true, validate: checkSpecification, 'trigger': 'blur'}],
+                    'specification': [{
+                        'required': true,
+                        validate: checkSpecification,
+                        'trigger': 'blur'
+                    }],
                 }
             }
         },

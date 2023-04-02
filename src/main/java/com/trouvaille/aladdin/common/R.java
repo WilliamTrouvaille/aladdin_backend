@@ -1,3 +1,12 @@
+/**
+ * @projectName: aladdin
+ * @package: com.trouvaille.aladdin.common
+ * @className: R
+ * @author: William_Trouvaille
+ * @description: 服务端返回结果类
+ * @date: 2022/7/26 15:06
+ * @version: 1.0
+ */
 package com.trouvaille.aladdin.common;
 
 import lombok.Data;
@@ -6,26 +15,20 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 通用返回结果，服务端响应的数据最终都会封装成此对象
- *
- * @param <T>
- */
 @Data
-
 public class R<T> implements Serializable {
 
+    //    编码：1成功，0和其它数字为失败
+    private Integer code;
 
-    private Integer code; //编码：1成功，0和其它数字为失败
+    //    错误信息
+    private String msg;
 
+    //    数据
+    private T data;
 
-    private String msg; //错误信息
-
-
-    private T data; //数据
-
-
-    private Map map = new HashMap(); //动态数据
+    //    动态数据
+    private Map map = new HashMap();
 
     public static <T> R<T> success(T object) {
         R<T> r = new R<T>();
@@ -41,12 +44,24 @@ public class R<T> implements Serializable {
         return r;
     }
 
-    public static R<String> flag(boolean flag, String s, String s1) {
-        return flag ? R.success(s) : R.error(s1);
+    public static R<String> flag(boolean flag, String msg_suc, String msg_err) {
+        if (flag) {
+            return R.success(msg_suc);
+        } else {
+            return R.error(msg_err);
+        }
     }
 
     public static R<String> flag(boolean flag) {
-        return flag(flag, "操作成功!", "操作失败,请重试!");
+        return R.flag(flag, "操作成功!", "操作失败,请重试!");
+    }
+
+    public R<Object> flag(boolean flag, T object, String msg) {
+        if (flag) {
+            return R.success(object);
+        } else {
+            return R.error(msg);
+        }
     }
 
     public R<T> add(String key, Object value) {

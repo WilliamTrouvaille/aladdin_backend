@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品管理查看页面</title>
+    <title>Document</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
     <link rel="stylesheet" href="../../styles/common.css"/>
@@ -25,7 +25,7 @@
                         slot="prefix"
                         class="el-input__icon el-icon-search"
                         style="cursor: pointer"
-                        @click="init"
+                        @click="handleQuery"
                 ></i>
             </el-input>
             <div class="tableLab">
@@ -34,7 +34,7 @@
                 <span style="border:none;" class="span-btn delBut non" @click="statusHandle('0')">批量停售</span>
                 <el-button
                         type="primary"
-                        @click="addFoodtype('add')"
+                        @click="addCommodity('add')"
                 >
                     + 新建商品
                 </el-button>
@@ -60,7 +60,8 @@
                               :src="getImage(row.image)"
                               :preview-src-list="[ `/common/download?name=${row.image}` ]">
                         <div slot="error" class="image-slot">
-                            <img src="../../images/noImg.png" style="width: auto; height: 40px; border:none;">
+                            <img src="../../images/noImg.png"
+                                 style="width: auto; height: 40px; border:none;" alt="">
                         </div>
                     </el-image>
                 </template>
@@ -79,13 +80,15 @@
                     prop="number"
                     label="当前数量"
             ></el-table-column>
-            <el-table-column
-                    prop="price"
-                    label="当前价格"
-            ></el-table-column>
+            <el-table-column label="进货价">
+                <template slot-scope="scope">
+                    <span style="margin-right: 10px;">￥{{ scope.row.purchasePrice / 100 }}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="售卖状态">
                 <template slot-scope="scope">
-                    <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售' }}</span>
+                    <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售'
+                        }}</span>
                 </template>
             </el-table-column>
             </el-table-column>
@@ -99,7 +102,7 @@
                             type="text"
                             size="small"
                             class="blueBug"
-                            @click="addFoodtype(scope.row.id)"
+                            @click="addCommodity(scope.row.id)"
                     >
                         修改
                     </el-button>
@@ -153,14 +156,13 @@
                 pageSize: 10,
                 tableData: [],
                 commodityState: '',
-
                 checkList: []
             }
         },
         computed: {},
         created() {
-
             this.init()
+
         },
         mounted() {
         },
@@ -171,6 +173,7 @@
                     pageSize: this.pageSize,
                     name: this.input ? this.input : undefined
                 }
+                console.log(params)
                 await getCommodityPage(params).then(res => {
                     if (String(res.code) === '1') {
                         this.tableData = res.data.records || []
@@ -188,16 +191,16 @@
                 this.init();
             },
             // 添加
-            addFoodtype(st) {
+            addCommodity(st) {
                 if (st === 'add') {
                     window.parent.menuHandle({
-                        id: '1',
+                        id: '4',
                         url: '/backend/page/commodity/add.html',
                         name: '添加商品'
                     }, true)
                 } else {
                     window.parent.menuHandle({
-                        id: '2',
+                        id: '4',
                         url: '/backend/page/commodity/add.html?id=' + st,
                         name: '修改商品'
                     }, true)

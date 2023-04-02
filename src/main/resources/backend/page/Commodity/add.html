@@ -4,44 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品管理添加页面</title>
+    <title>Document</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
     <link rel="stylesheet" href="../../styles/common.css"/>
     <link rel="stylesheet" href="../../styles/page.css"/>
     <style>
-        .selectInput {
-            position: relative;
-            width: 100%;
-            min-width: 100px;
-        }
-
-        .selectInput .flavorSelect {
-            position: absolute;
-            width: 100%;
-            padding: 0 10px;
-            border-radius: 3px;
-            border: solid 1px #FF903D;
-            line-height: 30px;
-            text-align: center;
-            background: #fff;
-            top: 50px;
-            z-index: 99;
-        }
-
-        .selectInput .flavorSelect .items {
-            cursor: pointer;
-            display: inline-block;
-            width: 100%;
-            line-height: 35px;
-            border-bottom: solid 1px #f4f4f4;
-            color: #666;
-        }
-
-        .selectInput .flavorSelect .none {
-            font-size: 14px;
-        }
-
         #food-add-app .uploadImg .el-form-item__label::before {
             content: '*';
             color: #F56C6C;
@@ -70,8 +38,7 @@
                             v-model="ruleForm.name"
                             placeholder="请填写商品名称"
                             maxlength="20"
-                            clearable
-                    />
+                            clearable></el-input>
                 </el-form-item>
                 <el-form-item
                         label="商品条形码:"
@@ -79,7 +46,8 @@
                 >
                     <el-input
                             v-model="ruleForm.code"
-                            maxlength=""
+                            placeholder="请填写商品条形码69后11位数字"
+                            maxlength="11"
                             clearable
                     >
                         <template slot="prepend">69-</template>
@@ -94,9 +62,7 @@
                 >
                     <el-input
                             v-model="ruleForm.price"
-                            placeholder="请设置商品价格"
-
-                    />
+                            placeholder="请设置商品价格"></el-input>
                 </el-form-item>
                 <el-form-item
                         label="供应商:"
@@ -105,6 +71,8 @@
                 >
                     <el-select
                             v-model="ruleForm.supplierId"
+                            :label-in-value="true"
+                            @change="currOperatorChange"
                             placeholder="请选择供应商">
 
                         <el-option
@@ -134,7 +102,7 @@
                                 v-if="imageUrl"
                                 :src="imageUrl"
                                 class="avatar"
-                        />
+                                alt=""/>
                         <i
                                 v-else
                                 class="el-icon-plus avatar-uploader-icon"
@@ -148,34 +116,33 @@
                         prop="specification"
                 >
                     <el-input
+
                             v-model="ruleForm.specification"
                             placeholder="例如:500ml/瓶"
                             maxlength="50"
-                            clearable
-                    />
+                            clearable></el-input>
                 </el-form-item>
                 <el-form-item
                         label="产地:"
-                        prop="produceplace"
+                        prop="producePlace"
                 >
                     <el-input
-                            v-model="ruleForm.produceplace"
+                            v-model="ruleForm.producePlace"
                             maxlength="50"
-                            clearable
-                    />
+                            placeholder="请输入产地,应仅含中文"
+                            clearable></el-input>
                 </el-form-item>
             </div>
             <div>
                 <el-form-item
                         label="进货价:"
-                        prop="purchase_price"
+                        prop="purchasePrice"
                 >
                     <el-input
-                            v-model="ruleForm.purchase_price"
+                            v-model="ruleForm.purchasePrice"
                             placeholder="请设置进货价"
                             maxlength="50"
-                            clearable
-                    />
+                            clearable></el-input>
                 </el-form-item>
                 <el-form-item
                         label="入库数量:"
@@ -184,8 +151,8 @@
                     <el-input
                             v-model="ruleForm.number"
                             maxlength="50"
-                            clearable
-                    />
+                            placeholder="请输入入库数量,应为整数"
+                            clearable></el-input>
                 </el-form-item>
             </div>
             <div class="address">
@@ -199,8 +166,7 @@
                             :rows="3"
                             placeholder="商品描述，最长200字"
                             maxlength="200"
-                            clearable
-                    />
+                            clearable></el-input>
                 </el-form-item>
             </div>
             <div class="subBox address">
@@ -215,7 +181,7 @@
                         保存
                     </el-button>
                     <el-button
-                            v-if="actionType == 'add'"
+                            v-if="actionType === 'add'"
                             type="primary"
                             class="continue"
                             @click="submitForm('ruleForm','goAnd')"
@@ -262,8 +228,8 @@
                     'specification': '',
                     'number': '',
                     'code': '',
-                    'produceplace': '',
-                    'purchase_price': '',
+                    'producePlace': '',
+                    'purchasePrice': '',
                     'supplierName': '',
                     'supplierId': '',
                     'status': true,
@@ -276,7 +242,7 @@
                 return {
                     'name': [{'required': true, 'validator': checkCommodity, 'trigger': 'blur'}],
                     'price': [{'required': true, validator: checkPrice, 'trigger': 'blur'}],
-                    'purchase_price': [{
+                    'purchasePrice': [{
                         'required': true,
                         validator: checkPurchasePrice,
                         'trigger': 'blur'
@@ -287,12 +253,18 @@
                         'trigger': 'blur'
                     }],
                     'code': [{'required': true, validate: checkCode1, 'trigger': 'blur'}],
-                    'number': [{'required': true, validate: checkNumber, 'trigger': 'blur'}],
+                    'number': [{
+                        'required': true,
+                        validate: checkNumber,
+                        'trigger': 'blur',
+                        type: 'number'
+                    }],
                     'specification': [{
                         'required': true,
                         validate: checkSpecification,
                         'trigger': 'blur'
                     }],
+                    'producePlace': [{'required': true, validate: checkPrice, 'trigger': 'blur'}],
                 }
             }
         },
@@ -300,6 +272,7 @@
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
             console.log(this.actionType)
+            this.getSupplierList()
 
             if (this.id) {
                 this.flag = true
@@ -316,8 +289,8 @@
                     if (String(res.code) === '1') {
                         this.ruleForm = {...res.data}
                         this.ruleForm.price = String(res.data.price / 100)
-                        this.purchase_price = String(res.data.purchase_price / 100)
-                        this.ruleForm.status = res.data.status == '1'
+                        this.purchasePrice = String(res.data.purchasePrice / 100)
+                        this.ruleForm.status = res.data.status === '1'
                         this.imageUrl = `/common/download?name=${res.data.image}`
                     } else {
                         this.$message.error(res.msg || '操作失败')
@@ -325,30 +298,40 @@
                 })
             },
 
+            getSupplierList() {
+                getSupplier().then(res => {
+                    console.log(res);
+                    if (res.code === 1) {
+                        this.options = res.data.map((item) => {
+                            return {
+                                'value': item.id,
+                                'label': item.name
+                            };
+                        });
+                        console.log(this.options)
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
+            },
+            currOperatorChange: function (val) {
+                let obj = {};
+                obj = this.options.find(item => {
+                    return item.value === val
+                });
+                this.ruleForm.supplierName = obj.label;
+                this.ruleForm.supplierId = obj.value;
+                console.log(this.ruleForm);
+            },
+
 
             outSelect(st, index) {
                 const _this = this
                 setTimeout(() => {
-                    const obj = JSON.parse(JSON.stringify(_this.dishFlavors[index]))
                     obj.showOption = st
-                    _this.dishFlavors.splice(index, 1, obj)
                 }, 200)
             },
 
-            inputHandle(val, index) {
-                // this.selectFlavor(false,index)
-            },
-
-            checkOption(val, ind, index) {
-                this.selectHandle(val.name, index, ind)
-                this.dishFlavors[index].name = val.name
-            },
-
-            selectHandle(val, key, ind) {
-                const arrDate = [...this.dishFlavors]
-                arrDate[key] = JSON.parse(JSON.stringify(this.dishFlavorsData[ind]))
-                this.dishFlavors = arrDate
-            },
 
             submitForm(formName, st) {
                 console.log(this.ruleForm.code)
@@ -357,39 +340,35 @@
                         let params = {...this.ruleForm}
                         params.status = this.ruleForm ? 1 : 0
                         params.price *= 100
-                        delete params.dishFlavors
+                        params.purchasePrice *= 100
                         if (!this.imageUrl) {
                             this.$message.error('请上传商品图片')
                             return
                         }
-                        if (this.actionType == 'add') {
+                        if (this.actionType === 'add') {
                             delete params.id
-                            addDish(params).then(res => {
+                            addCommodity(params).then(res => {
                                 if (res.code === 1) {
                                     this.$message.success('商品添加成功！')
                                     if (!st) {
                                         this.goBack()
                                     } else {
-                                        this.dishFlavors = []
-                                        // this.dishFlavorsData = []
                                         this.imageUrl = ''
                                         this.ruleForm = {
                                             'name': '',
                                             'id': '',
                                             'price': '',
-
                                             'image': '',
                                             'description': '',
+                                            'specification': '',
                                             'number': '',
+                                            'code': '',
+                                            'producePlace': '',
+                                            'purchasePrice': '',
+                                            'supplierName': '',
+                                            'supplierId': '',
                                             'status': true,
-                                        },
-                                            this.supplierForm = {
-                                                'code': '',
-                                                'supplier': '',
-                                                'supplierName': '',
-                                                'produceplace': '',
-                                                'purchase_price': '',
-                                            }
+                                        }
                                     }
                                 } else {
                                     this.$message.error(res.msg || '操作失败')
@@ -399,7 +378,7 @@
                             })
                         } else {
                             delete params.updateTime
-                            editDish(params).then(res => {
+                            editCommodity(params).then(res => {
                                 if (res.code === 1) {
                                     this.$message.success('商品修改成功！')
                                     this.goBack()
@@ -442,29 +421,12 @@
                     return file
                 }
             },
-
             goBack() {
                 window.parent.menuHandle({
                     id: '2',
                     url: '/backend/page/commodity/list.html',
                     name: '商品管理'
                 }, false)
-            },
-            getSupplierList() {
-                getSupplier().then(res => {
-                    console.log(res);
-                    if (res.code === 1) {
-                        this.options = res.data.map((item) => {
-                            return {
-                                'value': item.id,
-                                'label': item.name
-                            };
-                        });
-                        console.log(this.options)
-                    } else {
-                        this.$message.error(res.msg || '操作失败')
-                    }
-                })
             }
         }
     })

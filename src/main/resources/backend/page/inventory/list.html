@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>库存管理查看页面</title>
+    <title>商品管理-查看页面</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
     <link rel="stylesheet" href="../../styles/common.css"/>
@@ -35,7 +35,7 @@
                 <span style="border:none;" class="span-btn delBut non" @click="statusHandle('0')">批量停售</span>
                 <el-button
                         type="primary"
-                        @click="addFoodtype('add')"
+                        @click="addCommodity('add')"
                 >
                     + 新建商品
                 </el-button>
@@ -102,7 +102,7 @@
                             type="text"
                             size="small"
                             class="blueBug"
-                            @click="addFoodtype(scope.row.id)"
+                            @click="addCommodity(scope.row.id)"
                     >
                         修改
                     </el-button>
@@ -156,6 +156,7 @@
                 pageSize: 10,
                 tableData: [],
                 commodityState: '',
+                records: [],
 
                 checkList: []
             }
@@ -191,7 +192,7 @@
                 this.init();
             },
             // 添加
-            addFoodtype(st) {
+            addCommodity(st) {
                 if (st === 'add') {
                     window.parent.menuHandle({
                         id: '4',

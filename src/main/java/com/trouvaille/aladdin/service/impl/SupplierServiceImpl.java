@@ -2,7 +2,7 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.service.impl
  * @className: SupplierServiceImpl
- * @author: Eric
+ * @author: trouvaille_william
  * @description: 供应商ServiceImpl
  * @date: 2022/7/27 21:23
  * @version: 1.0

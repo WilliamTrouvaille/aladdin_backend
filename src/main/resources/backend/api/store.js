@@ -10,7 +10,7 @@ function getStorePage(params) {
 // 新增---添加员工
 function addStore(params) {
     return $axios({
-        url: '/store/save',
+        url: '/store',
         method: 'post',
         data: {...params}
     })

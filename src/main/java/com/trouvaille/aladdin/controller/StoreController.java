@@ -2,7 +2,7 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.controller
  * @className: StoreController
- * @author: Eric
+ * @author: trouvaille_william
  * @description: TODO
  * @date: 2022/7/27 20:21
  * @version: 1.0
@@ -48,14 +48,14 @@ public class StoreController {
         return R.success(stores);
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public R<String> save(@RequestBody Store store) {
         log.info("新增门店信息==>{}", store);
         boolean save = storeService.save(store);
         return R.flag(save, "新增门店成功!", "新增门店失败,请重试!");
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public R<String> update(@RequestBody Store store) {
         log.info("更改门店信息==>{}", store);
         boolean flag = storeService.updateById(store);

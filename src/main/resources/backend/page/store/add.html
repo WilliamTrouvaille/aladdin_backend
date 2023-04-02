@@ -129,7 +129,7 @@
                     ],
                     //姓名
                     name: [{required: true, 'validator': checkStoreName, 'trigger': 'blur'}],
-                    // 'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
+                    'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
                     'address': [{'required': true, 'validator': checkAddress, 'trigger': 'blur'}],
                     'contact': [{'required': true, 'validator': checkContact, 'trigger': 'blur'}],
                     'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}]
@@ -159,11 +159,7 @@
                 })
             },
             submitForm(formName, st) {
-                console.log(st)
-                console.log(formName)
                 this.$refs[formName].validate((valid) => {
-                    console.log("hehe")
-                    console.log(valid)
                     if (valid) {
                         if (this.actionType === 'add') {
                             const params = {

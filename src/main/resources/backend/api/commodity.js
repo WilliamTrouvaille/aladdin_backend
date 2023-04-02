@@ -1,12 +1,34 @@
 // 查询列表接口
-const getCommodityPage = (params) => {
+
+function getCommodityPage(params) {
     return $axios({
-        url: '/commodity/page',
+        url: `/commodity/page`,
         method: 'get',
         params
     })
 }
 
+// function getCommodityPage(params) {
+//     return $axios({
+//         url: `/json/commodity.json`,
+//         method: 'get',
+//         params
+//     })
+// }
+
+function getSupplier() {
+    return $axios({
+        url: `/supplier/list`,
+        method: 'get',
+    })
+}
+
+// function getSupplier() {
+//     return $axios({
+//         url: `/json/supplier.json`,
+//         method: 'get',
+//     })
+// }
 
 // 删除接口
 const deleteCommodity = (ids) => {

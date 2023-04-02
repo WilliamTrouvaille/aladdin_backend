@@ -2,7 +2,7 @@
  * @projectName: aladdin
  * @package: com.trouvaille.aladdin.controller
  * @className: SupplierController
- * @author: Eric
+ * @author: trouvaille_william
  * @description: 供应商控制类
  * @date: 2022/7/27 21:24
  * @version: 1.0
@@ -17,9 +17,7 @@ import com.trouvaille.aladdin.entity.Supplier;
 import com.trouvaille.aladdin.service.SupplierService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,6 +50,27 @@ public class SupplierController {
         SupplierController.log.info("获取全部供应商信息");
         final List<Supplier> suppliers = supplierService.list(null);
         return R.success(suppliers);
+    }
+
+
+    @GetMapping("/{id}")
+    public R<Supplier> getById(@PathVariable Long id) {
+        Supplier supplier = supplierService.getById(id);
+        return R.success(supplier);
+    }
+
+    @PutMapping
+    public R<String> update(@RequestBody Supplier supplier) {
+        log.info("更改供应商信息,供应商信息==>{}", supplier.toString());
+        boolean flag = supplierService.updateById(supplier);
+        return R.flag(flag, "供应商信息更改成功!", "供应商信息更改失败,请重试!");
+    }
+
+    @PostMapping
+    public R<String> save(@RequestBody Supplier supplier) {
+        log.info("新增供应商,供应商信息:{}", supplier);
+        boolean flag = supplierService.save(supplier);
+        return R.flag(flag);
     }
 
 }

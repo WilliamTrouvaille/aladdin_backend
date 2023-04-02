@@ -6,13 +6,13 @@ function isExternal(path) {
     return /^(https?:|mailto:|tel:)/.test(path);
 }
 
-// function isCellPhone(val) {
-//     if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
-//         return false
-//     } else {
-//         return true
-//     }
-// }
+function isCellPhone(val) {
+    if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        return false
+    } else {
+        return true
+    }
+}
 
 //校验账号
 function checkUserName(rule, value, callback) {
@@ -36,20 +36,25 @@ function checkName(rule, value, callback) {
     }
 }
 
-// function checkPhone(rule, value, callback) {
-//     // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
-//     if (value == "") {
-//         callback(new Error("请输入手机号"))
-//     } else if (!isCellPhone(value)) {//引入methods中封装的检查手机格式的方法
-//         callback(new Error("请输入正确的手机号!"))
-//     } else {
-//         callback()
-//     }
-// }
+//校验姓名
+function checkSupplierName(rule, value, callback) {
+    if (value === "") {
+        callback(new Error("请输入供应商名称"))
+    } else if (value.length > 21) {
+        callback(new Error("供应商名称过长"))
+    } else {
+        callback()
+    }
+}
 
 function checkPhone(rule, value, callback) {
-    if (value == '') {
-        callback(new Error('请输入手机号码'))
+    // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/;
+    if (value === "") {
+        callback(new Error("请输入手机号"))
+    } else if (!isCellPhone(value)) {//引入methods中封装的检查手机格式的方法
+        callback(new Error("请输入正确的手机号!"))
+    } else {
+        callback()
     }
 }
 
@@ -190,6 +195,19 @@ function checkNumber(rules, value, callback) {
             callback()
         } else {
             callback(new Error('请输入正确的入库数量!'))
+        }
+    }
+}
+
+function checkPoducePlace(rules, value, callback) {
+    if (!value) {
+        callback(new Error('请填写产地'))
+    } else {
+        const reg = /[\u4e00-\u9fa5]{0,20}/i
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('正确的产地应仅含中文,请重试!'))
         }
     }
 }

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>库存管理添加页面</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
-    <link rel="stylesheet" href="../../styles/common.css"/>
-    <link rel="stylesheet" href="../../styles/page.css"/>
+    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../styles/common.css" rel="stylesheet"/>
+    <link href="../../styles/page.css" rel="stylesheet"/>
     <style>
         .selectInput {
             position: relative;
@@ -54,12 +54,12 @@
 <div class="addBrand-container" id="food-add-app">
     <div class="container">
         <el-form
-                ref="ruleForm"
+                :inline="true"
                 :model="ruleForm"
                 :rules="rules"
-                :inline="true"
-                label-width="180px"
                 class="demo-ruleForm"
+                label-width="180px"
+                ref="ruleForm"
         >
             <div>
                 <el-form-item
@@ -67,10 +67,10 @@
                         prop="name"
                 >
                     <el-input
-                            v-model="ruleForm.name"
-                            placeholder="请填写商品名称"
-                            maxlength="20"
                             clearable
+                            maxlength="20"
+                            placeholder="请填写商品名称"
+                            v-model="ruleForm.name"
                     />
                 </el-form-item>
                 <el-form-item
@@ -78,9 +78,9 @@
                         prop="code"
                 >
                     <el-input
-                            v-model="ruleForm.code"
-                            maxlength=""
                             clearable
+                            maxlength=""
+                            v-model="ruleForm.code"
                     >
                         <template slot="prepend">69-</template>
                     </el-input>
@@ -93,8 +93,8 @@
                         prop="price"
                 >
                     <el-input
-                            v-model="ruleForm.price"
                             placeholder="请设置商品价格"
+                            v-model="ruleForm.price"
 
                     />
                 </el-form-item>
@@ -104,40 +104,40 @@
 
                 >
                     <el-select
-                            v-model="ruleForm.supplierId"
-                            placeholder="请选择供应商">
+                            placeholder="请选择供应商"
+                            v-model="ruleForm.supplierId">
 
                         <el-option
-                                v-for="item in options"
                                 :key="item.value"
                                 :label="item.label"
-                                :value="item.value">
+                                :value="item.value"
+                                v-for="item in options">
                         </el-option>
                     </el-select>
                 </el-form-item>
             </div>
             <div>
                 <el-form-item
+                        class="uploadImg"
                         label="商品图片:"
                         prop="region"
-                        class="uploadImg"
                 >
                     <el-upload
-                            class="avatar-uploader"
-                            action="/common/upload"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
                             :on-change="onChange"
+                            :on-success="handleAvatarSuccess"
+                            :show-file-list="false"
+                            action="/common/upload"
+                            class="avatar-uploader"
                             ref="upload"
                     >
                         <img
-                                v-if="imageUrl"
                                 :src="imageUrl"
                                 class="avatar"
+                                v-if="imageUrl"
                         />
                         <i
-                                v-else
                                 class="el-icon-plus avatar-uploader-icon"
+                                v-else
                         ></i>
                     </el-upload>
                 </el-form-item>
@@ -148,10 +148,10 @@
                         prop="specification"
                 >
                     <el-input
-                            v-model="ruleForm.specification"
-                            placeholder="例如:500ml/瓶"
-                            maxlength="50"
                             clearable
+                            maxlength="50"
+                            placeholder="例如:500ml/瓶"
+                            v-model="ruleForm.specification"
                     />
                 </el-form-item>
                 <el-form-item
@@ -159,9 +159,9 @@
                         prop="produceplace"
                 >
                     <el-input
-                            v-model="ruleForm.produceplace"
-                            maxlength="50"
                             clearable
+                            maxlength="50"
+                            v-model="ruleForm.produceplace"
                     />
                 </el-form-item>
             </div>
@@ -171,10 +171,10 @@
                         prop="purchase_price"
                 >
                     <el-input
-                            v-model="ruleForm.purchase_price"
-                            placeholder="请设置进货价"
-                            maxlength="50"
                             clearable
+                            maxlength="50"
+                            placeholder="请设置进货价"
+                            v-model="ruleForm.purchase_price"
                     />
                 </el-form-item>
                 <el-form-item
@@ -182,9 +182,9 @@
                         prop="number"
                 >
                     <el-input
-                            v-model="ruleForm.number"
-                            maxlength="50"
                             clearable
+                            maxlength="50"
+                            v-model="ruleForm.number"
                     />
                 </el-form-item>
             </div>
@@ -194,12 +194,12 @@
                         prop="region"
                 >
                     <el-input
-                            v-model="ruleForm.description"
-                            type="textarea"
                             :rows="3"
-                            placeholder="商品描述，最长200字"
-                            maxlength="200"
                             clearable
+                            maxlength="200"
+                            placeholder="商品描述，最长200字"
+                            type="textarea"
+                            v-model="ruleForm.description"
                     />
                 </el-form-item>
             </div>
@@ -209,16 +209,16 @@
                         取消
                     </el-button>
                     <el-button
-                            type="primary"
                             @click="submitForm('ruleForm')"
+                            type="primary"
                     >
                         保存
                     </el-button>
                     <el-button
-                            v-if="actionType == 'add'"
-                            type="primary"
-                            class="continue"
                             @click="submitForm('ruleForm','goAnd')"
+                            class="continue"
+                            type="primary"
+                            v-if="actionType == 'add'"
                     >
                         保存并继续添加商品
                     </el-button>

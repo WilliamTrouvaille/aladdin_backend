@@ -6,7 +6,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-    <title>菩提阁</title>
+    <title>Aladdin便利店用户端</title>
     <link rel="icon" href="images/favico.ico">
     <!--不同屏幕尺寸根字体设置-->
     <script src="js/base.js"></script>
@@ -28,7 +28,7 @@
         <div class="divStatic">
             <img src="images/logo.png" class="logo"/>
             <div class="divDesc">
-                <div class="divName">菩提阁餐厅</div>
+                <div class="divName">Aladdin便利店</div>
                 <div class="divSend">
                     <span><img src="images/time.png"/> 距离1.5km</span>
                     <span><img src="images/money.png"/> 配送费6元</span>
@@ -36,21 +36,20 @@
                 </div>
             </div>
         </div>
-        <div class="divDesc">
-            简介: 菩提阁中餐厅是菩提阁点餐的独立的品牌，定位“大众 化的美食外送餐饮”，旨为顾客打造专业美食。
-        </div>
     </div>
     <div class="divBody">
         <div class="divType">
             <ul>
-                <li v-for="(item,index) in categoryList" :key="index" @click="categoryClick(index,item.id,item.type)"
+                <li :key="index" @click="categoryClick(index,item.id,item.type)"
+                    v-for="(item,index) in categoryList"
                     :class="{active:activeType === index}">{{item.name}}
                 </li>
             </ul>
         </div>
         <div class="divMenu">
             <div>
-                <div class="divItem" v-for="(item,index) in dishList" :key="index" @click="dishDetails(item)">
+                <div :key="index" @click="dishDetails(item)" class="divItem"
+                     v-for="(item,index) in dishList">
                     <el-image :src="imgPathConvert(item.image)">
                         <div slot="error" class="image-slot">
                             <img src="images/noImg.png"/>
@@ -63,10 +62,12 @@
                         <div class="divBottom"><span>￥</span><span>{{item.price / 100}}</span></div>
                         <div class="divNum">
                             <div class="divSubtract" v-if="item.number > 0">
-                                <img src="images/subtract.png" @click.prevent.stop="subtractCart(item)"/>
+                                <img @click.prevent.stop="subtractCart(item)"
+                                     src="images/subtract.png"/>
                             </div>
                             <div class="divDishNum">{{item.number}}</div>
-                            <div class="divTypes" v-if="item.flavors && item.flavors.length > 0 && !item.number "
+                            <div class="divTypes"
+                                 v-if="item.flavors && item.flavors.length > 0 && !item.number "
                                  @click.prevent.stop="chooseFlavorClick(item)">选择规格
                             </div>
                             <div class="divAdd" v-else>
@@ -98,7 +99,8 @@
              @click="toAddOrderPage">去结算
         </div>
     </div>
-    <van-dialog v-model="dialogFlavor.show" :show-confirm-button="false" class="dialogFlavor" ref="flavorDialog">
+    <van-dialog :show-confirm-button="false" class="dialogFlavor" ref="flavorDialog"
+                v-model="dialogFlavor.show">
         <div class="dialogTitle">{{dialogFlavor.name}}</div>
         <div class="divContent">
             <div v-for="flavor in dialogFlavor.flavors" :key="flavor.id">
@@ -118,7 +120,8 @@
             <img src="images/close.png"/>
         </div>
     </van-dialog>
-    <van-popup v-model="cartDialogShow" position="bottom" :style="{ height: '50%' }" class="dialogCart">
+    <van-popup :style="{ height: '50%' }" class="dialogCart" position="bottom"
+               v-model="cartDialogShow">
         <div class="divCartTitle">
             <div class="title">购物车</div>
             <div class="clear" @click="clearCart">
@@ -222,7 +225,9 @@
                 <div class="divAdd" v-if="setMealDialog.item.number">
                     <img src="images/add.png" @click="addCart(setMealDialog.item)"/>
                 </div>
-                <div class="addCart" @click="addCart(setMealDialog.item)" v-if="!setMealDialog.item.number">加入购物车</div>
+                <div @click="addCart(setMealDialog.item)" class="addCart"
+                     v-if="!setMealDialog.item.number">加入购物车
+                </div>
             </div>
         </div>
         <div class="detailsDialogClose" @click="setMealDialog.show = false">
@@ -247,7 +252,7 @@
         el: '#main',
         data() {
             return {
-                //左边菜品类别index
+                //左边商品类别index
                 activeType: 0,
                 categoryList: [],
                 categoryId: undefined,
@@ -324,7 +329,7 @@
                     } else {
                         this.$notify({type: 'warning', message: res[0].msg});
                     }
-                    //获取菜品数据
+                    //获取商品数据
                     if (res[1].code === 1) {
                         this.cartData = res[1].data
                     } else {
@@ -336,13 +341,13 @@
             categoryClick(index, id, type) {
                 this.activeType = index
                 this.categoryId = id
-                if (type === 1) {//菜品
+                if (type === 1) {//商品
                     this.getDishList()
                 } else {
                     this.getSetmealData()
                 }
             },
-            //获取菜品数据
+            //获取商品数据
             async getDishList() {
                 if (!this.categoryId) {
                     return
@@ -397,17 +402,17 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-            //菜单中往购物车中添加商品
+            //商品中往购物车中添加商品
             async addCart(item) {
                 let params = {
                     amount: item.price / 100,//金额
                     dishFlavor: item.dishFlavor,//口味  如果没有传undefined
-                    dishId: undefined,//菜品id
+                    dishId: undefined,//商品id
                     setmealId: undefined,//套餐id
                     name: item.name,
                     image: item.image
                 }
-                if (Array.isArray(item.flavors)) {//表示是菜品
+                if (Array.isArray(item.flavors)) {//表示是商品
                     params.dishId = item.id
                 } else {//表示套餐 套餐没有口味
                     params.setmealId = item.id
@@ -465,7 +470,7 @@
                 let params = {
                     amount: item.amount,//金额
                     dishFlavor: item.dishFlavor,//口味  如果没有传undefined
-                    dishId: item.dishId,//菜品id
+                    dishId: item.dishId,//商品id
                     setmealId: item.setmealId,//套餐id
                     name: item.name,
                     image: item.image

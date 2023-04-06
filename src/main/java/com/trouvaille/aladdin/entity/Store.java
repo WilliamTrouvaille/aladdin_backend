@@ -13,19 +13,29 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // 门店id
+    /**
+     * 门店id
+     */
     private Long id;
 
-    // 手机号
+    /**
+     * 手机号
+     */
     private Long phone;
 
-    // 门店名称
+    /**
+     * 门店名称
+     */
     private String name;
 
-    // 联系人
+    /**
+     * 联系人
+     */
     private String contact;
 
-    // 地址
+    /**
+     * 地址
+     */
     private String address;
 
     @TableField(fill = FieldFill.INSERT)

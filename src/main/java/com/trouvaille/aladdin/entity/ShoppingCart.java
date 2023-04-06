@@ -13,28 +13,44 @@ public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // 主键
+    /**
+     * 主键
+     */
     private Long id;
 
-    // 名称
+    /**
+     * 名称
+     */
     private String name;
 
-    // 图片
+    /**
+     * 图片
+     */
     private String image;
 
-    // 用户id
+    /**
+     * 用户id
+     */
     private Long userId;
 
-    // 商品id
+    /**
+     * 商品id
+     */
     private Long commodityId;
 
-    // 数量
+    /**
+     * 数量
+     */
     private Integer number;
 
-    // 金额 单位分
+    /**
+     * 价格
+     */
     private Integer amount;
 
-    // 创建时间
+    /**
+     * 创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

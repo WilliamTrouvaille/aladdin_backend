@@ -32,7 +32,8 @@ public class SupplierController {
 
     @GetMapping("/page")
     public R<Page<Supplier>> page(final int page, final int pageSize, final String name) {
-        SupplierController.log.info("Supplier:name, page, pageSize==>{},{},{}", name, page, pageSize);
+        SupplierController.log.info("Supplier:name, page, pageSize==>{},{},{}", name, page,
+                pageSize);
 
         final Page<Supplier> pageInfo = new Page<>(page, pageSize);
         final LambdaQueryWrapper<Supplier> lqw = new LambdaQueryWrapper<>();

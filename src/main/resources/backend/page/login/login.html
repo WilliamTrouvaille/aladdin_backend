@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Aladdin便利店管理端</title>
-    <link rel="shortcut icon" href="../../favicon.ico">
+    <link href="../../favicon.ico" rel="shortcut icon">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
-    <link rel="stylesheet" href="../../styles/common.css">
-    <link rel="stylesheet" href="../../styles/login.css">
-    <link rel="stylesheet" href="../../styles/icon/iconfont.css"/>
+    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../styles/common.css" rel="stylesheet">
+    <link href="../../styles/login.css" rel="stylesheet">
+    <link href="../../styles/icon/iconfont.css" rel="stylesheet"/>
     <style>
         .body {
             min-width: 1366px;
@@ -22,27 +22,28 @@
 <body>
 <div class="login" id="login-app">
     <div class="login-box">
-        <img src="../../images/login/login-l.png" alt="">
+        <img alt="" src="../../images/login/login-l.png">
         <div class="login-form">
-            <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
+            <el-form :model="loginForm" :rules="loginRules" ref="loginForm">
                 <div class="login-form-title">
-                    <img src="../../images/login/logo.png" style="width:180px;height:90px;" alt=""/>
+                    <img alt="" src="../../images/login/logo.png" style="width:180px;height:90px;"/>
                 </div>
                 <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" type="text" auto-complete="off"
-                              placeholder="账号"
-                              maxlength="20"
-                              prefix-icon="iconfont icon-user"/>
+                    <el-input auto-complete="off" maxlength="20" placeholder="账号"
+                              prefix-icon="iconfont icon-user"
+                              type="text"
+                              v-model="loginForm.username"/>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" placeholder="密码"
-                              prefix-icon="iconfont icon-lock" maxlength="20"
-                              @keyup.enter.native="handleLogin"/>
+                    <el-input @keyup.enter.native="handleLogin" maxlength="20" placeholder="密码"
+                              prefix-icon="iconfont icon-lock" type="password"
+                              v-model="loginForm.password"/>
                 </el-form-item>
                 <el-form-item style="width:100%;">
-                    <el-button :loading="loading" class="login-btn" size="medium" type="primary"
+                    <el-button :loading="loading" @click.native.prevent="handleLogin"
+                               class="login-btn" size="medium"
                                style="width:100%;"
-                               @click.native.prevent="handleLogin">
+                               type="primary">
                         <span v-if="!loading">登录</span>
                         <span v-else>登录中...</span>
                     </el-button>

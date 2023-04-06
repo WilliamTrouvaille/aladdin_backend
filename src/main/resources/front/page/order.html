@@ -2,53 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-    <title>菩提阁</title>
-    <link rel="icon" href="../images/favico.ico">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui"
+          name="viewport">
+    <title>Aladdin便利店</title>
+    <link href="../images/favico.ico" rel="icon">
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
     <!-- 引入样式  -->
-    <link rel="stylesheet" href="../styles/index.css"/>
+    <link href="../styles/index.css" rel="stylesheet"/>
     <!--引入vant样式-->
-    <link rel="stylesheet" href="../styles/vant.min.css"/>
+    <link href="../styles/vant.min.css" rel="stylesheet"/>
     <!--本页面内容的样式-->
-    <link rel="stylesheet" href="../styles/order.css"/>
+    <link href="../styles/order.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="order" class="app">
+<div class="app" id="order">
     <div class="divHead">
         <div class="divTitle">
-            <i class="el-icon-arrow-left" @click="goBack"></i>菩提阁
+            <i @click="goBack" class="el-icon-arrow-left"></i>Aladdin便利店
         </div>
     </div>
     <div class="divBody" v-if="orderList.length > 0">
         <van-list
-                v-model="loading"
                 :finished="finished"
-                finished-text="没有更多了"
                 @load="getList"
+                finished-text="没有更多了"
+                v-model="loading"
         >
-            <van-cell v-for="(order,index) in orderList" :key="index" class="item">
+            <van-cell :key="index" class="item" v-for="(order,index) in orderList">
                 <div class="timeStatus">
                     <span>{{order.orderTime}}</span>
                     <span>{{getStatus(order.status)}}</span>
                     <!-- <span>正在派送</span> -->
                 </div>
                 <div class="dishList">
-                    <div v-for="(item,index) in order.orderDetails" :key="index" class="item">
+                    <div :key="index" class="item" v-for="(item,index) in order.orderDetails">
                         <span>{{item.name}}</span>
                         <span>x{{item.number}}</span>
                     </div>
                 </div>
                 <div class="result">
-                    <span>共{{order.sumNum}} 件商品,实付</span><span class="price">￥{{order.amount}}</span>
+                    <span>共{{order.sumNum}} 件商品,实付</span><span
+                        class="price">￥{{order.amount}}</span>
                 </div>
                 <div class="btn" v-if="order.status === 4">
-                    <div class="btnAgain" @click="addOrderAgain(order)">再来一单</div>
+                    <div @click="addOrderAgain(order)" class="btnAgain">再来一单</div>
                 </div>
             </van-cell>
         </van-list>

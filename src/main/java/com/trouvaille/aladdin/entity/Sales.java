@@ -15,31 +15,49 @@ public class Sales implements Serializable {
 
     private Long id;
 
-    // 顾客
+    /**
+     * 顾客
+     */
     private Long userId;
 
-    // 商品id
+    /**
+     * 商品id
+     */
     private Long commodity;
 
-    // 员工
+    /**
+     * 员工
+     */
     private Long employee;
 
-    // 地址
+    /**
+     * 地址
+     */
     private Long address;
 
-    // 商品总数
+    /**
+     * 商品总数
+     */
     private Integer number;
 
-    // 订单总利润 单位分
+    /**
+     * 订单总利润 单位分
+     */
     private Integer profit;
 
-    // 商品总额 单位分
+    /**
+     * 商品总额 单位分
+     */
     private Integer price;
 
-    // 支付方式 0到店支付 1外送
+    /**
+     * 支付方式 0到店支付 1外送
+     */
     private Integer method;
 
-    // 订单创建时间
+    /**
+     * 订单创建时间
+     */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Document</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
-    <link rel="stylesheet" href="../../styles/common.css"/>
-    <link rel="stylesheet" href="../../styles/page.css"/>
+    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../styles/common.css" rel="stylesheet"/>
+    <link href="../../styles/page.css" rel="stylesheet"/>
     <style>
         .addDish .el-input {
             width: 130px;
@@ -195,58 +195,66 @@
 <div class="addBrand-container" id="combo-add-app">
     <div class="container">
         <el-form
-                ref="ruleForm"
+                :inline="true"
                 :model="ruleForm"
                 :rules="rules"
-                :inline="true"
-                label-width="180px"
                 class="demo-ruleForm"
+                label-width="180px"
+                ref="ruleForm"
         >
             <div>
                 <el-form-item label="套餐名称:" prop="name">
-                    <el-input v-model="ruleForm.name" placeholder="请填写套餐名称" maxlength="20"/>
+                    <el-input maxlength="20" placeholder="请填写套餐名称" v-model="ruleForm.name"/>
                 </el-form-item>
                 <el-form-item label="套餐分类:" prop="idType">
-                    <el-select v-model="ruleForm.idType" placeholder="请选择套餐分类" @change="$forceUpdate()">
-                        <el-option v-for="(item, index) in setMealList" :key="index" :label="item.name"
-                                   :value="item.id"/>
+                    <el-select @change="$forceUpdate()" placeholder="请选择套餐分类"
+                               v-model="ruleForm.idType">
+                        <el-option :key="index" :label="item.name"
+                                   :value="item.id"
+                                   v-for="(item, index) in setMealList"/>
                     </el-select>
                 </el-form-item>
             </div>
             <div>
                 <el-form-item label="套餐价格:" prop="price">
-                    <el-input v-model="ruleForm.price" placeholder="请设置套餐价格"/>
+                    <el-input placeholder="请设置套餐价格" v-model="ruleForm.price"/>
                 </el-form-item>
             </div>
             <div>
-                <el-form-item label="套餐商品:" class="setmealFood">
+                <el-form-item class="setmealFood" label="套餐商品:">
                     <el-form-item>
                         <div class="addDish">
-                            <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + 添加商品</span>
-                            <div v-if="dishTable.length != 0" class="content">
-                                <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ 添加商品</div>
+                            <span @click="openAddDish" class="addBut" v-if="dishTable.length == 0"> + 添加商品</span>
+                            <div class="content" v-if="dishTable.length != 0">
+                                <div @click="openAddDish" class="addBut"
+                                     style="margin-bottom: 20px">+ 添加商品
+                                </div>
                                 <div class="table">
                                     <el-table :data="dishTable" style="width: 100%">
-                                        <el-table-column prop="name" label="名称" width="180"
-                                                         align="center"></el-table-column>
-                                        <el-table-column prop="price" label="原价" width="180">
-                                            <template slot-scope="scope"> {{ Number(scope.row.price) / 100 }}</template>
+                                        <el-table-column align="center" label="名称" prop="name"
+                                                         width="180"></el-table-column>
+                                        <el-table-column label="原价" prop="price" width="180">
+                                            <template slot-scope="scope">
+                                                {{ Number(scope.row.price) / 100 }}
+                                            </template>
                                         </el-table-column>
-                                        <el-table-column prop="address" label="份数" align="center">
+                                        <el-table-column align="center" label="份数" prop="address">
                                             <template slot-scope="scope">
                                                 <el-input-number
-                                                        v-model="scope.row.copies"
-                                                        size="small"
-                                                        :min="1"
                                                         :max="99"
+                                                        :min="1"
                                                         label="描述文字"
+                                                        size="small"
+                                                        v-model="scope.row.copies"
                                                 ></el-input-number>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="address" label="操作" width="180px;" align="center">
+                                        <el-table-column align="center" label="操作" prop="address"
+                                                         width="180px;">
                                             <template slot-scope="scope">
-                                                <el-button type="text" size="small"
-                                                           @click="delDishHandle(scope.$index)"> 删除
+                                                <el-button @click="delDishHandle(scope.$index)"
+                                                           size="small"
+                                                           type="text"> 删除
                                                 </el-button>
                                             </template>
                                         </el-table-column>
@@ -258,35 +266,37 @@
                 </el-form-item>
             </div>
             <div>
-                <el-form-item label="套餐图片:" class="uploadImg">
+                <el-form-item class="uploadImg" label="套餐图片:">
                     <el-upload
-                            class="avatar-uploader"
-                            action="/common/upload"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
                             :on-change="onChange"
+                            :on-success="handleAvatarSuccess"
+                            :show-file-list="false"
+                            action="/common/upload"
+                            class="avatar-uploader"
                             ref="upload"
                     >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar"></img>
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        <img :src="imageUrl" class="avatar" v-if="imageUrl"></img>
+                        <i class="el-icon-plus avatar-uploader-icon" v-else></i>
                     </el-upload>
                 </el-form-item>
             </div>
             <div class="address">
                 <el-form-item label="套餐描述:">
-                    <el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="套餐描述，最长200字"
-                              maxlength="200"/>
+                    <el-input :rows="3" maxlength="200" placeholder="套餐描述，最长200字"
+                              type="textarea"
+                              v-model="ruleForm.description"/>
                 </el-form-item>
             </div>
             <div class="subBox address">
                 <el-form-item>
                     <el-button @click="goBack()"> 取消</el-button>
-                    <el-button type="primary" @click="submitForm('ruleForm', false)"> 保存</el-button>
+                    <el-button @click="submitForm('ruleForm', false)" type="primary"> 保存
+                    </el-button>
                     <el-button
-                            v-if="actionType == 'add'"
-                            type="primary"
-                            class="continue"
                             @click="submitForm('ruleForm', true)"
+                            class="continue"
+                            type="primary"
+                            v-if="actionType == 'add'"
                     >
                         保存并继续添加套餐
                     </el-button>
@@ -295,58 +305,60 @@
         </el-form>
     </div>
     <el-dialog
-            title="添加商品"
-            class="addDishList"
-            :visible.sync="dialogVisible"
-            width="60%"
             :before-close="handleClose"
+            :visible.sync="dialogVisible"
+            class="addDishList"
+            title="添加商品"
+            width="60%"
     >
         <el-input
-                v-model="value"
                 class="seachDish"
-                placeholder="请输入商品名称进行搜索"
-                style="width: 250px"
-                size="small"
                 clearable
+                placeholder="请输入商品名称进行搜索"
+                size="small"
+                style="width: 250px"
+                v-model="value"
         >
-            <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer" @click="seachHandle"></i>
+            <i @click="seachHandle" class="el-input__icon el-icon-search" slot="prefix"
+               style="cursor: pointer"></i>
         </el-input>
         <!-- <AddDish ref="adddish" :check-list="checkList" :seach-key="seachKey" @checkList="getCheckList" /> -->
 
         <div class="addDishCon">
             <div class="leftCont">
                 <div
-                        v-show="seachKey.trim() == ''"
                         class="tabBut"
+                        v-show="seachKey.trim() == ''"
                 >
               <span
-                      v-for="(item, index) in dishType"
-                      :key="index"
                       :class="{act:index == keyInd}"
+                      :key="index"
                       @click="checkTypeHandle(index, item.id)"
+                      v-for="(item, index) in dishType"
               >{{ item.name }}</span>
                 </div>
                 <div class="tabList">
                     <div class="table">
-                        <div v-if="dishAddList.length == 0" style="padding-left:10px">
+                        <div style="padding-left:10px" v-if="dishAddList.length == 0">
                             暂无商品!
                         </div>
                         <el-checkbox-group
+                                @change="checkedListHandle"
                                 v-if="dishAddList.length > 0"
                                 v-model="checkedList"
-                                @change="checkedListHandle"
                         >
                             <div
-                                    v-for="(item, index) in dishAddList"
                                     :key="index"
                                     class="items"
+                                    v-for="(item, index) in dishAddList"
                             >
                                 <el-checkbox
                                         :key="index"
                                         :label="item"
                                 >
                                     <div class="item">
-                                        <span style="flex: 3;text-align: left">{{ item.dishName }}</span>
+                                        <span style="flex: 3;text-align: left">{{ item.dishName
+                                            }}</span>
                                         <span>{{ item.status == 0 ? '停售' : '在售' }}</span>
                                         <span>{{ Number(item.price) / 100 }}</span>
                                     </div>
@@ -362,19 +374,19 @@
                 </div>
                 <div class="items">
                     <div
-                            v-for="(item, ind) in checkedList"
                             :key="ind"
                             class="item"
+                            v-for="(item, ind) in checkedList"
                     >
                         <span>{{ item.dishName }}</span>
                         <span class="price">￥ {{ Number(item.price) / 100 }} </span>
                         <span
-                                class="del"
                                 @click="delCheck(ind)"
+                                class="del"
                         >
                   <img
-                          src="../../images/icons/btn_clean@2x.png"
                           alt=""
+                          src="../../images/icons/btn_clean@2x.png"
                   >
                 </span>
                     </div>
@@ -382,9 +394,9 @@
             </div>
         </div>
 
-        <span slot="footer" class="dialog-footer">
+        <span class="dialog-footer" slot="footer">
           <el-button @click="handleClose">取 消</el-button>
-          <el-button type="primary" @click="addTableList">确 定</el-button>
+          <el-button @click="addTableList" type="primary">确 定</el-button>
         </span>
     </el-dialog>
 </div>

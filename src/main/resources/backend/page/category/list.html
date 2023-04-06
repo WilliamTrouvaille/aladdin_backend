@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Document</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="../../plugins/element-ui/index.css"/>
-    <link rel="stylesheet" href="../../styles/common.css"/>
-    <link rel="stylesheet" href="../../styles/page.css"/>
+    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../styles/common.css" rel="stylesheet"/>
+    <link href="../../styles/page.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="dashboard-container" id="category-app">
@@ -18,69 +18,69 @@
                 style="display: inline-block"
         >
             <el-button
-                    type="primary"
-                    class="continue"
                     @click="addClass('class')"
+                    class="continue"
+                    type="primary"
             >
                 + 新增商品分类
             </el-button>
             <el-button
-                    type="primary"
                     @click="addClass('meal')"
+                    type="primary"
             >
                 + 新增套餐分类
             </el-button>
         </div>
         <el-table
                 :data="tableData"
-                stripe
                 class="tableBox"
+                stripe
         >
             <el-table-column
-                    prop="name"
                     label="分类名称"
+                    prop="name"
             />
             </el-table-column>
             <el-table-column
-                    prop="type"
                     label="分类类型"
+                    prop="type"
             >
                 <template slot-scope="scope">
                     <span>{{ scope.row.type == '1' ? '商品分类' : '套餐分类' }}</span>
                 </template>
             </el-table-column>
             <el-table-column
-                    prop="updateTime"
                     label="操作时间"
+                    prop="updateTime"
             >
                 <template slot-scope="scope">
                     {{scope.row.updateTime}}
                 </template>
             </el-table-column>
             <el-table-column
-                    prop="sort"
                     label="排序"
+                    prop="sort"
             />
             </el-table-column>
             <el-table-column
+                    align="center"
                     label="操作"
                     width="160"
-                    align="center"
             >
                 <template slot-scope="scope">
                     <el-button
-                            type="text"
-                            size="small"
-                            class="blueBug"
                             @click="editHandle(scope.row)"
+                            class="blueBug"
+                            size="small"
+                            type="text"
                     >
                         修改
                     </el-button>
                     <el-button
-                            type="text"
-                            size="small"
-                            class="delBut non"
                             @click="deleteHandle(scope.row.id)"
+                            class="delBut non"
+                            size="small"
+                            type="text"
                     >
                         删除
                     </el-button>
@@ -88,20 +88,20 @@
             </el-table-column>
         </el-table>
         <el-pagination
-                class="pageList"
-                :page-sizes="[10, 20, 30, 40]"
                 :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
+                :page-sizes="[10, 20, 30, 40]"
                 :total="counts"
-                @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
+                @size-change="handleSizeChange"
+                class="pageList"
+                layout="total, sizes, prev, pager, next, jumper"
         ></el-pagination>
     </div>
     <el-dialog
+            :before-close="handleClose"
             :title="classData.title"
             :visible.sync="classData.dialogVisible"
             width="30%"
-            :before-close="handleClose"
     >
         <el-form
                 class="demo-form-inline"
@@ -109,34 +109,34 @@
         >
             <el-form-item label="分类名称：">
                 <el-input
-                        v-model="classData.name"
-                        placeholder="请输入分类名称"
                         maxlength="14"
+                        placeholder="请输入分类名称"
+                        v-model="classData.name"
                 />
             </el-form-item>
             <el-form-item label="排序：">
-                <el-input v-model="classData.sort" type="number" placeholder="请输入排序"/>
+                <el-input placeholder="请输入排序" type="number" v-model="classData.sort"/>
             </el-form-item>
         </el-form>
         <span
-                slot="footer"
                 class="dialog-footer"
+                slot="footer"
         >
         <el-button
-                size="medium"
                 @click="classData.dialogVisible = false"
+                size="medium"
         >取 消</el-button>
         <el-button
-                type="primary"
-                size="medium"
                 @click="submitForm()"
+                size="medium"
+                type="primary"
         >确 定</el-button>
         <el-button
-                v-if="action != 'edit'"
-                type="primary"
-                size="medium"
-                class="continue"
                 @click="submitForm('go')"
+                class="continue"
+                size="medium"
+                type="primary"
+                v-if="action != 'edit'"
         > 保存并继续添加 </el-button>
       </span>
     </el-dialog>
@@ -245,7 +245,11 @@
                     if (valid) {
                         const reg = /^\d+$/
                         if (reg.test(classData.sort)) {
-                            addCategory({'name': classData.name, 'type': this.type, sort: classData.sort}).then(res => {
+                            addCategory({
+                                'name': classData.name,
+                                'type': this.type,
+                                sort: classData.sort
+                            }).then(res => {
                                 console.log(res)
                                 if (res.code === 1) {
                                     this.$message.success('分类添加成功！')

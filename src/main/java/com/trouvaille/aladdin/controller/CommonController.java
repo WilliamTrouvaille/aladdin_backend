@@ -44,6 +44,7 @@ public class CommonController {
      */
     @PostMapping("/upload")
     public R<String> upload(final MultipartFile file) {
+        boolean mkdirs = true;
         //file是一个临时文件，需要转存到指定位置，否则本次请求完成后临时文件会删除
         CommonController.log.info(file.toString());
 
@@ -59,7 +60,9 @@ public class CommonController {
         final File dir = new File(basePath);
         //判断当前目录是否存在
         //目录不存在，需要创建
-        if (!dir.exists()) dir.mkdirs();
+        if (!dir.exists()) {
+            mkdirs = dir.mkdirs();
+        }
 
         try {
             //将临时文件转存到指定位置
@@ -67,7 +70,7 @@ public class CommonController {
         } catch (final IOException e) {
             e.printStackTrace();
         }
-        return R.success(fileName);
+        return R.flag(mkdirs, fileName, "文件上传失败!");
     }
 
 

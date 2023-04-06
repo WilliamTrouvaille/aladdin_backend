@@ -2,31 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-    <title>菩提阁</title>
-    <link rel="icon" href="../images/favico.ico">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui"
+          name="viewport">
+    <title>Aladdin便利店</title>
+    <link href="../images/favico.ico" rel="icon">
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
     <!--引入vant样式-->
-    <link rel="stylesheet" href="../styles/vant.min.css"/>
+    <link href="../styles/vant.min.css" rel="stylesheet"/>
     <!-- 引入样式  -->
-    <link rel="stylesheet" href="../styles/index.css"/>
+    <link href="../styles/index.css" rel="stylesheet"/>
     <!--本页面内容的样式-->
-    <link rel="stylesheet" href="../styles/address.css"/>
+    <link href="../styles/address.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="address" class="app">
+<div class="app" id="address">
     <div class="divHead">
         <div class="divTitle">
-            <i class="el-icon-arrow-left" @click="goBack"></i>地址管理
+            <i @click="goBack" class="el-icon-arrow-left"></i>地址管理
         </div>
     </div>
     <div class="divContent">
-        <div class="divItem" v-for="(item,index) in addressList" :key="index" @click.capture="itemClick(item)">
+        <div :key="index" @click.capture="itemClick(item)" class="divItem"
+             v-for="(item,index) in addressList">
             <div class="divAddress">
                 <span :class="{spanCompany:item.label === '公司',spanHome:item.label === '家',spanSchool:item.label === '学校'}">{{item.label}}</span>
                 {{item.detail}}
@@ -36,15 +37,16 @@
                 <span>{{item.sex === '0' ? '女士' : '先生'}}</span>
                 <span>{{item.phone}}</span>
             </div>
-            <img src="../images/edit.png" @click.stop.prevent="toAddressEditPage(item)"/>
+            <img @click.stop.prevent="toAddressEditPage(item)" src="../images/edit.png"/>
             <div class="divSplit"></div>
             <div class="divDefault">
                 <img src="../images/checked_true.png" v-if="item.isDefault === 1">
-                <img src="../images/checked_false.png" @click.stop.prevent="setDefaultAddress(item)" v-else>设为默认地址
+                <img @click.stop.prevent="setDefaultAddress(item)" src="../images/checked_false.png"
+                     v-else>设为默认地址
             </div>
         </div>
     </div>
-    <div class="divBottom" @click="toAddressCreatePage">+ 添加收货地址</div>
+    <div @click="toAddressCreatePage" class="divBottom">+ 添加收货地址</div>
 </div>
 <!-- 开发环境版本,包含了有帮助的命令行警告 -->
 <script src="../../backend/plugins/vue/vue.js"></script>

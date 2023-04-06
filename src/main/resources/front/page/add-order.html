@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-    <title>菩提阁</title>
-    <link rel="icon" href="../images/favico.ico">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui"
+          name="viewport">
+    <title>Aladdin便利店</title>
+    <link href="../images/favico.ico" rel="icon">
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
     <!--引入vant样式-->
-    <link rel="stylesheet" href="../styles/vant.min.css"/>
+    <link href="../styles/vant.min.css" rel="stylesheet"/>
     <!-- 引入样式  -->
-    <link rel="stylesheet" href="../styles/index.css"/>
+    <link href="../styles/index.css" rel="stylesheet"/>
     <!--本页面内容的样式-->
-    <link rel="stylesheet" href="../styles/add-order.css"/>
+    <link href="../styles/add-order.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="add_order" class="app">
+<div class="app" id="add_order">
     <div class="divHead">
         <div class="divTitle">
-            <i class="el-icon-arrow-left" @click="goBack"></i>菩提阁
+            <i @click="goBack" class="el-icon-arrow-left"></i>Aladdin便利店
         </div>
     </div>
     <div class="divContent">
@@ -42,9 +42,9 @@
             <div class="title">订单明细</div>
             <div class="divSplit"></div>
             <div class="itemList">
-                <div class="item" v-for="(item,index) in cartData" :key="index">
+                <div :key="index" class="item" v-for="(item,index) in cartData">
                     <el-image :src="imgPathConvert(item.image)">
-                        <div slot="error" class="image-slot">
+                        <div class="image-slot" slot="error">
                             <img src="../images/noImg.png"/>
                         </div>
                     </el-image>
@@ -63,13 +63,13 @@
         <div class="note">
             <div class="title">备注</div>
             <van-field
-                    v-model="note"
-                    rows="2"
                     autosize
-                    type="textarea"
                     maxlength="50"
                     placeholder="请输入您需要备注的信息"
+                    rows="2"
                     show-word-limit
+                    type="textarea"
+                    v-model="note"
             />
         </div>
     </div>

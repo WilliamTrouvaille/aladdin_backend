@@ -11,6 +11,7 @@ package com.trouvaille.aladdin.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.User;
 import com.trouvaille.aladdin.service.UserService;
@@ -20,10 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -114,6 +112,27 @@ public class UserController {
             return R.success(user);
         }
         return R.error("登录失败");
+    }
+
+    /**
+     * @param page:
+     * @param pageSize:
+     * @param name:
+     * @return R<Page < User>>
+     * @author willi
+     * @description 分页获取用户信息
+     * @date 2023/04/20 22:55
+     */
+    @GetMapping("/page")
+    public R<Page<User>> page(int page, int pageSize, String name) {
+        log.info("User-page:name, page, pageSize==>{},{},{}", name, page, pageSize);
+        Page<User> pageInfo = new Page<>(page, pageSize);
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.like(name != null, User::getName, name);
+        lqw.orderByDesc(User::getCreateTime);
+        userService.page(pageInfo, lqw);
+        return R.success(pageInfo);
+
     }
 
 }

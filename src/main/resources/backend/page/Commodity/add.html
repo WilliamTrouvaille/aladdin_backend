@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
     <title>Document</title>
     <!-- 引入样式 -->
-    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="../../styles/common.css" rel="stylesheet"/>
-    <link href="../../styles/page.css" rel="stylesheet"/>
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet"/>
+    <link href="../../styles/common.css"
+          rel="stylesheet"/>
+    <link href="../../styles/page.css"
+          rel="stylesheet"/>
     <style>
         #food-add-app .uploadImg .el-form-item__label::before {
             content: '*';
@@ -19,7 +24,8 @@
     </style>
 </head>
 <body>
-<div class="addBrand-container" id="food-add-app">
+<div class="addBrand-container"
+     id="food-add-app">
     <div class="container">
         <el-form
                 :inline="true"
@@ -255,7 +261,7 @@
                     'code': [{'required': true, validate: checkCode1, 'trigger': 'blur'}],
                     'number': [{
                         'required': true,
-                        validate: checkNumber,
+                        // validate: checkNumber,
                         'trigger': 'blur',
                         type: 'number'
                     }],

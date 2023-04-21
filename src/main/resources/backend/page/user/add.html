@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
     <title>用户管理添加用户信息</title>
     <!-- 引入样式 -->
-    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="../../styles/common.css" rel="stylesheet"/>
-    <link href="../../styles/page.css" rel="stylesheet"/>
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet"/>
+    <link href="../../styles/common.css"
+          rel="stylesheet"/>
+    <link href="../../styles/page.css"
+          rel="stylesheet"/>
 </head>
 <body>
-<div class="addBrand-container" id="member-add-app">
+<div class="addBrand-container"
+     id="member-add-app">
     <div class="container">
         <el-form
                 :inline="false"
@@ -21,13 +27,20 @@
                 label-width="180px"
                 ref="ruleForm"
         >
-            <el-form-item label="账号:" prop="username">
-                <el-input clearable clearable maxlength="20"
-                          placeholder="请输入账号" v-model="ruleForm.username"></el-input>
+            <el-form-item label="账号:"
+                          prop="username">
+                <el-input clearable
+                          clearable
+                          maxlength="20"
+                          placeholder="请输入账号"
+                          v-model="ruleForm.username"></el-input>
             </el-form-item>
-            <el-form-item label="密码:" prop="password">
-                <el-input clearable clearable
-                          maxlength="20" placeholder="请输入密码,保存设置密码"
+            <el-form-item label="密码:"
+                          prop="password">
+                <el-input clearable
+                          clearable
+                          maxlength="20"
+                          placeholder="请输入密码,保存设置密码"
                           v-model="ruleForm.password"></el-input>
             </el-form-item>
             <el-form-item

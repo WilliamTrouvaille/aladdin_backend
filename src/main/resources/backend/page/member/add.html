@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
     <title>Document</title>
     <!-- 引入样式 -->
-    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="../../styles/common.css" rel="stylesheet"/>
-    <link href="../../styles/page.css" rel="stylesheet"/>
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet"/>
+    <link href="../../styles/common.css"
+          rel="stylesheet"/>
+    <link href="../../styles/page.css"
+          rel="stylesheet"/>
 </head>
 <body>
-<div class="addBrand-container" id="member-add-app">
+<div class="addBrand-container"
+     id="member-add-app">
     <div class="container">
         <el-form
                 :inline="false"
@@ -21,15 +27,15 @@
                 label-width="180px"
                 ref="ruleForm"
         >
-            <el-form-item label="账号:" prop="username">
-                <el-input clearable clearable maxlength="20"
-                          placeholder="请输入账号" v-model="ruleForm.username"></el-input>
+            <el-form-item label="账号:"
+                          prop="username">
+                <el-input clearable
+                          clearable
+                          maxlength="20"
+                          placeholder="请输入账号"
+                          v-model="ruleForm.username"></el-input>
             </el-form-item>
-            <el-form-item label="密码:" prop="password">
-                <el-input clearable clearable
-                          maxlength="20" placeholder="请输入密码,保存设置密码"
-                          v-model="ruleForm.password"></el-input>
-            </el-form-item>
+
             <el-form-item
                     label="员工姓名:"
                     prop="name"
@@ -48,7 +54,7 @@
                 <el-input
                         clearable
                         maxlength="20"
-                        placeholder="请输入手机号"
+                        placeholder="请输入手机号,请以13开头"
                         v-model="ruleForm.phone"></el-input>
             </el-form-item>
             <el-form-item
@@ -68,6 +74,7 @@
                         clearable
                         maxlength="20"
                         placeholder="请输入身份证号"
+                        :disabled="actionType === 'edit'"
                         v-model="ruleForm.idNumber"></el-input>
             </el-form-item>
 
@@ -103,7 +110,7 @@
                             @click="submitForm('ruleForm', true)"
                             class="continue"
                             type="primary"
-                            v-if="actionType == 'add'"
+                            v-if="actionType === 'add'"
                     >
                         保存并继续添加
                     </el-button>
@@ -137,7 +144,6 @@
                 ruleForm: {
                     'name': '',
                     'phone': '',
-                    'password': '',
                     'sex': '男',
                     'idNumber': '',
                     'store': '',
@@ -156,7 +162,6 @@
                     ],
                     //姓名
                     name: [{required: true, 'validator': checkName, 'trigger': 'blur'}],
-                    'password': [{required: true, 'message': '请输入密码!', 'trigger': 'blur'}],
                     'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
                     'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}],
                     'store': [{'required': true, 'message': '请输入所属门店!', 'trigger': 'blur'}]
@@ -182,7 +187,6 @@
                             console.log(res.data)
                             this.ruleForm = res.data
                             this.ruleForm.sex = res.data.sex === '0' ? '女' : '男'
-                            this.ruleForm.password = ''
                         } else {
                             this.$message.error(res.msg || '操作失败')
                         }
@@ -207,8 +211,6 @@
                                             username: '',
                                             'name': '',
                                             'phone': '',
-                                            // 'password': '',
-                                            // 'rePassword': '',/
                                             'sex': '男',
                                             'idNumber': ''
                                         }

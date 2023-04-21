@@ -40,10 +40,6 @@ public class Sales implements Serializable {
      */
     private Integer number;
 
-    /**
-     * 订单总利润 单位分
-     */
-    private Integer profit;
 
     /**
      * 商品总额 单位分

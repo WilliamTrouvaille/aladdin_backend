@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.trouvaille.aladdin.dao.SalesDao">
 
     <resultMap type="com.trouvaille.aladdin.entity.Sales" id="SalesMap">
@@ -17,24 +18,30 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price, method, create_time)
+        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price,
+        method, create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address}, #{entity.number},
+            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address},
+            #{entity.number},
             #{entity.profit}, #{entity.price}, #{entity.method}, #{entity.createTime})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price, method, create_time)
+        insert into aladdin.sales(user_id, commodity, employee, address, number, profit, price,
+        method, create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address}, #{entity.number},
+            (#{entity.userId}, #{entity.commodity}, #{entity.employee}, #{entity.address},
+            #{entity.number},
             #{entity.profit}, #{entity.price}, #{entity.method}, #{entity.createTime})
         </foreach>
         on duplicate key update
-        user_id = values(user_id) , commodity = values(commodity) , employee = values(employee) , address =
-        values(address) , number = values(number) , profit = values(profit) , price = values(price) , method =
+        user_id = values(user_id) , commodity = values(commodity) , employee = values(employee) ,
+        address =
+        values(address) , number = values(number) , profit = values(profit) , price = values(price)
+        , method =
         values(method) , create_time = values(create_time)
     </insert>
 

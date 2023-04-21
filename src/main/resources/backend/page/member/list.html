@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
     <title>Document</title>
     <!-- 引入样式 -->
-    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="../../styles/common.css" rel="stylesheet"/>
-    <link href="../../styles/page.css" rel="stylesheet"/>
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet"/>
+    <link href="../../styles/common.css"
+          rel="stylesheet"/>
+    <link href="../../styles/page.css"
+          rel="stylesheet"/>
     <style>
         #member-app .notAdmin::after {
             border: 0 !important;
@@ -17,7 +22,8 @@
     </style>
 </head>
 <body>
-<div class="dashboard-container" id="member-app">
+<div class="dashboard-container"
+     id="member-app">
     <div class="container">
         <div class="tableBar">
             <el-input
@@ -87,9 +93,10 @@
                             class="delBut non"
                             size="small"
                             type="text"
-                            v-if="user === 'admin'"
                     >
-                        {{ scope.row.status == '1' ? '禁用' : '启用' }}
+                        <v-slot scope="scope">
+                            {{ scope.row.status == '1' ? '禁用' : '启用' }}
+                        </v-slot>
                     </el-button>
                 </template>
             </el-table-column>
@@ -174,6 +181,29 @@
             handleSizeChange(val) {
                 this.pageSize = val
                 this.init()
+            },
+            //状态修改
+            statusHandle(row) {
+                this.id = row.id
+                this.status = row.status
+                this.$confirm('确认调整该账号的状态?', '提示', {
+                    'confirmButtonText': '确定',
+                    'cancelButtonText': '取消',
+                    'type': 'warning'
+                }).then(() => {
+                    enableOrDisableEmployee({
+                        'id': this.id,
+                        'status': !this.status ? 1 : 0
+                    }).then(res => {
+                        console.log('enableOrDisableEmployee', res)
+                        if (String(res.code) === '1') {
+                            this.$message.success('账号状态更改成功！')
+                            this.handleQuery()
+                        }
+                    }).catch(err => {
+                        this.$message.error('请求出错了：' + err)
+                    })
+                })
             },
             handleCurrentChange(val) {
                 this.page = val

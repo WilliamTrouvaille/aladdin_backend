@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
     <title>Document</title>
     <!-- 引入样式 -->
-    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="../../styles/common.css" rel="stylesheet"/>
-    <link href="../../styles/page.css" rel="stylesheet"/>
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet"/>
+    <link href="../../styles/common.css"
+          rel="stylesheet"/>
+    <link href="../../styles/page.css"
+          rel="stylesheet"/>
 </head>
 <body>
-<div class="dashboard-container" id="food-app">
+<div class="dashboard-container"
+     id="food-app">
     <div class="container">
         <div class="tableBar">
             <el-input
@@ -31,8 +37,11 @@
             <div class="tableLab">
                 <span @click="deleteHandle('批量', null)"
                       class="span-btn delBut non">批量删除</span>
-                <span @click="statusHandle('1')" class="span-btn blueBug non">批量启售</span>
-                <span @click="statusHandle('0')" class="span-btn delBut non" style="border:none;">批量停售</span>
+                <span @click="statusHandle('1')"
+                      class="span-btn blueBug non">批量启售</span>
+                <span @click="statusHandle('0')"
+                      class="span-btn delBut non"
+                      style="border:none;">批量停售</span>
                 <el-button
                         @click="addCommodity('add')"
                         type="primary"
@@ -55,12 +64,15 @@
                     label="商品名称"
                     prop="name"
             ></el-table-column>
-            <el-table-column align="center" label="图片" prop="image">
+            <el-table-column align="center"
+                             label="图片"
+                             prop="image">
                 <template slot-scope="{ row }">
                     <el-image :preview-src-list="[ `/common/download?name=${row.image}` ]"
                               :src="getImage(row.image)"
                               style="width: auto; height: 40px; border:none;cursor: pointer;">
-                        <div class="image-slot" slot="error">
+                        <div class="image-slot"
+                             slot="error">
                             <img alt=""
                                  src="../../images/noImg.png"
                                  style="width: auto; height: 40px; border:none;">

@@ -1,18 +1,27 @@
 function getMemberList(params) {
     return $axios({
-        url: '/employee/page',
-        // url: '/json/member.json',
+        // url: '/employee/page',
+        url: '/json/member.json',
         method: 'get',
         params
     })
 }
 
+
+// const enableOrDisableEmployee = (params) => {
+//     return $axios({
+//         url: '/employee/status/${params.status}',
+//         method: 'get',
+//         data: {...params}
+//     })
+// }
+
 // 修改---启用禁用接口
-function enableOrDisableEmployee(params) {
+const enableOrDisableEmployee = (params) => {
     return $axios({
-        url: '/employee',
-        method: 'put',
-        data: {...params}
+        url: `/employee/status/${params.status}`,
+        method: 'post',
+        params: {ids: params.id}
     })
 }
 

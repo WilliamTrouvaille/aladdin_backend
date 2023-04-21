@@ -7,11 +7,19 @@ function getUserList(params) {
     })
 }
 
-function enableOrDisableUser(params) {
+// function enableOrDisableUser(params) {
+//     return $axios({
+//         url: '/user',
+//         method: 'put',
+//         data: {...params}
+//     })
+// }
+
+const enableOrDisableUser = (params) => {
     return $axios({
-        url: '/user',
-        method: 'put',
-        data: {...params}
+        url: `/user/status/${params.status}`,
+        method: 'post',
+        params: {ids: params.id}
     })
 }
 

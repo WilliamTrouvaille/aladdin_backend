@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -144,6 +145,13 @@ public class EmployeeController {
         return R.success(employee);
     }
 
+    /**
+     * @param employee:
+     * @return R<String>
+     * @author willi
+     * @description 修改员工信息
+     * @date 2023/04/21 18:44
+     */
     @PutMapping
     public R<String> update(@RequestBody Employee employee) {
         log.info("更改员工信息,员工信息==>{}", employee.toString());
@@ -160,6 +168,22 @@ public class EmployeeController {
         boolean flag = employeeService.updateById(employee);
 
         return R.flag(flag, "员工信息更改成功!", "员工信息更改失败,请重试!");
+    }
+
+    /**
+     * @param ids:
+     * @param status:
+     * @return R<String>
+     * @author willi
+     * @description 更改员工状态
+     * @date 2023/04/21 18:46
+     */
+    @PostMapping("/status/{status}")
+    public R<String> status(@RequestParam List<Long> ids, @PathVariable int status) {
+        log.info("更改员工状态:ids==>{},status==>{}", ids, status);
+        boolean flag = employeeService.updateStatus(ids, status);
+        return flag ? R.success("员工状态已经更改成功！") : R.error("员工状态更改失败,请重试!");
+
     }
 
 }

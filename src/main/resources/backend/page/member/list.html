@@ -6,7 +6,7 @@
           http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0"
           name="viewport">
-    <title>Document</title>
+    <title>员工管理</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
           rel="stylesheet"/>
@@ -192,7 +192,7 @@
                     'type': 'warning'
                 }).then(() => {
                     enableOrDisableEmployee({
-                        'id': this.id,
+                        'ids': this.id,
                         'status': !this.status ? 1 : 0
                     }).then(res => {
                         console.log('enableOrDisableEmployee', res)

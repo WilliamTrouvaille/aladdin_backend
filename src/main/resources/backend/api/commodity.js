@@ -2,7 +2,8 @@
 
 function getCommodityPage(params) {
     return $axios({
-        url: `/commodity/page`,
+        // url: `/commodity/page`,
+        url: `/json/commodity.json`,
         method: 'get',
         params
     })

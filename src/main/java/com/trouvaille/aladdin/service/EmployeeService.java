@@ -3,8 +3,13 @@ package com.trouvaille.aladdin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.trouvaille.aladdin.entity.Employee;
 
-import java.util.List;
-
 public interface EmployeeService extends IService<Employee> {
-    boolean updateStatus(List<Long> ids, int status);
+    /**
+     * @param id:
+     * @param status:
+     * @return boolean
+     * @description: 修改员工状态
+     * @date: 2022/7/26 20:00
+     */
+    boolean updateStatus(Long id, int status);
 }

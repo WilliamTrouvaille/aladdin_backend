@@ -135,4 +135,21 @@ public class UserController {
 
     }
 
+    /**
+     * @param id:
+     * @param status:
+     * @return R<String>
+     * @author willi
+     * @description 更改用户状态
+     * @date 2023/04/22 15:56
+     */
+    @PutMapping("/status")
+    public R<String> status(Long id, int status) {
+        log.info("更改用户状态:ids==>{},status==>{}", id, status);
+        User user = userService.getById(id);
+        user.setStatus(status);
+        boolean flag = userService.updateById(user);
+        return flag ? R.success("用户状态已经更改成功！") : R.error("用户状态更改失败,请重试!");
+    }
+
 }

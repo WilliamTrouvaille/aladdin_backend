@@ -13,6 +13,9 @@ public class Sales implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 订单id
+     */
     private Long id;
 
     /**
@@ -21,30 +24,16 @@ public class Sales implements Serializable {
     private Long userId;
 
     /**
-     * 商品id
+     * 购物车id
      */
-    private Long commodity;
+    private Long shoppingCartId;
 
-    /**
-     * 员工
-     */
-    private Long employee;
 
     /**
      * 地址
      */
-    private Long address;
+    private Long addressId;
 
-    /**
-     * 商品总数
-     */
-    private Integer number;
-
-
-    /**
-     * 商品总额 单位分
-     */
-    private Integer price;
 
     /**
      * 支付方式 0到店支付 1外送

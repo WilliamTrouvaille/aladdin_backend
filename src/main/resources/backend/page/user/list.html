@@ -6,7 +6,7 @@
           http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0"
           name="viewport">
-    <title>用户管理用户信息展示</title>
+    <title>用户管理</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
           rel="stylesheet"/>
@@ -15,7 +15,7 @@
     <link href="../../styles/page.css"
           rel="stylesheet"/>
     <style>
-        #user-app .notAdmin::after {
+        #mser-app .notAdmin::after {
             border: 0 !important;
 
         }
@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="dashboard-container"
-     id="user-app">
+     id="mser-app">
     <div class="container">
         <div class="tableBar">
             <el-input
@@ -47,50 +47,49 @@
                 stripe
         >
             <el-table-column
-                    label="账号"
-                    prop="userid"
-            ></el-table-column>
+                    label="用户姓名"
+                    prop="name"
+            >
+                <template v-slot="scope">
+                    {{formattingName(scope.row.name)}}
+                </template>
+            </el-table-column>
             <el-table-column
                     label="手机号"
                     prop="phone"
             >
-                <v-slot scope="scope">
-                    {{scope.row.phone ? scope.row.phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1****$3") : ""}}
-                </v-slot>
+                <template v-slot="scope">
+                    {{formattingPhone(scope.row.phone)}}
+                </template>
             </el-table-column>
             <el-table-column
-                    label="所属门店"
-                    prop="storeName"
-            ></el-table-column>
+                    label="性别"
+                    prop="sex"
+            >
+                <template v-slot="scope">
+                    {{formattingSex(scope.row.sex)}}
+                </template>
+            </el-table-column>
             <el-table-column label="状态">
-                <v-slot scope="scope">
+                <template v-slot="scope">
                     {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
-                </v-slot>
+                </template>
             </el-table-column>
             <el-table-column
                     align="center"
                     label="操作"
                     width="160"
             >
-                <template slot-scope="scope">
-                    <el-button
-                            :class="{notAdmin:user !== 'admin'}"
-                            @click="addUserHandle(scope.row.id)"
-                            class="blueBug"
-                            size="small"
-                            type="text"
-                    >
-                        编辑
-                    </el-button>
+                <template v-slot="scope">
                     <el-button
                             @click="statusHandle(scope.row)"
                             class="delBut non"
                             size="small"
                             type="text"
                     >
-                        <v-slot scope="scope">
-                            {{ scope.row.status == '1' ? '禁用' : '启用' }}
-                        </v-slot>
+
+                        {{ scope.row.status == '1' ? '禁用' : '启用' }}
+
                     </el-button>
                 </template>
             </el-table-column>
@@ -117,7 +116,7 @@
 <script src="../../api/user.js"></script>
 <script>
     new Vue({
-        el: '#user-app',
+        el: '#mser-app',
         data() {
             return {
                 input: '',
@@ -152,6 +151,52 @@
                     this.$message.error('请求出错了：' + err)
                 })
             },
+            /**
+             * @description 隐藏手机号
+             */
+            formattingPhone(cellValue) {
+                if (Number(cellValue) && String(cellValue).length === 11) {
+                    var mobile = String(cellValue);
+                    var reg = /^(\d{3})\d{4}(\d{4})$/;
+                    return mobile.replace(reg, "$1****$2");
+                } else {
+                    return cellValue;
+                }
+            },
+            /**
+             * @description 隐藏真实姓名,两个字的姓名隐藏第二个字，三个字以上的姓名隐藏第二个字到倒数第二个字
+             */
+            formattingName(nameValue) {
+                if (nameValue && nameValue.length > 1) {
+                    var name = String(nameValue);
+                    var reg = /^(\S{1})\S*(\S{1})$/;
+                    return name.replace(reg, "$1**$2");
+                } else {
+                    return nameValue;
+                }
+            },
+
+            handleQuery() {
+                this.page = 1;
+                this.init();
+            },
+            handleSizeChange(val) {
+                this.pageSize = val
+                this.init()
+            },
+            /**
+             * @description 输出性别
+             */
+            formattingSex(cellValue) {
+                if (Number(cellValue) === 0) {
+                    return '男'
+                } else if (Number(cellValue) === 1) {
+                    return '女'
+                } else {
+                    return '不愿透露'
+                }
+            },
+            //状态修改
             statusHandle(row) {
                 this.id = row.id
                 this.status = row.status
@@ -161,10 +206,10 @@
                     'type': 'warning'
                 }).then(() => {
                     enableOrDisableUser({
-                        'ids': this.id,
+                        'id': this.id,
                         'status': !this.status ? 1 : 0
                     }).then(res => {
-                        console.log('enableOrDisableEmployee', res)
+                        console.log('enableOrDisableUser', res)
                         if (String(res.code) === '1') {
                             this.$message.success('账号状态更改成功！')
                             this.handleQuery()
@@ -174,18 +219,10 @@
                     })
                 })
             },
-            handleQuery() {
-                this.page = 1;
-                this.init();
-            },
-            handleSizeChange(val) {
-                this.pageSize = val
-                this.init()
-            },
             handleCurrentChange(val) {
                 this.page = val
                 this.init()
-            },
+            }
         }
     })
 </script>

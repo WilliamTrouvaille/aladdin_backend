@@ -71,10 +71,10 @@
                     prop="idNumber"
             >
                 <el-input
+                        :disabled="actionType === 'edit'"
                         clearable
                         maxlength="20"
                         placeholder="请输入身份证号"
-                        :disabled="actionType === 'edit'"
                         v-model="ruleForm.idNumber"></el-input>
             </el-form-item>
 

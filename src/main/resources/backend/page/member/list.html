@@ -63,7 +63,11 @@
             <el-table-column
                     label="手机号"
                     prop="phone"
-            ></el-table-column>
+            >
+                <template v-slot="scope">
+                    {{formattingPhone(scope.row.phone)}}
+                </template>
+            </el-table-column>
             <el-table-column
                     label="所属门店"
                     prop="storeName"
@@ -192,7 +196,7 @@
                     'type': 'warning'
                 }).then(() => {
                     enableOrDisableEmployee({
-                        'ids': this.id,
+                        'id': this.id,
                         'status': !this.status ? 1 : 0
                     }).then(res => {
                         console.log('enableOrDisableEmployee', res)
@@ -204,6 +208,18 @@
                         this.$message.error('请求出错了：' + err)
                     })
                 })
+            },
+            /**
+             * @description 隐藏手机号
+             */
+            formattingPhone(cellValue) {
+                if (Number(cellValue) && String(cellValue).length === 11) {
+                    var mobile = String(cellValue);
+                    var reg = /^(\d{3})\d{4}(\d{4})$/;
+                    return mobile.replace(reg, "$1****$2");
+                } else {
+                    return cellValue;
+                }
             },
             handleCurrentChange(val) {
                 this.page = val

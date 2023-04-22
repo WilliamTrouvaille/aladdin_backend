@@ -1,7 +1,7 @@
 function getMemberList(params) {
     return $axios({
-        // url: '/employee/page',
-        url: '/json/member.json',
+        url: '/employee/page',
+        // url: '/json/member.json',
         method: 'get',
         params
     })
@@ -19,9 +19,9 @@ function getMemberList(params) {
 // 修改---启用禁用接口
 const enableOrDisableEmployee = (params) => {
     return $axios({
-        url: `/employee/status/${params.status}`,
-        method: 'post',
-        params: {ids: params.id}
+        url: `/employee/status`,
+        method: 'put',
+        params: {...params}
     })
 }
 

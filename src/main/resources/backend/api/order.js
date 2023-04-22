@@ -1,7 +1,7 @@
 function getOrderDetailPage(params) {
     return $axios({
-        // url: '/sales/page',
-        url: 'json/sales.json',
+        url: '/sales/page',
+        // url: 'json/sales.json',
         method: 'get',
         params
     })

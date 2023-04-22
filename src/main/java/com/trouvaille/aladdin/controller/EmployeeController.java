@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -171,17 +170,17 @@ public class EmployeeController {
     }
 
     /**
-     * @param ids:
+     * @param id:
      * @param status:
      * @return R<String>
      * @author willi
      * @description 更改员工状态
-     * @date 2023/04/21 18:46
+     * @date 2023/04/22 15:56
      */
-    @PostMapping("/status/{status}")
-    public R<String> status(@RequestParam List<Long> ids, @PathVariable int status) {
-        log.info("更改员工状态:ids==>{},status==>{}", ids, status);
-        boolean flag = employeeService.updateStatus(ids, status);
+    @PutMapping("/status")
+    public R<String> status(Long id, int status) {
+        log.info("更改员工状态:ids==>{},status==>{}", id, status);
+        boolean flag = employeeService.updateStatus(id, status);
         return flag ? R.success("员工状态已经更改成功！") : R.error("员工状态更改失败,请重试!");
 
     }

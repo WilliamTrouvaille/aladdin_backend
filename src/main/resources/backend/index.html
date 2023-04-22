@@ -12,9 +12,7 @@
     <link href="styles/index.css" rel="stylesheet"/>
     <link href="styles/icon/iconfont.css" rel="stylesheet"/>
     <style>
-        .body {
-            min-width: 1366px;
-        }
+
 
         .app-main {
             height: calc(100% - 64px);
@@ -92,7 +90,6 @@
                 <iframe
                         :src="iframeUrl"
                         class="c_iframe"
-                        frameborder="0"
                         height="auto"
                         id="cIframe"
                         name="cIframe"
@@ -118,7 +115,6 @@
         data() {
             return {
                 defAct: '1',
-                menuActived: '1',
                 userInfo: {},
                 menuList: [
                     {
@@ -126,16 +122,16 @@
                         name: '员工管理',
                         url: 'page/member/list.html',
                         icon: 'icon-member',
-                    }, {
+                    },  {
                         id: '2',
-                        name: '用户管理',
-                        url: 'page/user/list.html',
-                        icon: 'icon-user',
-                    }, {
-                        id: '3',
                         name: '商品管理',
                         url: 'page/commodity/list.html',
                         icon: 'icon-combo',
+                    },{
+                        id: '3',
+                        name: '用户管理',
+                        url: 'page/user/list.html',
+                        icon: 'icon-user',
                     }, {
                         id: '4',
                         name: '订单管理',

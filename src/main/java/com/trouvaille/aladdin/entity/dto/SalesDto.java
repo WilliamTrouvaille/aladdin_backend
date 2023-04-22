@@ -9,8 +9,11 @@
  */
 package com.trouvaille.aladdin.entity.dto;
 
+import com.trouvaille.aladdin.entity.Commodity;
 import com.trouvaille.aladdin.entity.Sales;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class SalesDto extends Sales {
@@ -19,10 +22,7 @@ public class SalesDto extends Sales {
     private String userName;
 
 
-    private String commodityName;
-
-
-    private String employeeName;
+    private List<Commodity> commodityList;
 
 
     private String addressDetail;

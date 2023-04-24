@@ -57,7 +57,6 @@ public class UserController {
 
             SmsUtils.singleSend(phone, code);
 
-            session.setAttribute(phone, code);
 
             redisTemplate.opsForValue().set(phone, code, 10, TimeUnit.MINUTES);
 

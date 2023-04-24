@@ -16,7 +16,7 @@ function dishListApi(data) {
 }
 
 //获取商品分类对应的套餐
-function setmealListApi(data) {
+function setMealListApi(data) {
     return $axios({
         'url': '/setmeal/list',
         'method': 'get',

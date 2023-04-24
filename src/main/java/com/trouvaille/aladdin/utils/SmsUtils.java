@@ -35,16 +35,13 @@ public class SmsUtils {
         jsobj1.put("apikey", "3217aad418c3708d1e66060a1ce66f4b");
         // 需要替换自己的测试手机号码
         jsobj1.put("mobile", ctel);
-        // 需要替换自己测试的内容 短信内容需要进行 根据GBK编码方式的urlencode
-        // 一下内容是（您手机的注册验证码为：123456，如有问题请拨打客服电话：40066666111） 其中123456
-        // 可以更改为自己的验证内容
 
         jsobj1.put("content",
                 "%d1%e9%d6%a4%c2%eb%a3%ba"
                         + code + "%a3%ac%b4%f2%cb%c0%b6%bc%b2%bb%d2%aa%b8%e6%cb%df%b1%f0%c8%cb%c5" +
                         "%b6%a3%a1");
         String URL = BaseUrl + "single_send";
-//        post(jsobj1, URL);
+        post(jsobj1, URL);
 
     }
 

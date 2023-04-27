@@ -30,12 +30,6 @@
             >
                 + 新增商品分类
             </el-button>
-            <el-button
-                    @click="addClass('meal')"
-                    type="primary"
-            >
-                + 新增套餐分类
-            </el-button>
         </div>
         <el-table
                 :data="tableData"
@@ -46,14 +40,6 @@
                     label="分类名称"
                     prop="name"
             />
-            </el-table-column>
-            <el-table-column
-                    label="分类类型"
-                    prop="type"
-            >
-                <template slot-scope="scope">
-                    <span>{{ scope.row.type == '1' ? '商品分类' : '套餐分类' }}</span>
-                </template>
             </el-table-column>
             <el-table-column
                     label="操作时间"

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author trouvaille
  * @since 2023-04-27 14:07:07
  */
-@Service("addressService")
+@Service
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> implements AddressService {
 
 }

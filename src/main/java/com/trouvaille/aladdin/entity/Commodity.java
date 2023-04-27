@@ -1,87 +1,108 @@
 package com.trouvaille.aladdin.entity;
 
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * 商品信息表(Commodity)表实体类
+ *
+ * @author trouvaille
+ * @since 2023-04-27 22:45:14
+ */
 @Data
 public class Commodity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 335153729424390700L;
 
     /**
      * 主键
      */
+    @Id
     private Long id;
+
+
+    /**
+     * 种类id
+     */
+    private Integer categoryId;
+
 
     /**
      * 商品名称
      */
     private String name;
 
+
     /**
      * 商品价格 单位 分
      */
     private Integer price;
 
-    /**
-     * 条形码
-     */
-    private String code;
 
     /**
      * 进货价 单位分
      */
     private Integer purchasePrice;
 
-    /**
-     * 会员折扣率 单位%
-     */
-    private Integer discount;
 
     /**
      * 图片
      */
     private String image;
 
+
     /**
      * 描述信息
      */
     private String description;
+
 
     /**
      * 规格
      */
     private String specification;
 
+
     /**
      * 产地
      */
     private String producePlace;
+
 
     /**
      * 库存数量
      */
     private Integer number;
 
+
     /**
      * 供应商id
      */
     private Long supplierId;
+
 
     /**
      * 供应商名称
      */
     private String supplierName;
 
+
     /**
      * 0 停售 1 起售
      */
     private Integer status;
+
+
+    /**
+     * 是否删除
+     */
+    private Integer isDeleted;
+
 
     /**
      * 创建时间
@@ -106,11 +127,4 @@ public class Commodity implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
-
-    /**
-     * 是否删除
-     */
-    private Integer isDeleted;
-
-
 }

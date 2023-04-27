@@ -19,16 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @projectName: F:/Study/homework/java/aladdin/aladdin
- * @package: F:/Study/homework/java/aladdin/aladdin
- * @className: SalesControllerController
- * @author: trouvaille
- * @description: SalesController控制类
- * @date: 2022-08-05 21:14:14
- * @version: 1.0
- */
 
+/**
+ * @ClassName SalesController
+ * @Description 订单控制器
+ * @Author willi
+ * @Date 2021/4/22
+ * @Version 1.0
+ */
 @RestController
 @Slf4j
 @RequestMapping("/sales")

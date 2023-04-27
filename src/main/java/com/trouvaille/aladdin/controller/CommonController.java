@@ -80,9 +80,9 @@ public class CommonController {
      * @param name:
      * @param response:
      * @return void
-     * @author William_Trouvaille
      * @description 文件下载类
-     * @date 2022/08/03 16:40
+     * @author willi
+     * @since 2023/04/27 21:44
      */
     @GetMapping("/download")
     public void download(final String name, final HttpServletResponse response) {

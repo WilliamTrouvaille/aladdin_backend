@@ -63,10 +63,12 @@ public class CommonController {
         if (!dir.exists()) {
             mkdirs = dir.mkdirs();
         }
+        log.info("文件上传==>文件名:{};文件路径==>{}", fileName, dir);
 
         try {
+            String realPath = dir.getCanonicalPath(); // 获取真实路径
+            file.transferTo(new File(realPath + "/" + fileName)); // 转存
             //将临时文件转存到指定位置
-            file.transferTo(new File(basePath + fileName));
         } catch (final IOException e) {
             e.printStackTrace();
         }
@@ -84,10 +86,15 @@ public class CommonController {
      */
     @GetMapping("/download")
     public void download(final String name, final HttpServletResponse response) {
+        //创建一个目录对象
+        final File dir = new File(basePath);
+        log.info("文件下载==>文件名:{};文件路径==>{}", name, dir);
 
         try {
+
+            String realPath = dir.getCanonicalPath(); // 获取真实路径
             //输入流，通过输入流读取文件内容
-            final FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+            final FileInputStream fileInputStream = new FileInputStream(new File(realPath + "/" + name));
 
             //输出流，通过输出流将文件写回浏览器
             final ServletOutputStream outputStream = response.getOutputStream();

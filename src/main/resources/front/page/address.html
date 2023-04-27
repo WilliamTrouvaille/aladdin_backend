@@ -28,6 +28,7 @@
     <div class="divContent">
         <div :key="index" @click.capture="itemClick(item)" class="divItem"
              v-for="(item,index) in addressList">
+
             <div class="divAddress">
                 <span :class="{spanCompany:item.label === '公司',spanHome:item.label === '家',spanSchool:item.label === '学校'}">{{item.label}}</span>
                 {{item.detail}}
@@ -63,50 +64,7 @@
         el: "#address",
         data() {
             return {
-                addressList: [
-                    //     {
-                    //     label:'公司',
-                    //     detail:'金燕龙写字楼 4层电梯口fsdfdsfsdfsdfsssssssssssss（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:0,//是否是默认
-                    // },
-                    // {
-                    //     label:'家',
-                    //     detail:'金燕龙写字楼 4层电梯口（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:0,//是否是默认
-                    // },
-                    // {
-                    //     label:'学校',
-                    //     detail:'金燕龙写字楼 4层电梯口（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:0,//是否是默认
-                    // },
-                    // {
-                    //     label:'公司',
-                    //     detail:'金燕龙写字楼 4层电梯口（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:0,//是否是默认
-                    // },
-                    // {
-                    //     label:'公司',
-                    //     detail:'金燕龙写字楼 4层电梯口（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:0,//是否是默认
-                    // },
-                    // {
-                    //     label:'公司',
-                    //     detail:'金燕龙写字楼 4层电梯口（电梯可…）',
-                    //     consignee:'周先生',//姓名
-                    //     phone:18544445566,//手机号
-                    //     isDefault:1,//是否是默认
-                    // }
-                ],
+                addressList: [],
             }
         },
         computed: {},
@@ -120,8 +78,11 @@
                 history.go(-1)
             },
             toAddressEditPage(item) {
+                // console.log(item.id)
+                // this.$router.push({path: './address-edit.html', params: {id: item.id,}})
+
                 window.requestAnimationFrame(() => {
-                    window.location.href = `address-edit.html`
+                    window.location.href = 'address-edit.html' + '?id=' + item.id
                 })
             },
             toAddressCreatePage() {

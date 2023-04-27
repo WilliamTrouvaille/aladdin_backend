@@ -24,11 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/orders")
+/**
+ * @deprecated
+ * 已弃用!!!!!!!!
+ */
+@Deprecated
 public class OrdersController {
 
 
     @Autowired
     private OrdersService ordersService;
+
+//    @Autowired
+//    private Orders
 
 
     @GetMapping("/page")

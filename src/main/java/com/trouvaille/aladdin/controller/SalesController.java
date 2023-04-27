@@ -7,6 +7,7 @@ import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.Sales;
 import com.trouvaille.aladdin.entity.dto.SalesDto;
 import com.trouvaille.aladdin.service.CommodityService;
+import com.trouvaille.aladdin.service.SalesDetailService;
 import com.trouvaille.aladdin.service.SalesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -36,9 +37,20 @@ public class SalesController {
     @Autowired
     private SalesService salesService;
 
+    @Autowired
+    private SalesDetailService salesDetailService;
+
 
     @Autowired
     private CommodityService commodityService;
+
+
+    /**
+     * @param sales:
+     * @return R<List < SalesDto>>
+     * @description 查询全部销售记录信息
+     * @date 2023/04/22 16:39
+     */
 
     @GetMapping("/list")
     public R<List<SalesDto>> list(Sales sales) {

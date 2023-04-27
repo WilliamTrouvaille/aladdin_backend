@@ -1,10 +1,12 @@
 package com.trouvaille.aladdin.entity;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 /**
  * 地址信息表(Address)表实体类
@@ -17,6 +19,8 @@ import java.time.LocalTime;
 public class Address extends Model<Address> {
     //主键
     private Long id;
+    //用户id
+    private Long userId;
     //收货人
     private String consignee;
     //手机号
@@ -33,15 +37,31 @@ public class Address extends Model<Address> {
     private String detail;
     //默认 0 否 1是
     private Integer isDefault;
-    //创建时间
-    private LocalTime createTime;
-    //更新时间
-    private LocalTime updateTime;
-    //创建人
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
+    /**
+     * 创建人
+     */
+    @TableField(fill = FieldFill.INSERT)
     private Long createUser;
-    //修改人
+
+    /**
+     * 修改人
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
-    //是否已删除
+    /**
+     * 是否删除
+     */
     private Integer isDeleted;
 
 }

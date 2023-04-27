@@ -58,6 +58,7 @@
     text-align: left;
     color: #20232a;
     line-height: 25rem;
+    display: inline;
 }
 
 #main .divTitle .divStatic .divDesc .divSend {

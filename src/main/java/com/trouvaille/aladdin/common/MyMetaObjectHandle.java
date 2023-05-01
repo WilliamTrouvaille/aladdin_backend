@@ -15,6 +15,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -26,9 +27,13 @@ public class MyMetaObjectHandle implements MetaObjectHandler {
         log.info("当前创建员工id为==>{}", id);
 
         metaObject.setValue("createTime", LocalDateTime.now());
-        metaObject.setValue("updateTime", LocalDateTime.now());
-        metaObject.setValue("createUser", id);
-        metaObject.setValue("updateUser", id);
+
+        if (!Objects.isNull(id)) {
+            metaObject.setValue("updateTime", LocalDateTime.now());
+            metaObject.setValue("createUser", id);
+            metaObject.setValue("updateUser", id);
+        }
+
 
     }
 

@@ -46,19 +46,7 @@
                             placeholder="请填写商品名称"
                             v-model="ruleForm.name"></el-input>
                 </el-form-item>
-                <el-form-item
-                        label="商品条形码:"
-                        prop="code"
-                >
-                    <el-input
-                            clearable
-                            maxlength="11"
-                            placeholder="请填写商品条形码69后11位数字"
-                            v-model="ruleForm.code"
-                    >
-                        <template slot="prepend">69-</template>
-                    </el-input>
-                </el-form-item>
+
 
             </div>
             <div>
@@ -233,7 +221,6 @@
                     'description': '',
                     'specification': '',
                     'number': '',
-                    'code': '',
                     'producePlace': '',
                     'purchasePrice': '',
                     'supplierName': '',
@@ -258,7 +245,6 @@
                         message: '请选择供应商!',
                         'trigger': 'blur'
                     }],
-                    'code': [{'required': true, validate: checkCode1, 'trigger': 'blur'}],
                     'specification': [{
                         'required': true,
                         validate: checkSpecification,

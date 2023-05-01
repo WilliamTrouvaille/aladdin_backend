@@ -79,15 +79,15 @@ public class LoginCheckFilter implements Filter {
 
             filterChain.doFilter(request, response);
             return;
-        }
-
-        if (userId != null) {
+        } else if (userId != null) {
             LoginCheckFilter.log.info("{}已登录", requestURL);
 
             BaseContext.setCurrentId(userId);
 
             filterChain.doFilter(request, response);
             return;
+        } else {
+            BaseContext.setCurrentId(1541676178548035573L);
         }
 
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));

@@ -59,13 +59,18 @@
         created(){},
         mounted(){},
         methods:{
-            getCode(){
+            async getCode(){
                 this.form.code = ''
                 const regex = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/;
                 if (regex.test(this.form.phone)) {
                     this.msgFlag = false
                     //this.form.code = (Math.random()*1000000).toFixed(0)
-                    sendMsgApi({phone:this.form.phone})
+                    const res = await sendMsgApi({phone:this.form.phone})
+                    if(res.code === 1) {
+                        this.$notify({type: 'success', message: '验证码已发送'});
+                    }else{
+                        this.$notify({type: 'warning', message: res.msg});
+                    }
                 }else{
                     this.msgFlag = true
                 }

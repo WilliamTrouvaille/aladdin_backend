@@ -40,7 +40,7 @@ public class CategoryController {
         log.info("Category--page:page, pageSize==>{},{}", page, pageSize);
         Page<Category> pageInfo = new Page<>(page, pageSize);
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
-        lqw.orderByDesc(Category::getUpdateTime);
+        lqw.orderByDesc(Category::getSort);
         categoryService.page(pageInfo, lqw);
         return R.success(pageInfo);
     }

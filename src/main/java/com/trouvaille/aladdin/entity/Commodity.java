@@ -31,6 +31,12 @@ public class Commodity implements Serializable {
      */
     private Long categoryId;
 
+    
+    /**
+     * 月销量
+     */
+    private Long saleNum;
+
 
     /**
      * 商品名称

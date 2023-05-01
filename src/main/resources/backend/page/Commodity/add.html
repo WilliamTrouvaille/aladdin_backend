@@ -74,7 +74,7 @@
                         prop="price"
                 >
                     <el-input
-                            placeholder="请设置商品价格"
+                            placeholder="请设置商品价格,单位为分"
                             v-model="ruleForm.price"></el-input>
                 </el-form-item>
                 <el-form-item
@@ -84,7 +84,7 @@
                     <el-input
                             clearable
                             maxlength="50"
-                            placeholder="请设置进货价"
+                            placeholder="请设置进货价,单位为分"
                             v-model="ruleForm.purchasePrice"></el-input>
                 </el-form-item>
             </div>
@@ -231,8 +231,17 @@
                 }, {
                     value: '个',
                     label: '个'
-                },
-                ],
+                }, {
+                    value: '瓶',
+                    label: '瓶'
+
+                }, {
+                    value: '箱',
+                    label: '箱'
+                }, {
+                    value: '件',
+                    label: '件'
+                },],
                 vueRest: '1',
                 index: 0,
                 flag: false,

@@ -64,6 +64,18 @@ public class CommodityController {
         return R.success(pageDtoInfo);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public R<List<Commodity>> getByCategoryId(@PathVariable Long categoryId) {
+        log.info("根据分类id查询商品:{}", categoryId);
+        List<Commodity> commodityList = commodityService.list(new LambdaQueryWrapper<Commodity>().eq(Commodity::getCategoryId, categoryId));
+
+        List<Commodity> commodities = commodityList.stream().map((item) -> {
+            item.setNumber(0);
+            return item;
+        }).collect(Collectors.toList());
+        return R.success(commodities);
+    }
+
     @PostMapping
     public R<String> save(@RequestBody Commodity commodity) {
         log.info("新增商品:{}", commodity);

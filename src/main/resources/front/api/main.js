@@ -7,20 +7,19 @@ function categoryListApi() {
 }
 
 //获取商品分类对应的商品
-function dishListApi(data) {
-    return $axios({
-        'url': '/dish/list',
-        'method': 'get',
-        params: {...data}
-    })
-}
+// function dishListApi(data) {
+//     return $axios({
+//         'url': '/dish/list',
+//         'method': 'get',
+//         params: {...data}
+//     })
+// }
 
 //获取商品分类对应的套餐
-function setMealListApi(data) {
+function setCategoryApi(data) {
     return $axios({
-        'url': '/setmeal/list',
+        'url': `/commodity/category/${data.categoryId}`,
         'method': 'get',
-        params: {...data}
     })
 }
 
@@ -60,11 +59,11 @@ function clearCartApi() {
 }
 
 //获取套餐的全部商品
-function setMealDishDetailsApi(id) {
-    return $axios({
-        'url': `/setmeal/dish/${id}`,
-        'method': 'get',
-    })
-}
+// function setMealDishDetailsApi(id) {
+//     return $axios({
+//         'url': `/setmeal/dish/${id}`,
+//         'method': 'get',
+//     })
+// }
 
 

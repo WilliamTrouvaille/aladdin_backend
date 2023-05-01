@@ -100,6 +100,11 @@ public class ShoppingCartController {
         return R.success(cartServiceOne);
     }
 
+    //    TODO
+    @PostMapping("/sub")
+    public R<ShoppingCart> sub(@RequestBody ShoppingCart shoppingCart) {
+        return R.success(shoppingCart);
+    }
 
     @GetMapping("/{id}")
     public R<ShoppingCart> getById(@PathVariable Long id) {

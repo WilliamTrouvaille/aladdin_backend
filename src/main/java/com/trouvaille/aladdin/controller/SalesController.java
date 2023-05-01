@@ -12,9 +12,7 @@ import com.trouvaille.aladdin.service.SalesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -110,6 +108,21 @@ public class SalesController {
 //        log.info(String.valueOf(list));
 
         return R.success(pages);
+    }
+
+    /**
+     * @param sales:
+     * @return R<String>
+     * @author willi
+     * @description 提交订单
+     * @since 2023/05/01 23:17
+     */
+//    TODO 有BUG
+    @PostMapping("/submit")
+    public R<String> submit(@RequestBody Sales sales) {
+        log.info("订单数据：{}", sales);
+        boolean flag = this.salesService.submit(sales);
+        return R.flag(flag);
     }
 
 

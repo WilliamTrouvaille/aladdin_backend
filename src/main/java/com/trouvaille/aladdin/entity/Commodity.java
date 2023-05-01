@@ -31,7 +31,7 @@ public class Commodity implements Serializable {
      */
     private Long categoryId;
 
-    
+
     /**
      * 月销量
      */

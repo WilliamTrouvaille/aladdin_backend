@@ -46,6 +46,25 @@
                             placeholder="请填写商品名称"
                             v-model="ruleForm.name"></el-input>
                 </el-form-item>
+                <el-form-item
+                        label="商品类型:"
+                        prop="categoryId"
+
+                >
+                    <el-select
+                            :label-in-value="true"
+                            @change="categoryOperator"
+                            placeholder="请选择商品类型"
+                            v-model="ruleForm.categoryId">
+
+                        <el-option
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                                v-for="item in categoryOptions">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
 
 
             </div>
@@ -59,23 +78,14 @@
                             v-model="ruleForm.price"></el-input>
                 </el-form-item>
                 <el-form-item
-                        label="供应商:"
-                        prop="supplierId"
-
+                        label="进货价:"
+                        prop="purchasePrice"
                 >
-                    <el-select
-                            :label-in-value="true"
-                            @change="currOperatorChange"
-                            placeholder="请选择供应商"
-                            v-model="ruleForm.supplierId">
-
-                        <el-option
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                                v-for="item in options">
-                        </el-option>
-                    </el-select>
+                    <el-input
+                            clearable
+                            maxlength="50"
+                            placeholder="请设置进货价"
+                            v-model="ruleForm.purchasePrice"></el-input>
                 </el-form-item>
             </div>
             <div>
@@ -105,16 +115,31 @@
                 </el-form-item>
             </div>
             <div>
+                <!--                <el-form-item-->
+                <!--                        label="规格:"-->
+                <!--                        prop="specification"-->
+                <!--                >-->
+                <!--                    <el-input-->
+
+                <!--                            clearable-->
+                <!--                            maxlength="50"-->
+                <!--                            placeholder="例如:500ml/瓶"-->
+                <!--                            v-model="ruleForm.specification"></el-input>-->
+                <!--                </el-form-item>-->
                 <el-form-item
                         label="规格:"
                         prop="specification"
                 >
-                    <el-input
-
-                            clearable
-                            maxlength="50"
-                            placeholder="例如:500ml/瓶"
-                            v-model="ruleForm.specification"></el-input>
+                    <template>
+                        <el-select v-model="ruleForm.specification" placeholder="请选择商品规格">
+                            <el-option
+                                    v-for="item in specificationOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </template>
                 </el-form-item>
                 <el-form-item
                         label="产地:"
@@ -128,16 +153,7 @@
                 </el-form-item>
             </div>
             <div>
-                <el-form-item
-                        label="进货价:"
-                        prop="purchasePrice"
-                >
-                    <el-input
-                            clearable
-                            maxlength="50"
-                            placeholder="请设置进货价"
-                            v-model="ruleForm.purchasePrice"></el-input>
-                </el-form-item>
+
                 <el-form-item
                         label="入库数量:"
                         prop="number"
@@ -208,7 +224,15 @@
                 value: '',
                 imageUrl: '',
                 actionType: '',
-                options: [],
+                categoryOptions: [],
+                specificationOptions: [{
+                    value: '斤',
+                    label: '斤'
+                }, {
+                    value: '个',
+                    label: '个'
+                },
+                ],
                 vueRest: '1',
                 index: 0,
                 flag: false,
@@ -223,9 +247,9 @@
                     'number': '',
                     'producePlace': '',
                     'purchasePrice': '',
-                    'supplierName': '',
-                    'supplierId': '',
                     'status': true,
+                    'categoryName': '',
+                    'categoryId': '',
                 },
                 mak: false
             }
@@ -238,11 +262,6 @@
                     'purchasePrice': [{
                         'required': true,
                         validator: checkPurchasePrice,
-                        'trigger': 'blur'
-                    }],
-                    'supplierName': [{
-                        'required': true,
-                        message: '请选择供应商!',
                         'trigger': 'blur'
                     }],
                     'specification': [{
@@ -258,7 +277,7 @@
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
             console.log(this.actionType)
-            this.getSupplierList()
+            this.getCategoryList()
 
             if (this.id) {
                 this.flag = true
@@ -284,29 +303,30 @@
                 })
             },
 
-            getSupplierList() {
-                getSupplier().then(res => {
+            getCategoryList() {
+                getCategory().then(res => {
                     console.log(res);
                     if (res.code === 1) {
-                        this.options = res.data.map((item) => {
+                        this.categoryOptions = res.data.map((item) => {
                             return {
                                 'value': item.id,
                                 'label': item.name
                             };
                         });
-                        console.log(this.options)
+                        console.log(this.categoryOptions)
                     } else {
                         this.$message.error(res.msg || '操作失败')
                     }
                 })
             },
-            currOperatorChange: function (val) {
+
+            categoryOperator: function (val) {
                 let obj = {};
-                obj = this.options.find(item => {
+                obj = this.categoryOptions.find(item => {
                     return item.value === val
                 });
-                this.ruleForm.supplierName = obj.label;
-                this.ruleForm.supplierId = obj.value;
+                this.ruleForm.categoryName = obj.label;
+                this.ruleForm.categoryId = obj.value;
                 console.log(this.ruleForm);
             },
 

@@ -29,7 +29,7 @@ public class Commodity implements Serializable {
     /**
      * 种类id
      */
-    private Integer categoryId;
+    private Long categoryId;
 
 
     /**

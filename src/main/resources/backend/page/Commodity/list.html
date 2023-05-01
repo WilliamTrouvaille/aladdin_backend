@@ -81,6 +81,10 @@
                 </template>
             </el-table-column>
 
+            <el-table-column
+                    label="商品分类"
+                    prop="categoryName"
+            ></el-table-column>
             <el-table-column label="当前售价">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">￥{{ scope.row.price / 100 }}</span>
@@ -90,10 +94,7 @@
                     label="产地"
                     prop="producePlace"
             ></el-table-column>
-            <el-table-column
-                    label="当前数量"
-                    prop="number"
-            ></el-table-column>
+
             <el-table-column label="进货价">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">￥{{ scope.row.purchasePrice / 100 }}</span>

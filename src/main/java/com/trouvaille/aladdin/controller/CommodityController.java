@@ -14,8 +14,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.Commodity;
+import com.trouvaille.aladdin.entity.dto.CommodityDto;
+import com.trouvaille.aladdin.service.CategoryService;
 import com.trouvaille.aladdin.service.CommodityService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,26 +33,35 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("/page")
-    public R<Page<Commodity>> page(final int page, final int pageSize, final String name) {
+    public R<Page<CommodityDto>> page(final int page, final int pageSize, final String name) {
         CommodityController.log.info("商品分页查询==>当前页数:{},页面大小:{},查询条件:{}", page, pageSize, name);
 
         final Page<Commodity> pageInfo = new Page<>(page, pageSize);
+        final Page<CommodityDto> pageDtoInfo = new Page<>(page, pageSize);
 
         final LambdaQueryWrapper<Commodity> lqw = new LambdaQueryWrapper<>();
         lqw.like(name != null, Commodity::getName, name);
         lqw.orderByDesc(Commodity::getUpdateTime);
-        commodityService.page(pageInfo, lqw);
 
-        List<Commodity> records = pageInfo.getRecords().stream().map((item) -> {
+        commodityService.page(pageInfo, lqw);
+        BeanUtils.copyProperties(pageInfo, pageDtoInfo, new String[]{"records"});
+
+        List<CommodityDto> records = pageInfo.getRecords().stream().map((item) -> {
+            CommodityDto commodityDto = new CommodityDto();
+            commodityDto.setCategoryName(categoryService.getById(item.getCategoryId()).getName());
             String newName = item.getName() + '(' + item.getSpecification() + ')';
             item.setName(newName);
-            return item;
+            BeanUtils.copyProperties(item, commodityDto);
+            return commodityDto;
         }).collect(Collectors.toList());
 
-        pageInfo.setRecords(records);
+        pageDtoInfo.setRecords(records);
 
-        return R.success(pageInfo);
+        return R.success(pageDtoInfo);
     }
 
     @PostMapping

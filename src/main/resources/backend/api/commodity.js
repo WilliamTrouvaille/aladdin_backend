@@ -17,12 +17,20 @@ function getCommodityPage(params) {
 //     })
 // }
 
-function getSupplier() {
+// function getSupplier() {
+//     return $axios({
+//         url: `/supplier/list`,
+//         method: 'get',
+//     })
+// }
+
+function getCategory() {
     return $axios({
-        url: `/supplier/list`,
+        url: `/category/list`,
         method: 'get',
     })
 }
+
 
 // function getSupplier() {
 //     return $axios({

@@ -3,6 +3,7 @@ package com.trouvaille.aladdin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.trouvaille.aladdin.common.BaseContext;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.Sales;
 import com.trouvaille.aladdin.entity.dto.SalesDto;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -52,7 +54,7 @@ public class SalesController {
     public R<List<SalesDto>> list(Sales sales) {
         LambdaQueryWrapper<Sales> queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper.orderByDesc(Sales::getCreateTime);
+        queryWrapper.orderByDesc(Sales::getCheckoutTime);
 
         List<Sales> salesList = salesService.list(queryWrapper);
 
@@ -87,9 +89,9 @@ public class SalesController {
         Page<Sales> pageInfo = new Page<>(page, pageSize);
         LambdaQueryWrapper<Sales> lqw = new LambdaQueryWrapper<>();
         lqw.like(id != null, Sales::getId, id);
-        lqw.orderByDesc(Sales::getCreateTime);
-        lqw.ge(beginTime != null, Sales::getCreateTime, beginTime);
-        lqw.le(endTime != null, Sales::getCreateTime, endTime);
+        lqw.orderByDesc(Sales::getCheckoutTime);
+        lqw.ge(beginTime != null, Sales::getCheckoutTime, beginTime);
+        lqw.le(endTime != null, Sales::getCheckoutTime, endTime);
         salesService.page(pageInfo, lqw);
         Page<SalesDto> pages = new Page<>(page, pageSize);
         BeanUtils.copyProperties(pageInfo, page, "records");
@@ -117,12 +119,25 @@ public class SalesController {
      * @description 提交订单
      * @since 2023/05/01 23:17
      */
-//    TODO 有BUG
     @PostMapping("/submit")
     public R<String> submit(@RequestBody Sales sales) {
         log.info("订单数据：{}", sales);
         boolean flag = this.salesService.submit(sales);
         return R.flag(flag);
+    }
+
+    //    TODO
+    @GetMapping("/userPage")
+    public R<Page<Sales>> userPage(int page, int pageSize) {
+        log.info("Sales - userPage: page, pageSize==>{},{}", page, pageSize);
+        Long userId = BaseContext.getCurrentId();
+        Page<Sales> pageInfo = new Page<>(page, pageSize);
+        LambdaQueryWrapper<Sales> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(Sales::getCheckoutTime);
+        lqw.eq(Objects.nonNull(userId), Sales::getUserId, userId);
+        salesService.page(pageInfo, lqw);
+
+        return R.success(pageInfo);
     }
 
 

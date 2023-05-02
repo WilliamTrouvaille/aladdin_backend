@@ -64,7 +64,7 @@
                 type: 'warning',
                 duration: 5 * 1000
             })
-            //window.top.location.href = '/front/page/no-wify.html'
+            //window.top.location.href = '/front/page/error.html'
             return Promise.reject(error)
         }
     )

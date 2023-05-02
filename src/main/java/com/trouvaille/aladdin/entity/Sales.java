@@ -1,7 +1,5 @@
 package com.trouvaille.aladdin.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -104,10 +102,4 @@ public class Sales implements Serializable {
      */
     private String consignee;
 
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
 }

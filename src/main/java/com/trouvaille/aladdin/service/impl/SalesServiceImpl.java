@@ -79,7 +79,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
                 sales.setId(salesId);
                 sales.setOrderTime(LocalDateTime.now());
                 sales.setCheckoutTime(LocalDateTime.now());
-                sales.setStatus(2);
+                sales.setStatus(4);
                 sales.setAmount(new BigDecimal(amount.get()));
                 sales.setUserId(userid);
                 sales.setNumber(String.valueOf(salesId));

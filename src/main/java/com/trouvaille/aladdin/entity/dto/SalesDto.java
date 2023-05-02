@@ -27,5 +27,7 @@ public class SalesDto extends Sales {
 
     private String addressDetail;
 
+    private Integer sumNum;
+
 
 }

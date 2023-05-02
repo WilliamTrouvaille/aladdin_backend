@@ -3,7 +3,7 @@
  * @package: com.trouvaille.reggietakeout.controller
  * @className: UserController
  * @author: Eric
- * @description: TODO
+ * @description: 用户控制器
  * @date: 2022/7/22 16:15
  * @version: 1.0
  */

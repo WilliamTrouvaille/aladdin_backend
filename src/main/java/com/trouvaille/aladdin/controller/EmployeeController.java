@@ -13,9 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.Employee;
-import com.trouvaille.aladdin.entity.Store;
 import com.trouvaille.aladdin.service.EmployeeService;
-import com.trouvaille.aladdin.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -31,9 +29,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
-    @Autowired
-    private StoreService storeService;
 
 
     /**
@@ -115,14 +110,10 @@ public class EmployeeController {
     public R<String> save(@RequestBody Employee employee) {
         log.info("新增员工,员工信息:{}", employee);
 
-        Long storeId = employee.getStore();
-        Store store = storeService.getById(storeId);
 
-
-        employee.setStoreName(store.getName());
 //设置初始密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
-        boolean save = employeeService.save(employee);
+        boolean save = this.employeeService.save(employee);
 
         if (save) {
             return R.success("添加员工成功");
@@ -159,14 +150,8 @@ public class EmployeeController {
         String password = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
         employee.setPassword(password);
 
-        Long storeId = employee.getStore();
-        Store store = storeService.getById(storeId);
 
-
-        employee.setStoreName(store.getName());
-        boolean flag = employeeService.updateById(employee);
-
-        return R.flag(flag, "员工信息更改成功!", "员工信息更改失败,请重试!");
+        return R.flag(true, "员工信息更改成功!", "员工信息更改失败,请重试!");
     }
 
     /**

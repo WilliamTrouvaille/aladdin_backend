@@ -78,23 +78,6 @@
                         v-model="ruleForm.idNumber"></el-input>
             </el-form-item>
 
-            <el-form-item
-                    label="所属门店:"
-                    prop="store"
-
-            >
-                <el-select
-                        placeholder="请选择门店名称"
-                        v-model="ruleForm.store">
-
-                    <el-option
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            v-for="item in options">
-                    </el-option>
-                </el-select>
-            </el-form-item>
             <div class="subBox address">
                 <el-form-item>
                     <el-button @click="goBack()">
@@ -146,7 +129,6 @@
                     'phone': '',
                     'sex': '男',
                     'idNumber': '',
-                    'store': '',
                     username: ''
                 }
             }
@@ -164,7 +146,6 @@
                     name: [{required: true, 'validator': checkName, 'trigger': 'blur'}],
                     'phone': [{'required': true, 'validator': checkPhone, 'trigger': 'blur'}],
                     'idNumber': [{'required': true, 'validator': validID, 'trigger': 'blur'}],
-                    'store': [{'required': true, 'message': '请输入所属门店!', 'trigger': 'blur'}]
                 }
             }
         },

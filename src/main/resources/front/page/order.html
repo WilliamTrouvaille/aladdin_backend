@@ -22,34 +22,34 @@
 <div class="app" id="order">
     <div class="divHead">
         <div class="divTitle">
-            <i @click="goBack" class="el-icon-arrow-left"></i>Aladdin便利店
+            <i @click="goBack" class="el-icon-arrow-left"></i>订单查看
         </div>
     </div>
-    <div class="divBody" v-if="orderList.length > 0">
+    <div class="divBody" v-if="salesList.length > 0">
         <van-list
                 :finished="finished"
                 @load="getList"
                 finished-text="没有更多了"
                 v-model="loading"
         >
-            <van-cell :key="index" class="item" v-for="(order,index) in orderList">
+            <van-cell :key="index" class="item" v-for="(sales,index) in salesList">
                 <div class="timeStatus">
-                    <span>{{order.orderTime}}</span>
-                    <span>{{getStatus(order.status)}}</span>
+                    <span>{{sales.orderTime}}</span>
+                    <span>{{getStatus(sales.status)}}</span>
                     <!-- <span>正在派送</span> -->
                 </div>
                 <div class="dishList">
-                    <div :key="index" class="item" v-for="(item,index) in order.orderDetails">
+                    <div :key="index" class="item" v-for="(item,index) in sales.commodityList">
                         <span>{{item.name}}</span>
                         <span>x{{item.number}}</span>
                     </div>
                 </div>
                 <div class="result">
-                    <span>共{{order.sumNum}} 件商品,实付</span><span
-                        class="price">￥{{order.amount}}</span>
+                    <span>共{{sales.sumNum}} 件商品,实付</span><span
+                        class="price">￥{{sales.amount}}</span>
                 </div>
-                <div class="btn" v-if="order.status === 4">
-                    <div @click="addOrderAgain(order)" class="btnAgain">再来一单</div>
+                <div class="btn" v-if="sales.status === 4">
+                    <div @click="addOrderAgain(sales)" class="btnAgain">再来一单</div>
                 </div>
             </van-cell>
         </van-list>
@@ -80,14 +80,14 @@
                     page: 1,
                     pageSize: 5
                 },
-                orderList: [],
+                salesList: [],
                 loading: false,
                 finished: false
             }
         },
         computed: {},
         created() {
-            this.initData()
+            this.getList()
         },
         mounted() {
         },
@@ -103,9 +103,9 @@
                     history.go(-1)
                 }
             },
-            initData() {
-                this.getList()
-            },
+            // initData() {
+            //     this.getList()
+            // },
             async getList() {
                 if (this.finished) {
                     this.loading = false;
@@ -113,17 +113,18 @@
                 }
                 const res = await orderPagingApi(this.paging)
                 if (res.code === 1) {
-                    this.orderList.push(...res.data.records)
-                    let records = res.data.records
-                    if (records && Array.isArray(records)) {
-                        records.forEach(item => {
-                            let number = 0
-                            item.orderDetails.forEach(ele => {
-                                number += ele.number
-                            })
-                            item.sumNum = number
-                        })
-                    }
+                    this.salesList.push(...res.data.records)
+                    console.log(this.salesList)
+                    // let records = res.data.records
+                    // if (records && Array.isArray(records)) {
+                    //     records.forEach(item => {
+                    // let number = 0
+                    // item.orderDetails.forEach(ele => {
+                    //     number += ele.number
+                    // })
+                    // item.sumNum = number
+                    // })
+                    // }
                     this.loading = false;
                     if (this.paging.page >= res.data.pages) {
                         this.finished = true;
@@ -133,6 +134,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
+
             async addOrderAgain(order) {
                 const res = await orderAgainApi({id: order.id})
                 if (res.code === 1) {

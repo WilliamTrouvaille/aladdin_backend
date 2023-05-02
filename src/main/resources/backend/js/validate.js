@@ -97,10 +97,10 @@ function checkPrice(rules, value, callback) {
     } else {
         const reg = /^\d+(\.\d{0,2})?$/
         if (reg.test(value)) {
-            if (value < 10000) {
+            if (value < 100000) {
                 callback()
             } else {
-                callback(new Error('商品价格应小于10000'))
+                callback(new Error('商品价格应小于100000'))
             }
         } else {
             callback(new Error('商品价格格式只能为数字,且最多保留两位小数'))

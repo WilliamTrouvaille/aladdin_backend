@@ -67,7 +67,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
                 long salesId = IdWorker.getId();
                 List<SalesDetail> salesDetails = (List) shoppingCarts.stream().map((item) -> {
                     SalesDetail salesDetail = new SalesDetail();
-                    salesDetail.setSalesId(item.getId());
+                    salesDetail.setSalesId(salesId);
                     salesDetail.setNumber(item.getNumber());
                     salesDetail.setCommodityId(item.getCommodityId());
                     salesDetail.setName(item.getName());

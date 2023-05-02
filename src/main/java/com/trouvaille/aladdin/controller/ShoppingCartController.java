@@ -48,7 +48,7 @@ public class ShoppingCartController {
         lqw.eq(ShoppingCart::getUserId, userid);
         lqw.orderByAsc(ShoppingCart::getCreateTime);
 
-        List<ShoppingCart> shoppingCarts = shoppingCartService.list(lqw);
+        List<ShoppingCart> shoppingCarts = this.shoppingCartService.list(lqw);
 
 
         return R.success(shoppingCarts);
@@ -56,7 +56,7 @@ public class ShoppingCartController {
 
     /**
      * @param :
-     * @return R<String>
+     * @return R < String>
      * @author willi
      * @description 清空购物车
      * @date 2023/04/24 20:04
@@ -68,7 +68,7 @@ public class ShoppingCartController {
         Long userid = BaseContext.getCurrentId();
 
         lqw.eq(ShoppingCart::getUserId, userid);
-        boolean flag = shoppingCartService.remove(lqw);
+        boolean flag = this.shoppingCartService.remove(lqw);
 
         return R.flag(flag);
     }
@@ -84,16 +84,16 @@ public class ShoppingCartController {
         lqw.eq(ShoppingCart::getUserId, shoppingCart.getUserId());
         lqw.eq(ShoppingCart::getCommodityId, shoppingCart.getCommodityId());
 
-        ShoppingCart cartServiceOne = shoppingCartService.getOne(lqw);
+        ShoppingCart cartServiceOne = this.shoppingCartService.getOne(lqw);
 
         if (cartServiceOne != null) {
             Integer number = cartServiceOne.getNumber();
             cartServiceOne.setNumber(number + 1);
-            shoppingCartService.updateById(cartServiceOne);
+            this.shoppingCartService.updateById(cartServiceOne);
         } else {
             shoppingCart.setNumber(1);
             shoppingCart.setCreateTime(LocalDateTime.now());
-            shoppingCartService.save(shoppingCart);
+            this.shoppingCartService.save(shoppingCart);
 
             cartServiceOne = shoppingCart;
         }
@@ -103,13 +103,31 @@ public class ShoppingCartController {
     //    TODO
     @PostMapping("/sub")
     public R<ShoppingCart> sub(@RequestBody ShoppingCart shoppingCart) {
-        return R.success(shoppingCart);
+        log.info("减少购物车商品信息==.{}", shoppingCart.toString());
+
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+
+        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(ShoppingCart::getUserId, userId);
+        lqw.eq(ShoppingCart::getCommodityId, shoppingCart.getCommodityId());
+
+        ShoppingCart cartServiceOne = this.shoppingCartService.getOne(lqw);
+
+        Integer number = cartServiceOne.getNumber();
+
+        cartServiceOne.setNumber(number - 1);
+        this.shoppingCartService.removeById(cartServiceOne);
+
+
+        return R.success(cartServiceOne);
+
     }
 
     @GetMapping("/{id}")
     public R<ShoppingCart> getById(@PathVariable Long id) {
         log.info("ShoppingCart - getById:id==>{}", id);
-        ShoppingCart shoppingCart = shoppingCartService.getById(id);
+        ShoppingCart shoppingCart = this.shoppingCartService.getById(id);
         return R.success(shoppingCart);
     }
 

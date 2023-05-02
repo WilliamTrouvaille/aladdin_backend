@@ -23,6 +23,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -57,7 +58,7 @@ public class UserController {
 //            SmsUtils.singleSend(phone, code);
 
 
-            redisTemplate.opsForValue().set(phone, code, 10, TimeUnit.MINUTES);
+            this.redisTemplate.opsForValue().set(phone, code, 10, TimeUnit.MINUTES);
 
             return R.success("验证码短信发送成功!");
         }
@@ -87,7 +88,7 @@ public class UserController {
         //从Session中获取保存的验证码
 //        Object codeInSession = session.getAttribute(phone);
 
-        Object codeInSession = redisTemplate.opsForValue().get(phone);
+        Object codeInSession = this.redisTemplate.opsForValue().get(phone);
 
         //进行验证码的比对（页面提交的验证码和Session中保存的验证码比对）
         if (codeInSession != null && codeInSession.equals(code)) {
@@ -96,18 +97,19 @@ public class UserController {
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(User::getPhone, phone);
 
-            User user = userService.getOne(queryWrapper);
+            User user = this.userService.getOne(queryWrapper);
             if (user == null) {
                 //判断当前手机号对应的用户是否为新用户，如果是新用户就自动完成注册
                 user = new User();
                 user.setPhone(phone);
                 user.setStatus(1);
+                user.setCreateTime(LocalDateTime.now());
                 user.setName("用户" + phone.substring(7));
-                userService.save(user);
+                this.userService.save(user);
             }
             session.setAttribute("user", user.getId());
 
-            redisTemplate.delete(phone);
+            this.redisTemplate.delete(phone);
             return R.success(user);
         }
         return R.error("登录失败");
@@ -145,9 +147,9 @@ public class UserController {
     @PutMapping("/status")
     public R<String> status(Long id, int status) {
         log.info("更改用户状态:ids==>{},status==>{}", id, status);
-        User user = userService.getById(id);
+        User user = this.userService.getById(id);
         user.setStatus(status);
-        boolean flag = userService.updateById(user);
+        boolean flag = this.userService.updateById(user);
         return flag ? R.success("用户状态已经更改成功！") : R.error("用户状态更改失败,请重试!");
     }
 

@@ -299,6 +299,7 @@
                 this.cartData.forEach(item => {
                     price += (item.number * item.amount)
                 })
+                price = price.toFixed(2)
                 return price
             }
         },
@@ -434,12 +435,10 @@
             //菜单中减少选中的商品
             async subtractCart(item) {
                 let params = {
-                    dishId: item.id,
-                }
-                if (!Array.isArray(item.flavors)) {
-                    params = {
-                        setmealId: item.id,
-                    }
+                    amount: item.price / 100,//金额
+                    commodityId: item.id,//商品id
+                    name: item.name,
+                    image: item.image
                 }
                 const res = await updateCartApi(params)
                 if (res.code === 1) {
@@ -466,10 +465,8 @@
             //购物车中增加商品数量
             async cartNumAdd(item) {
                 let params = {
-                    amount: item.amount,//金额
-                    dishFlavor: item.dishFlavor,//口味  如果没有传undefined
-                    dishId: item.dishId,//商品id
-                    setmealId: item.setmealId,//套餐id
+                    amount: item.price / 100,//金额
+                    commodityId: item.id,//商品id
                     name: item.name,
                     image: item.image
                 }
@@ -489,8 +486,10 @@
             //购物车中减少商品数量
             async cartNumberSubtract(item) {
                 let params = {
-                    dishId: item.dishId,
-                    setmealId: item.setmealId,
+                    amount: item.price / 100,//金额
+                    commodityId: item.id,//商品id
+                    name: item.name,
+                    image: item.image
                 }
                 const res = await updateCartApi(params)
                 if (res.code === 1) {

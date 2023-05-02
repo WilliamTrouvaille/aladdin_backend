@@ -59,14 +59,14 @@
     <div class="container">
         <!-- 搜索项 -->
         <div class="tableBar">
-            <el-input placeholder="请输入订单号"
-                      style="width: 250px"
-                      v-model="input">
-                <i
-                        class="el-input__icon el-icon-search"
-                        slot="prefix"
-                        style="cursor: pointer"></i>
-            </el-input>
+            <!--            <el-input placeholder="请输入订单号"-->
+            <!--                      style="width: 250px"-->
+            <!--                      v-model="input">-->
+            <!--                <i-->
+            <!--                        class="el-input__icon el-icon-search"-->
+            <!--                        slot="prefix"-->
+            <!--                        style="cursor: pointer"></i>-->
+            <!--            </el-input>-->
             <el-date-picker :default-time="['00:00:00', '23:59:59']"
                             clearable
                             end-placeholder="结束日期"
@@ -87,14 +87,14 @@
                   class="tableBox"
                   stripe>
             <el-table-column label="顾客"
-                             prop="user">
+                             prop="userName">
                 <template v-slot="scope">
-                    {{formattingName(scope.row.user)}}
+                    {{formattingName(scope.row.userName)}}
                 </template>
             </el-table-column>
             <el-table-column label="下单时间"
                              min-width="100"
-                             prop="createTime"></el-table-column>
+                             prop="checkoutTime"></el-table-column>
             <el-table-column label="地址"
                              min-width="150"
                              prop="address"></el-table-column>
@@ -104,10 +104,10 @@
                     <span>{{scope.row.method === 0 ? '到店支付' : '外送'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="实收金额"
-                             prop="price">
+            <el-table-column label="状态"
+                             prop="status">
                 <template v-slot="scope">
-                    <span>￥{{scope.row.price }}</span>
+                    <span>{{getStatus(scope.row.status) }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="操作"
@@ -147,17 +147,17 @@
                 <span class="des">{{ diaForm.id }}</span>
             </div>
             <div class="item-box">
-                <span class="label">支付金额：</span>
-                <span class="des">￥{{ diaForm.price }}</span>
+                <span class="label">状态：</span>
+                <span class="des">getStatus({{diaForm.price}})</span>
             </div>
             <div class="item-box">
                 <span class="label">下单时间：</span>
-                <span class="des">{{ diaForm.createTime }}</span>
+                <span class="des">{{ diaForm.checkoutTime }}</span>
             </div>
             <div class="item-box">
                 <span class="label">购买商品：</span>
                 <span class="des">
-                    <el-table :data="diaForm.goods"
+                    <el-table :data="diaForm.commodityList"
                               border
                               stripe
                               style="width: 100%"
@@ -166,9 +166,9 @@
                         <el-table-column label="商品名称"
                                          prop="name"></el-table-column>
                         <el-table-column label="数量"
-                                         prop="count"></el-table-column>
-                        <el-table-column label="单价"
-                                         prop="price"></el-table-column>
+                                         prop="number"></el-table-column>
+                        <el-table-column label="简介"
+                                         prop="description"></el-table-column>
                     </el-table>
                 </span>
 
@@ -272,6 +272,28 @@
             handleCurrentChange(val) {
                 this.page = val
                 this.init()
+            },
+            getStatus(status) {
+                let str = ''
+                switch (status) {
+                    case 1:
+                        str = '待付款'
+                        break;
+                    case 2:
+                        str = '待发货'
+                        break;
+                    case 3:
+                        str = '待收货'
+                        break;
+                    case 4:
+                        str = '已完成'
+                        break;
+                    case 5:
+                        str = '已取消'
+                        break;
+
+                }
+                return str
             }
         }
     })

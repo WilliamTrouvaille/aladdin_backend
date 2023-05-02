@@ -268,11 +268,6 @@
                 return {
                     'name': [{'required': true, 'validator': checkCommodity, 'trigger': 'blur'}],
                     'price': [{'required': true, validator: checkPrice, 'trigger': 'blur'}],
-                    'purchasePrice': [{
-                        'required': true,
-                        validator: checkPurchasePrice,
-                        'trigger': 'blur'
-                    }],
                     'specification': [{
                         'required': true,
                         validate: checkSpecification,
@@ -354,8 +349,8 @@
                     if (valid) {
                         let params = {...this.ruleForm}
                         params.status = this.ruleForm ? 1 : 0
-                        params.price *= 100
-                        params.purchasePrice *= 100
+                        // params.price *= 100
+                        // params.purchasePrice *= 100
                         if (!this.imageUrl) {
                             this.$message.error('请上传商品图片')
                             return

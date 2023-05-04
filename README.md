@@ -17,14 +17,10 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver#这里写你MySQL的驱动,现在一般用这个
       url: jdbc:mysql://${YOUR_ADDRESS}:3306/aladdin?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true#这里写你MySQL的驱动,请先把${YOUR_ADDRESS}更改为你自己的MySQL数据库地址
-      username: root#这里写你的MySQL的用户名
-      password: uZ#%4qZcNxJqHc2!#这里写你的MySQL的密码
+      username: YOUR_USERNAME#这里写你的MySQL的用户名
+      password: YOUR_PASSWORD#这里写你的MySQL的密码
 
 ```
-
-
-
-
 
 # 项目入口
 

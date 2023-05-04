@@ -148,31 +148,36 @@
             </div>
             <div class="item-box">
                 <span class="label">状态：</span>
-                <span class="des">getStatus({{diaForm.price}})</span>
+                <span class="des">{{getStatus(diaForm.status)}}</span>
             </div>
             <div class="item-box">
                 <span class="label">下单时间：</span>
                 <span class="des">{{ diaForm.checkoutTime }}</span>
             </div>
-            <div class="item-box">
-                <span class="label">购买商品：</span>
-                <span class="des">
-                    <el-table :data="diaForm.commodityList"
-                              border
-                              stripe
-                              style="width: 100%"
-                              max-height="250"
-                    >
-                        <el-table-column label="商品名称"
-                                         prop="name"></el-table-column>
-                        <el-table-column label="数量"
-                                         prop="number"></el-table-column>
-                        <el-table-column label="简介"
-                                         prop="description"></el-table-column>
-                    </el-table>
-                </span>
-
-            </div>
+            <!--            <div class="item-box last-child" max-height="300">-->
+            <!--                <span class="label">购买商品：</span>-->
+            <!--                <span class="des">-->
+            <!--                    <el-table :data="diaForm.commodityList"-->
+            <!--                              border-->
+            <!--                              ref="table"-->
+            <!--                              highlight-current-row-->
+            <!--                              stripe-->
+            <!--                              :cell-style="tableCellStyle"-->
+            <!--                              style="width: 100%"-->
+            <!--                              max-height="250"-->
+            <!--                    >-->
+            <!--                        <el-table-column label="商品名称"-->
+            <!--                                         prop="name"></el-table-column>-->
+            <!--                        <el-table-column label="数量"-->
+            <!--                                         prop="number"></el-table-column>-->
+            <!--                        <el-table-column label="应付款"-->
+            <!--                                         prop="price"></el-table-column>-->
+            <!--                        <el-table-column-->
+            <!--                                label="实际付款"-->
+            <!--                                prop="price"></el-table-column>-->
+            <!--                    </el-table>-->
+            <!--                </span>-->
+            <!--            </div>-->
         </div>
 
     </el-dialog>
@@ -247,13 +252,14 @@
              * @description 隐藏真实姓名,两个字的姓名隐藏第二个字，三个字以上的姓名隐藏第二个字到倒数第二个字
              */
             formattingName(nameValue) {
-                if (nameValue && nameValue.length > 1) {
-                    var name = String(nameValue);
-                    var reg = /^(\S{1})\S*(\S{1})$/;
-                    return name.replace(reg, "$1**$2");
-                } else {
-                    return nameValue;
-                }
+                // if (nameValue && nameValue.length > 1) {
+                //     var name = String(nameValue);
+                //     var reg = /^(\S{1})\S*(\S{1})$/;
+                //     return name.replace(reg, "$1**$2");
+                // } else {
+                //     return nameValue;
+                // }
+                return nameValue
             },
 
             // 查看详情
@@ -273,6 +279,12 @@
                 this.page = val
                 this.init()
             },
+            tableCellStyle({row, column, rowIndex, columnIndex}) {
+                if (column !== 0) {
+                    return "padding:6px 0;"
+                }
+            },
+
             getStatus(status) {
                 let str = ''
                 switch (status) {

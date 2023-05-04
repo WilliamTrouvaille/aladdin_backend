@@ -170,4 +170,10 @@ public class EmployeeController {
 
     }
 
+    @PostMapping("/updatePwd")
+    public R<String> updatePwd(String oldPwd, String newPwd) {
+        log.info("员工更改密码:oldPwd==>{},newPwd==>{}", oldPwd, newPwd);
+        return flag ? R.success("密码更改成功！") : R.error("密码更改失败,请重试!");
+    }
+
 }

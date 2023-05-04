@@ -167,13 +167,14 @@
              * @description 隐藏真实姓名,两个字的姓名隐藏第二个字，三个字以上的姓名隐藏第二个字到倒数第二个字
              */
             formattingName(nameValue) {
-                if (nameValue && nameValue.length > 1) {
-                    var name = String(nameValue);
-                    var reg = /^(\S{1})\S*(\S{1})$/;
-                    return name.replace(reg, "$1**$2");
-                } else {
-                    return nameValue;
-                }
+                // if (nameValue && nameValue.length > 1) {
+                //     var name = String(nameValue);
+                //     var reg = /^(\S{1})\S*(\S{1})$/;
+                //     return name.replace(reg, "$1**$2");
+                // } else {
+                //     return nameValue;
+                // }
+                return nameValue
             },
 
             handleQuery() {

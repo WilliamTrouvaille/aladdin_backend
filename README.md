@@ -10,12 +10,12 @@ spring: #没有写注释的地方请勿更改
 
   redis:
     host: #这里写你的Redis的地址
-    port: 6379 #这里写你的Redis的端口,一般用6379
-    database: 0 #这里写你的Redis的数据库,一般用0
+    port: 6379
+    database: 0
     password: #这里写你的Redis的密码
   datasource:
     druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver#这里写你MySQL的驱动,现在一般用这个
+      driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://${YOUR_ADDRESS}:3306/aladdin?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true #这里写你MySQL的驱动,请先把${YOUR_ADDRESS}更改为你自己的MySQL数据库地址
       username: YOUR_USERNAME #这里写你的MySQL的用户名
       password: YOUR_PASSWORD #这里写你的MySQL的密码

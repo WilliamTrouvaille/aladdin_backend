@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @author trouvaille
  * @since 2023-04-27 14:07:01
  */
-@SuppressWarnings("serial")
+@SuppressWarnings ("serial")
 @Data
 public class Address extends Model<Address> {
     //主键
@@ -40,28 +40,28 @@ public class Address extends Model<Address> {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField (fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
+    
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField (fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
     /**
      * 创建人
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField (fill = FieldFill.INSERT)
     private Long createUser;
-
+    
     /**
      * 修改人
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField (fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
     /**
      * 是否删除
      */
     private Integer isDeleted;
-
+    
 }

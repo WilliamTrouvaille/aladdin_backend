@@ -11,28 +11,28 @@
     <!--不同屏幕尺寸根字体设置-->
     <script src="js/base.js"></script>
     <!--element-ui的样式-->
-    <link href="../backend/plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../backend/plugins/element-ui/index.css" rel="stylesheet" />
     <!--引入vant样式-->
-    <link href="styles/vant.min.css" rel="stylesheet"/>
+    <link href="styles/vant.min.css" rel="stylesheet" />
     <!-- 引入样式  -->
-    <link href="styles/index.css" rel="stylesheet"/>
+    <link href="styles/index.css" rel="stylesheet" />
     <!--本页面内容的样式-->
-    <link href="styles/main.css" rel="stylesheet"/>
+    <link href="styles/main.css" rel="stylesheet" />
 </head>
 <body>
 <div class="app" id="main">
     <div class="divHead">
-        <img @click="toUserPage" src="images/user.png"/>
+        <img @click="toUserPage" src="images/user.png" />
     </div>
     <div class="divTitle">
         <div class="divStatic">
-            <img class="logo" src="images/logo.png" alt=""/>
+            <img alt="" class="logo" src="images/logo.png" />
             <div class="divDesc">
                 <div class="divName">Aladdin便利店</div>
                 <div class="divSend">
-                    <span><img src="images/time.png"/> 距离2.7km</span>
-                    <span><img src="images/money.png"/> 配送费2元</span>
-                    <span><img src="images/location.png"/> 预计时长22min</span>
+                    <span><img src="images/time.png" /> 距离2.7km</span>
+                    <span><img src="images/money.png" /> 配送费2元</span>
+                    <span><img src="images/location.png" /> 预计时长22min</span>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                      v-for="(item,index) in dishList">
                     <el-image :src="imgPathConvert(item.image)">
                         <div class="image-slot" slot="error">
-                            <img src="images/noImg.png"/>
+                            <img src="images/noImg.png" />
                         </div>
                     </el-image>
                     <div>
@@ -66,7 +66,7 @@
                         <div class="divNum">
                             <div class="divSubtract" v-if="item.number > 0">
                                 <img @click.prevent.stop="subtractCart(item)"
-                                     src="images/subtract.png"/>
+                                     src="images/subtract.png" />
                             </div>
                             <div class="divDishNum">{{item.number}}</div>
                             <div @click.prevent.stop="chooseFlavorClick(item)"
@@ -75,14 +75,14 @@
                                 选择规格
                             </div>
                             <div class="divAdd" v-else>
-                                <img @click.prevent.stop="addCart(item)" src="images/add.png"/>
+                                <img @click.prevent.stop="addCart(item)" src="images/add.png" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    
     </div>
     <div class="divLayer">
         <div class="divLayerLeft"></div>
@@ -121,7 +121,7 @@
             <div @click="dialogFlavorAddCart">加入购物车</div>
         </div>
         <div @click="dialogFlavor.show = false" class="divFlavorClose">
-            <img src="images/close.png"/>
+            <img src="images/close.png" />
         </div>
     </van-dialog>
     <van-popup :style="{ height: '50%' }" class="dialogCart" position="bottom"
@@ -136,7 +136,7 @@
             <div :key="item.id" class="divCartItem" v-for="item in cartData">
                 <el-image :src="imgPathConvert(item.image)">
                     <div class="image-slot" slot="error">
-                        <img src="images/noImg.png"/>
+                        <img src="images/noImg.png" />
                     </div>
                 </el-image>
                 <div class="divDesc">
@@ -147,11 +147,11 @@
                 </div>
                 <div class="divNum">
                     <div class="divSubtract">
-                        <img @click="cartNumberSubtract(item)" src="images/subtract.png"/>
+                        <img @click="cartNumberSubtract(item)" src="images/subtract.png" />
                     </div>
                     <div class="divDishNum">{{item.number}}</div>
                     <div class="divAdd">
-                        <img @click="cartNumAdd(item)" src="images/add.png"/>
+                        <img @click="cartNumAdd(item)" src="images/add.png" />
                     </div>
                 </div>
                 <div class="divSplit"></div>
@@ -167,7 +167,7 @@
         <div class="divContainer">
             <el-image :src="imgPathConvert(detailsDialog.item.image)">
                 <div class="image-slot" slot="error">
-                    <img src="images/noImg.png"/>
+                    <img src="images/noImg.png" />
                 </div>
             </el-image>
             <div class="title">{{detailsDialog.item.name}}</div>
@@ -179,7 +179,7 @@
             </div>
             <div class="right">
                 <div class="divSubtract" v-if="detailsDialog.item.number > 0">
-                    <img @click="subtractCart(detailsDialog.item)" src="images/subtract.png"/>
+                    <img @click="subtractCart(detailsDialog.item)" src="images/subtract.png" />
                 </div>
                 <div class="divDishNum">{{detailsDialog.item.number}}</div>
                 <div @click="chooseFlavorClick(detailsDialog.item)"
@@ -188,12 +188,12 @@
                     选择规格
                 </div>
                 <div class="divAdd" v-else>
-                    <img @click="addCart(detailsDialog.item)" src="images/add.png"/>
+                    <img @click="addCart(detailsDialog.item)" src="images/add.png" />
                 </div>
             </div>
         </div>
         <div @click="detailsDialog.show = false" class="detailsDialogClose">
-            <img src="images/close.png"/>
+            <img src="images/close.png" />
         </div>
     </van-dialog>
     <van-dialog :show-confirm-button="false"
@@ -207,7 +207,7 @@
             <div :key="index" class="item" v-for="(item,index) in setMealDialog.item.list">
                 <el-image :src="imgPathConvert(item.image)">
                     <div class="image-slot" slot="error">
-                        <img src="images/noImg.png"/>
+                        <img src="images/noImg.png" />
                     </div>
                 </el-image>
                 <div class="divSubTitle">{{item.name + '(' + item.copies + '份)' }}
@@ -224,11 +224,11 @@
             </div>
             <div class="right">
                 <div class="divSubtract" v-if="setMealDialog.item.number > 0">
-                    <img @click="subtractCart(setMealDialog.item)" src="images/subtract.png"/>
+                    <img @click="subtractCart(setMealDialog.item)" src="images/subtract.png" />
                 </div>
                 <div class="divDishNum">{{setMealDialog.item.number}}</div>
                 <div class="divAdd" v-if="setMealDialog.item.number">
-                    <img @click="addCart(setMealDialog.item)" src="images/add.png"/>
+                    <img @click="addCart(setMealDialog.item)" src="images/add.png" />
                 </div>
                 <div @click="addCart(setMealDialog.item)" class="addCart"
                      v-if="!setMealDialog.item.number">加入购物车
@@ -236,7 +236,7 @@
             </div>
         </div>
         <div @click="setMealDialog.show = false" class="detailsDialogClose">
-            <img src="images/close.png"/>
+            <img src="images/close.png" />
         </div>
     </van-dialog>
 </div>
@@ -431,7 +431,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-
+            
             //菜单中减少选中的商品
             async subtractCart(item) {
                 let params = {
@@ -455,7 +455,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-
+            
             //展开购物车
             openCart() {
                 if (this.cartData.length > 0) {
@@ -503,7 +503,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-
+            
             //修改商品列表中的数据number
             changeDishList(item) {
                 for (let ele of this.dishList) {
@@ -512,7 +512,7 @@
                     }
                 }
             },
-
+            
             //清空购物车
             async clearCart() {
                 const res = await clearCartApi()
@@ -574,7 +574,7 @@
                     })
                     this.dialogFlavor.show = false
                 }
-
+                
             },
             //网络图片路径转换
             imgPathConvert(path) {
@@ -611,9 +611,9 @@
                 //         this.$notify({type: 'warning', message: res.msg});
                 //     }
                 // }
-
+                
             }
-
+            
         }
     })
 </script>

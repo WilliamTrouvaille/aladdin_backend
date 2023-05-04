@@ -17,17 +17,17 @@ import java.util.List;
 
 @Data
 public class SalesDto extends Sales {
-
-
+    
+    
     private String userName;
-
-
+    
+    
     private List<Commodity> commodityList;
-
-
+    
+    
     private String addressDetail;
-
+    
     private Integer sumNum;
-
-
+    
+    
 }

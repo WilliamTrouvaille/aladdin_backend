@@ -12,13 +12,13 @@
           rel="shortcut icon">
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
           rel="stylesheet">
     <link href="../../styles/login.css"
           rel="stylesheet">
     <link href="../../styles/icon/iconfont.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <style>
         .body {
             min-width: 1366px;
@@ -39,7 +39,7 @@
                 <div class="login-form-title">
                     <img alt=""
                          src="../../images/login/logo.png"
-                         style="width:180px;height:90px;"/>
+                         style="width:180px;height:90px;" />
                 </div>
                 <el-form-item prop="username">
                     <el-input auto-complete="off"
@@ -47,7 +47,7 @@
                               placeholder="账号"
                               prefix-icon="iconfont icon-user"
                               type="text"
-                              v-model="loginForm.username"/>
+                              v-model="loginForm.username" />
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input @keyup.enter.native="handleLogin"
@@ -55,7 +55,7 @@
                               placeholder="密码"
                               prefix-icon="iconfont icon-lock"
                               type="password"
-                              v-model="loginForm.password"/>
+                              v-model="loginForm.password" />
                 </el-form-item>
                 <el-form-item style="width:100%;">
                     <el-button :loading="loading"

@@ -8,13 +8,13 @@
     <title>Aladdin便利店</title>
     <link href="../images/favico.ico" rel="icon">
     <!--element-ui的样式-->
-    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet" />
     <!-- 引入样式  -->
-    <link href="../styles/index.css" rel="stylesheet"/>
+    <link href="../styles/index.css" rel="stylesheet" />
     <!--引入vant样式-->
-    <link href="../styles/vant.min.css" rel="stylesheet"/>
+    <link href="../styles/vant.min.css" rel="stylesheet" />
     <!--本页面内容的样式-->
-    <link href="../styles/user.css" rel="stylesheet"/>
+    <link href="../styles/user.css" rel="stylesheet" />
 </head>
 <body>
 <div class="app" id="user">
@@ -23,9 +23,9 @@
             <i @click="goBack" class="el-icon-arrow-left"></i>个人中心
         </div>
         <div class="divUser">
-            <img src="../images/headPage.png"/>
+            <img src="../images/headPage.png" />
             <div class="desc">
-                <div class="divName">蔡徐坤 <img src="../images/women.png"/></div>
+                <div class="divName">蔡徐坤 <img src="../images/women.png" /></div>
                 <div class="divPhone">{{userPhone}}</div>
             </div>
         </div>
@@ -33,13 +33,13 @@
     <div class="divContent">
         <div class="divLinks">
             <div @click="toAddressPage" class="item">
-                <img src="../images/locations.png"/>
+                <img src="../images/locations.png" />
                 <span>地址管理</span>
                 <i class="el-icon-arrow-right"></i>
             </div>
             <div class="divSplit"></div>
             <div @click="toOrderPage" class="item">
-                <img src="../images/orders.png"/>
+                <img src="../images/orders.png" />
                 <span>历史订单</span>
                 <i class="el-icon-arrow-right"></i>
             </div>
@@ -166,7 +166,7 @@
                     case 5:
                         str = '已取消'
                         break;
-
+                    
                 }
                 return str
             },

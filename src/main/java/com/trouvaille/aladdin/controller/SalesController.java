@@ -34,36 +34,36 @@ import java.util.stream.Collectors;
 @Data
 @RestController
 @Slf4j
-@RequestMapping("/sales")
+@RequestMapping ("/sales")
 public class SalesController {
-
+    
     @Autowired
     private SalesService salesService;
-
+    
     @Autowired
     private SalesDetailService salesDetailService;
-
-
+    
+    
     @Autowired
     private CommodityService commodityService;
 
 
-    /**
-     * @param sales:
-     * @return R<List < SalesDto>>
-     * @description 查询全部销售记录信息
-     * @date 2023/04/22 16:39
-     */
+/**
+ * @param sales:
+ * @return R < List  <  SalesDto>>
+ * @description 查询全部销售记录信息
+ * @date 2023/04/22 16:39
+ */
 
 //    @GetMapping("/list")
-//    public R<List<SalesDto>> list(Sales sales) {
-//        LambdaQueryWrapper<Sales> queryWrapper = new LambdaQueryWrapper<>();
+//    public R < List < SalesDto>> list(Sales sales) {
+//        LambdaQueryWrapper < Sales> queryWrapper = new LambdaQueryWrapper < >();
 //
 //        queryWrapper.orderByDesc(Sales::getCheckoutTime);
 //
-//        List<Sales> salesList = salesService.list(queryWrapper);
+//        List < Sales> salesList = salesService.list(queryWrapper);
 //
-//        List<SalesDto> list = salesList.stream().map((item) -> {
+//        List < SalesDto> list = salesList.stream().map((item) -> {
 //
 //            SalesDto salesDto = new SalesDto();
 //            BeanUtils.copyProperties(item, salesDto);
@@ -73,76 +73,76 @@ public class SalesController {
 //
 //        return R.success(list);
 //    }
-
-
+    
+    
     /**
      * @param page:
      * @param pageSize:
      * @param id:
      * @param beginTime:
      * @param endTime:
-     * @return R<Page < SalesDto>>
+     * @return R < Page  <  SalesDto>>
      * @description 分页查询
      * @author willi
      * @date 2023/04/22 16:39
      */
-    @GetMapping("/page")
-    public R<Page<SalesDto>> page(int page, int pageSize, Long id, String beginTime,
-                                  String endTime) {
-        log.info("Sales - Page:id, page, pageSize,beginTime,endTime==>{},{},{}", id, page,
-                pageSize, beginTime, endTime);
-        Page<Sales> pageInfo = new Page<>(page, pageSize);
-        Page<SalesDto> pageDtoInfo = new Page<>(page, pageSize);
-
+    @GetMapping ("/page")
+    public R<Page<SalesDto>> page (int page , int pageSize , Long id , String beginTime ,
+                                   String endTime) {
+        log.info("Sales - Page:id, page, pageSize,beginTime,endTime==>{},{},{}" , id , page ,
+                pageSize , beginTime , endTime);
+        Page<Sales> pageInfo = new Page<>(page , pageSize);
+        Page<SalesDto> pageDtoInfo = new Page<>(page , pageSize);
+        
         LambdaQueryWrapper<Sales> lqw = new LambdaQueryWrapper<>();
-        lqw.like(id != null, Sales::getId, id);
+        lqw.like(id != null , Sales::getId , id);
         lqw.orderByDesc(Sales::getCheckoutTime);
-        lqw.ge(beginTime != null, Sales::getCheckoutTime, beginTime);
-        lqw.le(endTime != null, Sales::getCheckoutTime, endTime);
-
-        return this.pageR(lqw, pageInfo, pageDtoInfo);
+        lqw.ge(beginTime != null , Sales::getCheckoutTime , beginTime);
+        lqw.le(endTime != null , Sales::getCheckoutTime , endTime);
+        
+        return this.pageR(lqw , pageInfo , pageDtoInfo);
     }
-
+    
     /**
      * @param sales:
-     * @return R < String>
+     * @return R  <  String>
      * @author willi
      * @description 提交订单
      * @since 2023/05/01 23:17
      */
-    @PostMapping("/submit")
-    public R<String> submit(@RequestBody Sales sales) {
-        log.info("订单数据：{}", sales);
+    @PostMapping ("/submit")
+    public R<String> submit (@RequestBody Sales sales) {
+        log.info("订单数据：{}" , sales);
         boolean flag = this.salesService.submit(sales);
         return R.flag(flag);
     }
-
-    @GetMapping("/userPage")
-    public R<Page<SalesDto>> userPage(int page, int pageSize) {
-        log.info("Sales - userPage: page, pageSize==>{},{}", page, pageSize);
+    
+    @GetMapping ("/userPage")
+    public R<Page<SalesDto>> userPage (int page , int pageSize) {
+        log.info("Sales - userPage: page, pageSize==>{},{}" , page , pageSize);
 
 //        获取当前用户id
         Long userId = BaseContext.getCurrentId();
 
 //        最终返回的分页对象
-        Page<SalesDto> pageDtoInfo = new Page<>(page, pageSize);
-        Page<Sales> pageInfo = new Page<>(page, pageSize);
-
+        Page<SalesDto> pageDtoInfo = new Page<>(page , pageSize);
+        Page<Sales> pageInfo = new Page<>(page , pageSize);
+        
         LambdaQueryWrapper<Sales> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(Sales::getCheckoutTime);
-        lqw.eq(Objects.nonNull(userId), Sales::getUserId, userId);
-
-        return this.pageR(lqw, pageInfo, pageDtoInfo);
-
+        lqw.eq(Objects.nonNull(userId) , Sales::getUserId , userId);
+        
+        return this.pageR(lqw , pageInfo , pageDtoInfo);
+        
     }
-
-    public R<Page<SalesDto>> pageR(LambdaQueryWrapper lqw, Page<Sales> pageInfo, Page<SalesDto> pageDtoInfo) {
+    
+    public R<Page<SalesDto>> pageR (LambdaQueryWrapper lqw , Page<Sales> pageInfo , Page<SalesDto> pageDtoInfo) {
 
 //        分页查询
-        this.salesService.page(pageInfo, lqw);
+        this.salesService.page(pageInfo , lqw);
 
 //        拷贝分页信息
-        BeanUtils.copyProperties(pageInfo, pageDtoInfo, "records");
+        BeanUtils.copyProperties(pageInfo , pageDtoInfo , "records");
 
 //        获取分页信息
         List<Sales> records = pageInfo.getRecords();
@@ -151,12 +151,12 @@ public class SalesController {
         List<SalesDto> dtoRecords = records.stream().map((item) -> {
             SalesDto salesDto = new SalesDto();
             AtomicReference<Integer> sumNum = new AtomicReference<>(0);
-
-            BeanUtils.copyProperties(item, salesDto);
+            
+            BeanUtils.copyProperties(item , salesDto);
             Long salesId = item.getId();
             LambdaQueryWrapper<SalesDetail> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-            lambdaQueryWrapper.eq(Objects.nonNull(salesId), SalesDetail::getSalesId, salesId);
-
+            lambdaQueryWrapper.eq(Objects.nonNull(salesId) , SalesDetail::getSalesId , salesId);
+            
             List<SalesDetail> salesDetailList = this.salesDetailService.list(lambdaQueryWrapper);
             List<Commodity> commodities = salesDetailList.stream().map((salesDetail -> {
                 Commodity commodity = this.commodityService.getById(salesDetail.getCommodityId());
@@ -166,17 +166,17 @@ public class SalesController {
             })).collect(Collectors.toList());
             salesDto.setCommodityList(commodities);
             salesDto.setSumNum(sumNum.get());
-
+            
             return salesDto;
-
+            
         }).collect(Collectors.toList());
-
+        
         pageDtoInfo.setRecords(dtoRecords);
-
-
+        
+        
         return R.success(pageDtoInfo);
-
+        
     }
-
+    
 }
 

@@ -12,7 +12,7 @@ import java.util.Random;
 public class ValidateCodeUtils {
     private static final int FourLength = 4;
     private static final int SixLength = 6;
-
+    
     /**
      * @param length:
      * @return Integer
@@ -20,7 +20,7 @@ public class ValidateCodeUtils {
      * @description 随机生成验证码
      * @date 2022/07/22 16:32
      */
-    public static Integer generateValidateCode(int length) {
+    public static Integer generateValidateCode (int length) {
         Integer code = null;
         if (length == FourLength) {
 //            生成随机数，最大为9999
@@ -41,7 +41,7 @@ public class ValidateCodeUtils {
         }
         return code;
     }
-
+    
     /**
      * @param length:
      * @return String
@@ -49,9 +49,9 @@ public class ValidateCodeUtils {
      * @description 随机生成指定长度字符串验证码
      * @date 2022/07/22 16:32
      */
-    public static String generateValidateCode4String(int length) {
+    public static String generateValidateCode4String (int length) {
         Random rdm = new Random();
         String hash1 = Integer.toHexString(rdm.nextInt());
-        return hash1.substring(0, length);
+        return hash1.substring(0 , length);
     }
 }

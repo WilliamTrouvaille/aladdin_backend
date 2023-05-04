@@ -26,12 +26,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
      * @date: 2022/7/26 20:00
      */
     @Override
-    public boolean updateStatus(Long id, int status) {
+    public boolean updateStatus (Long id , int status) {
         LambdaUpdateWrapper<Employee> luw = new LambdaUpdateWrapper<>();
-        luw.in(Employee::getId, id);
-        luw.eq(Employee::getStatus, 1 - status);
-        luw.set(Employee::getStatus, status);
+        luw.in(Employee::getId , id);
+        luw.eq(Employee::getStatus , 1 - status);
+        luw.set(Employee::getStatus , status);
         return update(luw);
-
+        
     }
 }

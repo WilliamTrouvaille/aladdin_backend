@@ -9,15 +9,15 @@
     <title>员工管理</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/page.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <style>
         #member-app .notAdmin::after {
             border: 0 !important;
-
+            
         }
     </style>
 </head>
@@ -68,7 +68,7 @@
                     {{formattingPhone(scope.row.phone)}}
                 </template>
             </el-table-column>
-
+            
             <el-table-column label="状态">
                 <template slot-scope="scope">
                     {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
@@ -81,7 +81,7 @@
             >
                 <template slot-scope="scope">
                     <el-button
-                            @click="passwordHandle(scope.row)"
+                            @click="passwordHandle(scope.row.id)"
                             class="delBut non"
                             size="small"
                             type="text"
@@ -121,6 +121,44 @@
                 layout="total, sizes, prev, pager, next, jumper"
         ></el-pagination>
     </div>
+    <el-dialog
+            :before-close="handleClose"
+            :title="classData.title"
+            :visible.sync="classData.dialogVisible"
+            width="30%"
+    >
+        <el-form
+                class="demo-form-inline"
+                label-width="100px"
+        >
+            <el-form-item label="原始密码：">
+                <el-input
+                        maxlength="20"
+                        placeholder="请输入原密码,初始密码为123456"
+                        v-model="classData.oldPwd"
+                />
+            </el-form-item>
+            <el-form-item label="新密码：">
+                <el-input placeholder="请输入新密码"
+                          type="number"
+                          v-model="classData.newPwd" />
+            </el-form-item>
+        </el-form>
+        <span
+                class="dialog-footer"
+                slot="footer"
+        >
+        <el-button
+                @click="classData.dialogVisible = false"
+                size="medium"
+        >取 消</el-button>
+        <el-button
+                @click="passwordUpdate()"
+                size="medium"
+                type="primary"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
 </div>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="../../plugins/vue/vue.js"></script>
@@ -142,6 +180,13 @@
                 tableData: [],
                 id: '',
                 status: '',
+                classData: {
+                    'title': '修改员工密码',
+                    'dialogVisible': false,
+                    'employeeId': '',
+                    'oldPwd': '',
+                    'newPwd': '',
+                }
             }
         },
         computed: {},
@@ -214,16 +259,23 @@
                     })
                 })
             },
-            passwordHandle(row) {
+            passwordHandle(id) {
+                this.classData.employeeId = id
+                this.classData.oldPwd = ''
+                this.classData.newPwd = ''
+                this.classData.dialogVisible = true
+            },
+            //密码修改
+            passwordUpdate(row) {
                 this.id = row.id
-                this.status = row.status
-                enableOrDisableEmployee({
-                    'id': this.id,
-                    'status': !this.status ? 1 : 0
+                updatteEmployeePassword({
+                    'employeeId': row.classData.employeeId,
+                    'oldPwd': row.classData.oldPwd,
+                    'newPwd': row.classData.newPwd
                 }).then(res => {
                     console.log('enableOrDisableEmployee', res)
                     if (String(res.code) === '1') {
-                        this.$message.success('账号状态更改成功！')
+                        this.$message.success(res.message)
                         this.handleQuery()
                     }
                 }).catch(err => {
@@ -245,7 +297,11 @@
             handleCurrentChange(val) {
                 this.page = val
                 this.init()
-            }
+            },
+            // 关闭弹窗
+            handleClose(st) {
+                this.classData.dialogVisible = false
+            },
         }
     })
 </script>

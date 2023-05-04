@@ -14,49 +14,49 @@ import java.math.BigDecimal;
  */
 @Data
 public class SalesDetail implements Serializable {
-
+    
     private static final long serialVersionUID = 184463576525516573L;
-
+    
     /**
      * 主键
      */
     @Id
     private Long id;
-
-
+    
+    
     /**
      * 名字
      */
     private String name;
-
-
+    
+    
     /**
      * 图片
      */
     private String image;
-
-
+    
+    
     /**
      * 订单id
      */
     private Long salesId;
-
-
+    
+    
     /**
      * 商品id
      */
     private Long commodityId;
-
-
+    
+    
     /**
      * 数量
      */
     private Integer number;
-
-
+    
+    
     /**
      * 金额
      */
     private BigDecimal amount;
-
+    
 }

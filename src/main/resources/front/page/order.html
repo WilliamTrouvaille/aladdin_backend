@@ -10,13 +10,13 @@
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet" />
     <!-- 引入样式  -->
-    <link href="../styles/index.css" rel="stylesheet"/>
+    <link href="../styles/index.css" rel="stylesheet" />
     <!--引入vant样式-->
-    <link href="../styles/vant.min.css" rel="stylesheet"/>
+    <link href="../styles/vant.min.css" rel="stylesheet" />
     <!--本页面内容的样式-->
-    <link href="../styles/order.css" rel="stylesheet"/>
+    <link href="../styles/order.css" rel="stylesheet" />
 </head>
 <body>
 <div class="app" id="order">
@@ -56,7 +56,7 @@
     </div>
     <div class="divNoData" v-else>
         <div class="divContainer">
-            <img src="../images/no_order.png"/>
+            <img src="../images/no_order.png" />
             <div>暂无订单</div>
         </div>
     </div>
@@ -134,7 +134,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-
+            
             async addOrderAgain(order) {
                 const res = await orderAgainApi({id: order.id})
                 if (res.code === 1) {
@@ -163,7 +163,7 @@
                     case 5:
                         str = '已取消'
                         break;
-
+                    
                 }
                 return str
             }

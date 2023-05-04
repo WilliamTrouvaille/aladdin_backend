@@ -27,91 +27,91 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/commodity")
+@RequestMapping ("/commodity")
 public class CommodityController {
-
+    
     @Autowired
     private CommodityService commodityService;
-
+    
     @Autowired
     private CategoryService categoryService;
-
-    @GetMapping("/page")
-    public R<Page<CommodityDto>> page(final int page, final int pageSize, final String name) {
-        CommodityController.log.info("商品分页查询==>当前页数:{},页面大小:{},查询条件:{}", page, pageSize, name);
-
-        final Page<Commodity> pageInfo = new Page<>(page, pageSize);
-        final Page<CommodityDto> pageDtoInfo = new Page<>(page, pageSize);
-
+    
+    @GetMapping ("/page")
+    public R<Page<CommodityDto>> page (final int page , final int pageSize , final String name) {
+        CommodityController.log.info("商品分页查询==>当前页数:{},页面大小:{},查询条件:{}" , page , pageSize , name);
+        
+        final Page<Commodity> pageInfo = new Page<>(page , pageSize);
+        final Page<CommodityDto> pageDtoInfo = new Page<>(page , pageSize);
+        
         final LambdaQueryWrapper<Commodity> lqw = new LambdaQueryWrapper<>();
-        lqw.like(name != null, Commodity::getName, name);
+        lqw.like(name != null , Commodity::getName , name);
         lqw.orderByDesc(Commodity::getUpdateTime);
-
-        commodityService.page(pageInfo, lqw);
-        BeanUtils.copyProperties(pageInfo, pageDtoInfo, new String[]{"records"});
-
+        
+        commodityService.page(pageInfo , lqw);
+        BeanUtils.copyProperties(pageInfo , pageDtoInfo , new String[]{"records"});
+        
         List<CommodityDto> records = pageInfo.getRecords().stream().map((item) -> {
             CommodityDto commodityDto = new CommodityDto();
             commodityDto.setCategoryName(categoryService.getById(item.getCategoryId()).getName());
             String newName = item.getName() + '(' + item.getSpecification() + ')';
             item.setName(newName);
-            BeanUtils.copyProperties(item, commodityDto);
+            BeanUtils.copyProperties(item , commodityDto);
             return commodityDto;
         }).collect(Collectors.toList());
-
+        
         pageDtoInfo.setRecords(records);
-
+        
         return R.success(pageDtoInfo);
     }
-
-    @GetMapping("/category/{categoryId}")
-    public R<List<Commodity>> getByCategoryId(@PathVariable Long categoryId) {
-        log.info("根据分类id查询商品:{}", categoryId);
-        List<Commodity> commodityList = commodityService.list(new LambdaQueryWrapper<Commodity>().eq(Commodity::getCategoryId, categoryId));
-
+    
+    @GetMapping ("/category/{categoryId}")
+    public R<List<Commodity>> getByCategoryId (@PathVariable Long categoryId) {
+        log.info("根据分类id查询商品:{}" , categoryId);
+        List<Commodity> commodityList = commodityService.list(new LambdaQueryWrapper<Commodity>().eq(Commodity::getCategoryId , categoryId));
+        
         List<Commodity> commodities = commodityList.stream().map((item) -> {
             item.setNumber(0);
             return item;
         }).collect(Collectors.toList());
         return R.success(commodities);
     }
-
+    
     @PostMapping
-    public R<String> save(@RequestBody Commodity commodity) {
-        log.info("新增商品:{}", commodity);
+    public R<String> save (@RequestBody Commodity commodity) {
+        log.info("新增商品:{}" , commodity);
         boolean save = commodityService.save(commodity);
         return R.flag(save);
     }
-
-    @GetMapping("/{id}")
-    public R<Commodity> getById(@PathVariable Long id) {
-        log.info("查询id为{}的商品", id);
+    
+    @GetMapping ("/{id}")
+    public R<Commodity> getById (@PathVariable Long id) {
+        log.info("查询id为{}的商品" , id);
         Commodity commodity = commodityService.getById(id);
         return R.success(commodity);
     }
-
+    
     @PutMapping
-    public R<String> update(@RequestBody Commodity commodity) {
-        log.info("更改商品信息,商品信息==>{}", commodity.toString());
+    public R<String> update (@RequestBody Commodity commodity) {
+        log.info("更改商品信息,商品信息==>{}" , commodity.toString());
         boolean flag = commodityService.updateById(commodity);
         return R.flag(flag);
-
+        
     }
-
-    @PostMapping("/status/{status}")
-    public R<String> status(@RequestParam List<Long> ids, @PathVariable int status) {
+    
+    @PostMapping ("/status/{status}")
+    public R<String> status (@RequestParam List<Long> ids , @PathVariable int status) {
         // 0 更改为停售 1更改为起售
-        log.info("更改售卖状态:ids==>{},status==>{}", ids, status);
-        boolean flag = commodityService.updateStatus(ids, status);
+        log.info("更改售卖状态:ids==>{},status==>{}" , ids , status);
+        boolean flag = commodityService.updateStatus(ids , status);
         return flag ? R.success("商品状态已经更改成功！") : R.error("商品状态更改失败,请重试!");
-
+        
     }
-
+    
     @DeleteMapping
-    public R<String> delete(@RequestParam List<Long> ids) {
+    public R<String> delete (@RequestParam List<Long> ids) {
         boolean flag = commodityService.removeByIds(ids);
         return flag ? R.success("删除成功!") : R.error("删除失败,请重试!");
-
+        
     }
-
+    
 }

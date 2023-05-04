@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 public class CommodityDto extends Commodity {
-
+    
     // 商品类别名称
     private String categoryName;
 }

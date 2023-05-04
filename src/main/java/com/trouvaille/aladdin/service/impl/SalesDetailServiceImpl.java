@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author trouvaille
  * @since 2023-04-22 17:47:04
  */
-@Service("salesDetailService")
+@Service ("salesDetailService")
 public class SalesDetailServiceImpl extends ServiceImpl<SalesDetailMapper, SalesDetail> implements SalesDetailService {
 
 }

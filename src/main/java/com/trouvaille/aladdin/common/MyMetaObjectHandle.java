@@ -20,30 +20,30 @@ import java.util.Objects;
 @Component
 @Slf4j
 public class MyMetaObjectHandle implements MetaObjectHandler {
-
+    
     @Override
-    public void insertFill(MetaObject metaObject) {
+    public void insertFill (MetaObject metaObject) {
         Long id = BaseContext.getCurrentId();
-        log.info("当前创建员工id为==>{}", id);
-
-        metaObject.setValue("createTime", LocalDateTime.now());
-
-        if (!Objects.isNull(id)) {
-            metaObject.setValue("updateTime", LocalDateTime.now());
-            metaObject.setValue("createUser", id);
-            metaObject.setValue("updateUser", id);
+        log.info("当前创建员工id为==>{}" , id);
+        
+        metaObject.setValue("createTime" , LocalDateTime.now());
+        
+        if (! Objects.isNull(id)) {
+            metaObject.setValue("updateTime" , LocalDateTime.now());
+            metaObject.setValue("createUser" , id);
+            metaObject.setValue("updateUser" , id);
         }
-
-
+        
+        
     }
-
+    
     @Override
-    public void updateFill(MetaObject metaObject) {
+    public void updateFill (MetaObject metaObject) {
         Long id = BaseContext.getCurrentId();
-
-        log.info("当前创建员工id为==>{}", id);
-        log.info("当前更改员工id为==>{}", id);
-        metaObject.setValue("updateTime", LocalDateTime.now());
-        metaObject.setValue("updateUser", id);
+        
+        log.info("当前创建员工id为==>{}" , id);
+        log.info("当前更改员工id为==>{}" , id);
+        metaObject.setValue("updateTime" , LocalDateTime.now());
+        metaObject.setValue("updateUser" , id);
     }
 }

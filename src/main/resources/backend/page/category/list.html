@@ -9,11 +9,11 @@
     <title>Document</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/page.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
 </head>
 <body>
 <div class="dashboard-container"
@@ -109,7 +109,7 @@
             <el-form-item label="排序：">
                 <el-input placeholder="请输入排序"
                           type="number"
-                          v-model="classData.sort"/>
+                          v-model="classData.sort" />
             </el-form-item>
         </el-form>
         <span
@@ -263,7 +263,7 @@
                         } else {
                             this.$message.error('排序只能输入数字类型')
                         }
-
+                        
                     } else {
                         this.$message.error('请输入分类名称或排序')
                     }

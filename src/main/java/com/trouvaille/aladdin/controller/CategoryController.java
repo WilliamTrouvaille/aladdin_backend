@@ -20,62 +20,62 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@RequestMapping("/category")
+@RequestMapping ("/category")
 public class CategoryController {
-
+    
     @Autowired
     private CategoryService categoryService;
-
-
-    @GetMapping("/list")
-    public R<List<Category>> list() {
-
+    
+    
+    @GetMapping ("/list")
+    public R<List<Category>> list () {
+        
         List<Category> category = categoryService.list(null);
-        log.info("Category--list===>{}", category);
+        log.info("Category--list===>{}" , category);
         return R.success(category);
     }
-
-    @GetMapping("/page")
-    public R<Page<Category>> page(int page, int pageSize) {
-        log.info("Category--page:page, pageSize==>{},{}", page, pageSize);
-        Page<Category> pageInfo = new Page<>(page, pageSize);
+    
+    @GetMapping ("/page")
+    public R<Page<Category>> page (int page , int pageSize) {
+        log.info("Category--page:page, pageSize==>{},{}" , page , pageSize);
+        Page<Category> pageInfo = new Page<>(page , pageSize);
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(Category::getSort);
-        categoryService.page(pageInfo, lqw);
+        categoryService.page(pageInfo , lqw);
         return R.success(pageInfo);
     }
-
-
-    @GetMapping("/{id}")
-    public R<Category> getById(@PathVariable Long id) {
-        log.info("Category--getById:id==>{}", id);
+    
+    
+    @GetMapping ("/{id}")
+    public R<Category> getById (@PathVariable Long id) {
+        log.info("Category--getById:id==>{}" , id);
         Category category = categoryService.getById(id);
         return R.success(category);
     }
-
-
-    @PostMapping("/save")
-    public R<String> save(@RequestBody Category category) {
-        log.info("Category--save: category==>{}", category);
+    
+    
+    @PostMapping ("/save")
+    public R<String> save (@RequestBody Category category) {
+        log.info("Category--save: category==>{}" , category);
         boolean save = categoryService.save(category);
-        return R.flag(save, "新增信息成功!", "新增信息失败,请重试!");
+        return R.flag(save , "新增信息成功!" , "新增信息失败,请重试!");
     }
-
-
-    @PutMapping("/update")
-    public R<String> update(@RequestBody Category category) {
-        log.info("Category--update: category==>{}", category);
+    
+    
+    @PutMapping ("/update")
+    public R<String> update (@RequestBody Category category) {
+        log.info("Category--update: category==>{}" , category);
         boolean update = categoryService.updateById(category);
-        return R.flag(update, "更改信息成功!", "更改信息失败,请重试!");
+        return R.flag(update , "更改信息成功!" , "更改信息失败,请重试!");
     }
-
-
-    @DeleteMapping("/{id}")
-    public R<String> delete(@PathVariable Long id) {
-        log.info("Category--delete: id==>{}", id);
+    
+    
+    @DeleteMapping ("/{id}")
+    public R<String> delete (@PathVariable Long id) {
+        log.info("Category--delete: id==>{}" , id);
         boolean delete = categoryService.removeById(id);
-        return R.flag(delete, "删除信息成功!", "删除信息失败,请重试!");
-
+        return R.flag(delete , "删除信息成功!" , "删除信息失败,请重试!");
+        
     }
 }
 

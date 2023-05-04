@@ -28,19 +28,19 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements SalesService {
-
+    
     @Autowired
     private UserService userService;
     @Autowired
     private AddressService addressService;
     @Autowired
     private ShoppingCartService shoppingCartService;
-
+    
     @Autowired
     private SalesDetailService saleDetailService;
-
+    
     @Override
-    public boolean submit(Sales sales) {
+    public boolean submit (Sales sales) {
 //        设置成功标志
         boolean flag = true;
 
@@ -49,7 +49,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
 
 //        获取当前用户购物车信息
         LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper();
-        lqw.eq(ShoppingCart::getUserId, userid);
+        lqw.eq(ShoppingCart::getUserId , userid);
         List<ShoppingCart> shoppingCarts = this.shoppingCartService.list(lqw);
 
 //        判断购物车是否为空
@@ -96,8 +96,8 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
             flag = false;
             throw new CustomException("购物车为空,不能下单!");
         }
-
-
+        
+        
     }
 }
 

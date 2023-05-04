@@ -6,7 +6,7 @@ import com.trouvaille.aladdin.entity.Commodity;
 import java.util.List;
 
 public interface CommodityService extends IService<Commodity> {
-    boolean updateStatus(List<Long> ids, int status);
-
-
+    boolean updateStatus (List<Long> ids , int status);
+    
+    
 }

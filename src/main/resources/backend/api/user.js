@@ -15,6 +15,15 @@ function getUserList(params) {
 //     })
 // }
 
+const updatteUserPassword = (params) => {
+    return $axios({
+        url: `/user/updatePwd`,
+        method: 'post',
+        params: {...params}
+    })
+}
+
+
 const enableOrDisableUser = (params) => {
     return $axios({
         url: `/user/status`,

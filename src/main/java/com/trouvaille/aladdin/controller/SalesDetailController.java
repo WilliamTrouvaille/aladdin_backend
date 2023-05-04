@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-@RequestMapping("/salesDetail")
+@RequestMapping ("/salesDetail")
 public class SalesDetailController {
 
 

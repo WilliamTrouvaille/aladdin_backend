@@ -11,5 +11,5 @@ public interface EmployeeService extends IService<Employee> {
      * @description: 修改员工状态
      * @date: 2022/7/26 20:00
      */
-    boolean updateStatus(Long id, int status);
+    boolean updateStatus (Long id , int status);
 }

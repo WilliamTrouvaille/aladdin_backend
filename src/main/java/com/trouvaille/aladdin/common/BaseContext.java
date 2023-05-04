@@ -11,17 +11,17 @@ package com.trouvaille.aladdin.common;
 
 public class BaseContext {
     public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
-
-    public static Long getCurrentId() {
+    
+    public static Long getCurrentId () {
         return BaseContext.threadLocal.get();
     }
-
-
-    public static void setCurrentId(final Long id) {
+    
+    
+    public static void setCurrentId (final Long id) {
         BaseContext.threadLocal.set(id);
     }
-
-    public static void close() {
+    
+    public static void close () {
         BaseContext.threadLocal.remove();
     }
 }

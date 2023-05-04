@@ -23,31 +23,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/orders")
+@RequestMapping ("/orders")
 /**
  * @deprecated
  * 已弃用!!!!!!!!
  */
 @Deprecated
 public class OrdersController {
-
-
+    
+    
     @Autowired
     private OrdersService ordersService;
 
 //    @Autowired
 //    private Orders
-
-
-    @GetMapping("/page")
-    public R<Page<Orders>> page(int page, int pageSize, String name) {
-        log.info("Orders:name, page, pageSize==>{},{},{}", name, page, pageSize);
-        Page<Orders> pageInfo = new Page<>(page, pageSize);
+    
+    
+    @GetMapping ("/page")
+    public R<Page<Orders>> page (int page , int pageSize , String name) {
+        log.info("Orders:name, page, pageSize==>{},{},{}" , name , page , pageSize);
+        Page<Orders> pageInfo = new Page<>(page , pageSize);
         LambdaQueryWrapper<Orders> lqw = new LambdaQueryWrapper<>();
-        lqw.like(name != null, Orders::getCommodityName, name);
+        lqw.like(name != null , Orders::getCommodityName , name);
         lqw.orderByDesc(Orders::getCreateTime);
-        ordersService.page(pageInfo, lqw);
+        ordersService.page(pageInfo , lqw);
         return R.success(pageInfo);
     }
-
+    
 }

@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @EnableTransactionManagement
 public class AladdinApplication {
-
-    public static void main(final String[] args) {
-        SpringApplication.run(AladdinApplication.class, args);
+    
+    public static void main (final String[] args) {
+        SpringApplication.run(AladdinApplication.class , args);
         AladdinApplication.log.info("项目启动成功!");
     }
-
+    
 }

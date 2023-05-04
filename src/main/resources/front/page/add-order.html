@@ -10,13 +10,13 @@
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet" />
     <!--引入vant样式-->
-    <link href="../styles/vant.min.css" rel="stylesheet"/>
+    <link href="../styles/vant.min.css" rel="stylesheet" />
     <!-- 引入样式  -->
-    <link href="../styles/index.css" rel="stylesheet"/>
+    <link href="../styles/index.css" rel="stylesheet" />
     <!--本页面内容的样式-->
-    <link href="../styles/add-order.css" rel="stylesheet"/>
+    <link href="../styles/add-order.css" rel="stylesheet" />
 </head>
 <body>
 <div class="app" id="add_order">
@@ -45,7 +45,7 @@
                 <div :key="index" class="item" v-for="(item,index) in cartData">
                     <el-image :src="imgPathConvert(item.image)">
                         <div class="image-slot" slot="error">
-                            <img src="../images/noImg.png"/>
+                            <img src="../images/noImg.png" />
                         </div>
                     </el-image>
                     <div class="desc">

@@ -21,13 +21,13 @@ import java.util.List;
 @Service
 public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity> implements CommodityService {
     @Override
-    public boolean updateStatus(List<Long> ids, int status) {
+    public boolean updateStatus (List<Long> ids , int status) {
         LambdaUpdateWrapper<Commodity> luw = new LambdaUpdateWrapper<>();
-        luw.in(Commodity::getId, ids);
-        luw.eq(Commodity::getStatus, 1 - status);
-        luw.set(Commodity::getStatus, status);
+        luw.in(Commodity::getId , ids);
+        luw.eq(Commodity::getStatus , 1 - status);
+        luw.set(Commodity::getStatus , status);
         return update(luw);
     }
-
-
+    
+    
 }

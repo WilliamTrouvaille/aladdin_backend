@@ -10,13 +10,13 @@
     <!--不同屏幕尺寸根字体设置-->
     <script src="../js/base.js"></script>
     <!--element-ui的样式-->
-    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet" />
     <!--引入vant样式-->
-    <link href="../styles/vant.min.css" rel="stylesheet"/>
+    <link href="../styles/vant.min.css" rel="stylesheet" />
     <!-- 引入样式  -->
-    <link href="../styles/index.css" rel="stylesheet"/>
+    <link href="../styles/index.css" rel="stylesheet" />
     <!--本页面内容的样式-->
-    <link href="../styles/address.css" rel="stylesheet"/>
+    <link href="../styles/address.css" rel="stylesheet" />
 </head>
 <body>
 <div class="app" id="address">
@@ -28,7 +28,7 @@
     <div class="divContent">
         <div :key="index" @click.capture="itemClick(item)" class="divItem"
              v-for="(item,index) in addressList">
-
+            
             <div class="divAddress">
                 <span :class="{spanCompany:item.label === '公司',spanHome:item.label === '家',spanSchool:item.label === '学校'}">{{item.label}}</span>
                 {{item.detail}}
@@ -38,7 +38,7 @@
                 <span>{{item.sex === '0' ? '女士' : '先生'}}</span>
                 <span>{{item.phone}}</span>
             </div>
-            <img @click.stop.prevent="toAddressEditPage(item)" src="../images/edit.png"/>
+            <img @click.stop.prevent="toAddressEditPage(item)" src="../images/edit.png" />
             <div class="divSplit"></div>
             <div class="divDefault">
                 <img src="../images/checked_true.png" v-if="item.isDefault === 1">
@@ -80,7 +80,7 @@
             toAddressEditPage(item) {
                 // console.log(item.id)
                 // this.$router.push({path: './address-edit.html', params: {id: item.id,}})
-
+                
                 window.requestAnimationFrame(() => {
                     window.location.href = 'address-edit.html' + '?id=' + item.id
                 })
@@ -116,7 +116,7 @@
                     history.go(-1)
                 }
             }
-
+            
         }
     })
 </script>

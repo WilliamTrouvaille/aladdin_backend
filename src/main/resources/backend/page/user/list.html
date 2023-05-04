@@ -9,15 +9,15 @@
     <title>用户管理</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/page.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <style>
         #mser-app .notAdmin::after {
             border: 0 !important;
-
+            
         }
     </style>
 </head>
@@ -80,16 +80,24 @@
                     label="操作"
                     width="160"
             >
-                <template v-slot="scope">
+                <template slot-scope="scope">
+                    <el-button
+                            @click="passwordHandle(scope.row)"
+                            class="delBut non"
+                            size="small"
+                            type="text"
+                    >
+                        修改密码
+                    </el-button>
                     <el-button
                             @click="statusHandle(scope.row)"
                             class="delBut non"
                             size="small"
                             type="text"
                     >
-
-                        {{ scope.row.status == '1' ? '禁用' : '启用' }}
-
+                        <v-slot scope="scope">
+                            {{ scope.row.status == '1' ? '禁用' : '启用' }}
+                        </v-slot>
                     </el-button>
                 </template>
             </el-table-column>
@@ -126,6 +134,8 @@
                 tableData: [],
                 id: '',
                 status: '',
+                
+                
             }
         },
         computed: {},
@@ -176,7 +186,7 @@
                 // }
                 return nameValue
             },
-
+            
             handleQuery() {
                 this.page = 1;
                 this.init();

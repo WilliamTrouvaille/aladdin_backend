@@ -27,44 +27,44 @@ import java.io.IOException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/common")
+@RequestMapping ("/common")
 @Slf4j
 public class CommonController {
-
-    @Value("${aladdin.path}")
+    
+    @Value ("${aladdin.path}")
     private String basePath;
-
-
+    
+    
     /**
      * @param file:
-     * @return R<String>
+     * @return R < String>
      * @author William_Trouvaille
      * @description 文件上传类
      * @date 2022/08/03 16:40
      */
-    @PostMapping("/upload")
-    public R<String> upload(final MultipartFile file) {
+    @PostMapping ("/upload")
+    public R<String> upload (final MultipartFile file) {
         boolean mkdirs = true;
         //file是一个临时文件，需要转存到指定位置，否则本次请求完成后临时文件会删除
         CommonController.log.info(file.toString());
-
+        
         //原始文件名
         final String originalFilename = file.getOriginalFilename();//abc.jpg
         assert originalFilename != null;
         final String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-
+        
         //使用UUID重新生成文件名，防止文件名称重复造成文件覆盖
         final String fileName = UUID.randomUUID() + suffix;
-
+        
         //创建一个目录对象
         final File dir = new File(basePath);
         //判断当前目录是否存在
         //目录不存在，需要创建
-        if (!dir.exists()) {
+        if (! dir.exists()) {
             mkdirs = dir.mkdirs();
         }
-        log.info("文件上传==>文件名:{};文件路径==>{}", fileName, dir);
-
+        log.info("文件上传==>文件名:{};文件路径==>{}" , fileName , dir);
+        
         try {
             String realPath = dir.getCanonicalPath(); // 获取真实路径
             file.transferTo(new File(realPath + "/" + fileName)); // 转存
@@ -72,10 +72,10 @@ public class CommonController {
         } catch (final IOException e) {
             e.printStackTrace();
         }
-        return R.flag(mkdirs, fileName, "文件上传失败!");
+        return R.flag(mkdirs , fileName , "文件上传失败!");
     }
-
-
+    
+    
     /**
      * @param name:
      * @param response:
@@ -84,30 +84,30 @@ public class CommonController {
      * @author willi
      * @since 2023/04/27 21:44
      */
-    @GetMapping("/download")
-    public void download(final String name, final HttpServletResponse response) {
+    @GetMapping ("/download")
+    public void download (final String name , final HttpServletResponse response) {
         //创建一个目录对象
         final File dir = new File(basePath);
-        log.info("文件下载==>文件名:{};文件路径==>{}", name, dir);
-
+        log.info("文件下载==>文件名:{};文件路径==>{}" , name , dir);
+        
         try {
-
+            
             String realPath = dir.getCanonicalPath(); // 获取真实路径
             //输入流，通过输入流读取文件内容
             final FileInputStream fileInputStream = new FileInputStream(new File(realPath + "/" + name));
-
+            
             //输出流，通过输出流将文件写回浏览器
             final ServletOutputStream outputStream = response.getOutputStream();
-
+            
             response.setContentType("image/jpeg");
-
+            
             int len;
             byte[] bytes = new byte[1024];
-            while ((len = fileInputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
+            while ((len = fileInputStream.read(bytes)) != - 1) {
+                outputStream.write(bytes , 0 , len);
                 outputStream.flush();
             }
-
+            
             //关闭资源
             outputStream.close();
             fileInputStream.close();
@@ -115,6 +115,6 @@ public class CommonController {
             e.printStackTrace();
         }
         CommonController.log.info("文件下载成功!");
-
+        
     }
 }

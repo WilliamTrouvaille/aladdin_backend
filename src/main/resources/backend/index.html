@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="UTF-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Aladdin便利店管理端</title>
     <link href="favicon.ico" rel="shortcut icon">
     <!-- 引入样式 -->
-    <link href="plugins/element-ui/index.css" rel="stylesheet"/>
-    <link href="styles/common.css" rel="stylesheet"/>
-    <link href="styles/index.css" rel="stylesheet"/>
-    <link href="styles/icon/iconfont.css" rel="stylesheet"/>
+    <link href="plugins/element-ui/index.css" rel="stylesheet" />
+    <link href="styles/common.css" rel="stylesheet" />
+    <link href="styles/index.css" rel="stylesheet" />
+    <link href="styles/icon/iconfont.css" rel="stylesheet" />
     <style>
-
-
+        
+        
         .app-main {
             height: calc(100% - 64px);
         }
-
+        
         .app-main .divTmp {
             width: 100%;
             height: 100%;
@@ -31,10 +31,10 @@
         <!-- sidebar -->
         <div class="sidebar-container">
             <div class="logo">
-
-                <img alt="" src="images/login/login-logo.png" style="width: 123px; height: 56px"/>
+                
+                <img alt="" src="images/login/login-logo.png" style="width: 123px; height: 56px" />
             </div>
-
+            
             <el-scrollbar wrap-class="scrollbar-wrapper">
                 <el-menu
                         :collapse-transition="false"
@@ -74,7 +74,7 @@
             <div class="navbar">
                 <div class="head-lable">
               <span @click="goBack()" class="goBack" v-if="goBackFlag"
-              ><img alt="" src="images/icons/btn_back@2x.png"/> 返回</span
+              ><img alt="" src="images/icons/btn_back@2x.png" /> 返回</span
               >
                     <span>{{headTitle}}</span>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="avatar-wrapper">{{ userInfo.name }}</div>
                     <!-- <div class="logout" @click="logout">退出</div> -->
                     <img @click="logout" alt="退出" class="outLogin"
-                         src="images/icons/btn_close@2x.png"/>
+                         src="images/icons/btn_close@2x.png" />
                 </div>
             </div>
             <div class="app-main" v-loading="loading">
@@ -109,7 +109,7 @@
 <script src="js/request.js"></script>
 <script src="api/login.js"></script>
 <script>
-
+    
     new Vue({
         el: '#app',
         data() {

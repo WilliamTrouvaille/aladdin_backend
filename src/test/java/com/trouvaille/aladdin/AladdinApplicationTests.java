@@ -12,18 +12,18 @@ import java.util.List;
 @SpringBootTest
 @Slf4j
 class AladdinApplicationTests {
-
+    
     @Autowired
     private EmployeeService employeeService;
-
+    
     @Test
-    void contextLoads() {
+    void contextLoads () {
     }
-
+    
     @Test
-    void testService() {
+    void testService () {
         List<Employee> employees = employeeService.list(null);
         System.out.println(employees);
     }
-
+    
 }

@@ -9,18 +9,18 @@
     <title>Document</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/page.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <style>
         #food-add-app .uploadImg .el-form-item__label::before {
             content: '*';
             color: #F56C6C;
             margin-right: 4px;
         }
-
+    
     </style>
 </head>
 <body>
@@ -49,14 +49,14 @@
                 <el-form-item
                         label="商品类型:"
                         prop="categoryId"
-
+                
                 >
                     <el-select
                             :label-in-value="true"
                             @change="categoryOperator"
                             placeholder="请选择商品类型"
                             v-model="ruleForm.categoryId">
-
+                        
                         <el-option
                                 :key="item.value"
                                 :label="item.label"
@@ -65,8 +65,8 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-
-
+            
+            
             </div>
             <div>
                 <el-form-item
@@ -106,7 +106,7 @@
                                 :src="imageUrl"
                                 alt=""
                                 class="avatar"
-                                v-if="imageUrl"/>
+                                v-if="imageUrl" />
                         <i
                                 class="el-icon-plus avatar-uploader-icon"
                                 v-else
@@ -120,7 +120,7 @@
                 <!--                        prop="specification"-->
                 <!--                >-->
                 <!--                    <el-input-->
-
+                
                 <!--                            clearable-->
                 <!--                            maxlength="50"-->
                 <!--                            placeholder="例如:500ml/瓶"-->
@@ -131,12 +131,12 @@
                         prop="specification"
                 >
                     <template>
-                        <el-select v-model="ruleForm.specification" placeholder="请选择商品规格">
+                        <el-select placeholder="请选择商品规格" v-model="ruleForm.specification">
                             <el-option
-                                    v-for="item in specificationOptions"
                                     :key="item.value"
                                     :label="item.label"
-                                    :value="item.value">
+                                    :value="item.value"
+                                    v-for="item in specificationOptions">
                             </el-option>
                         </el-select>
                     </template>
@@ -153,7 +153,7 @@
                 </el-form-item>
             </div>
             <div>
-
+                
                 <el-form-item
                         label="入库数量:"
                         prop="number"
@@ -234,7 +234,7 @@
                 }, {
                     value: '瓶',
                     label: '瓶'
-
+                    
                 }, {
                     value: '箱',
                     label: '箱'
@@ -282,7 +282,7 @@
             this.actionType = this.id ? 'edit' : 'add'
             console.log(this.actionType)
             this.getCategoryList()
-
+            
             if (this.id) {
                 this.flag = true
                 console.log("flag==>" + this.flag)
@@ -306,7 +306,7 @@
                     }
                 })
             },
-
+            
             getCategoryList() {
                 getCategory().then(res => {
                     console.log(res);
@@ -323,7 +323,7 @@
                     }
                 })
             },
-
+            
             categoryOperator: function (val) {
                 let obj = {};
                 obj = this.categoryOptions.find(item => {
@@ -333,16 +333,16 @@
                 this.ruleForm.categoryId = obj.value;
                 console.log(this.ruleForm);
             },
-
-
+            
+            
             outSelect(st, index) {
                 const _this = this
                 setTimeout(() => {
                     obj.showOption = st
                 }, 200)
             },
-
-
+            
+            
             submitForm(formName, st) {
                 console.log(this.ruleForm.code)
                 this.$refs[formName].validate((valid) => {
@@ -404,7 +404,7 @@
                     }
                 })
             },
-
+            
             handleAvatarSuccess(response, file, fileList) {
                 // 拼接down接口预览
                 if (response.code === 0 && response.msg === '未登录') {
@@ -414,7 +414,7 @@
                     this.ruleForm.image = response.data
                 }
             },
-
+            
             onChange(file) {
                 if (file) {
                     const suffix = file.name.split('.')[1]

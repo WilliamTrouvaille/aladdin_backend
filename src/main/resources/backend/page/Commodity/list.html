@@ -9,11 +9,11 @@
     <title>Document</title>
     <!-- 引入样式 -->
     <link href="../../plugins/element-ui/index.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/common.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
     <link href="../../styles/page.css"
-          rel="stylesheet"/>
+          rel="stylesheet" />
 </head>
 <body>
 <div class="dashboard-container"
@@ -80,7 +80,7 @@
                     </el-image>
                 </template>
             </el-table-column>
-
+            
             <el-table-column
                     label="商品分类"
                     prop="categoryName"
@@ -94,7 +94,7 @@
                     label="产地"
                     prop="producePlace"
             ></el-table-column>
-
+            
             <el-table-column label="进货价">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">￥{{ scope.row.purchasePrice / 100 }}</span>
@@ -103,7 +103,7 @@
             <el-table-column label="售卖状态">
                 <template slot-scope="scope">
                     <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售'
-                        }}</span>
+                                                      }}</span>
                 </template>
             </el-table-column>
             </el-table-column>
@@ -177,7 +177,7 @@
         computed: {},
         created() {
             this.init()
-
+            
         },
         mounted() {
         },
@@ -221,7 +221,7 @@
                     }, true)
                 }
             },
-
+            
             // 删除
             deleteHandle(type, id) {
                 if (type === '批量' && id === null) {
@@ -245,7 +245,7 @@
                     })
                 })
             },
-
+            
             //状态更改
             statusHandle(row) {
                 let params = {}
@@ -279,7 +279,7 @@
                     })
                 })
             },
-
+            
             // 全部操作
             handleSelectionChange(val) {
                 let checkArr = []

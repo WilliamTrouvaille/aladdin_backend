@@ -180,18 +180,21 @@ public class EmployeeController {
      * @description 更改密码
      * @since 2023/05/04 15:35
      */
-    @PostMapping ("/updatePwd")
+    @GetMapping ("/updatePwd")
     public R<String> updatePwd (String employeeId , String oldPwd , String newPwd) {
         
+        log.info("员工更改密码:oldPwd==>{},newPwd==>{},employeeId==>{}" , oldPwd , newPwd , employeeId);
         
-        Employee employee = this.employeeService.getById(employeeId);
-        log.info("员工更改密码:oldPwd==>{},newPwd==>{},employee==>{}" , oldPwd , newPwd , employee.toString());
+        
+        Employee employee = this.employeeService.getById(Long.parseLong(employeeId));
+        
         
         if (employee == null) {
             return R.error("员工不存在,请重试!");
         } else if (! employee.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes(StandardCharsets.UTF_8)))) {
             return R.error("原密码输入错误,请重试!");
         }
+        
         
         employee.setPassword(DigestUtils.md5DigestAsHex(newPwd.getBytes(StandardCharsets.UTF_8)));
         boolean flag = this.employeeService.updateById(employee);

@@ -7,6 +7,13 @@ function getMemberList(params) {
     })
 }
 
+function updatteEmployeePassword(params) {
+    return $axios({
+        url: `/employee/updatePwd`,
+        method: 'get',
+        params
+    })
+}
 
 // const enableOrDisableEmployee = (params) => {
 //     return $axios({
@@ -25,14 +32,6 @@ const enableOrDisableEmployee = (params) => {
     })
 }
 
-// 修改---启用禁用接口
-const updatteEmployeePassword = (params) => {
-    return $axios({
-        url: `/employee/updatePwd`,
-        method: 'post',
-        params: {...params}
-    })
-}
 
 // 新增---添加员工
 function addEmployee(params) {

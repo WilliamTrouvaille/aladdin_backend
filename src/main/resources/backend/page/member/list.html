@@ -133,14 +133,16 @@
         >
             <el-form-item label="原始密码：">
                 <el-input
-                        maxlength="20"
+                        maxlength="32"
+                        type="password"
                         placeholder="请输入原密码,初始密码为123456"
                         v-model="classData.oldPwd"
                 />
             </el-form-item>
             <el-form-item label="新密码：">
-                <el-input placeholder="请输入新密码"
-                          type="number"
+                <el-input placeholder="请输入新密码,长度为6-32位"
+                          maxlength="32"
+                          type="password"
                           v-model="classData.newPwd" />
             </el-form-item>
         </el-form>
@@ -238,6 +240,10 @@
             },
             //状态修改
             statusHandle(row) {
+                console.log(row.id)
+                if (String(row.id) === '1') {
+                    this.$message.error('无法修改超级管理员状态！')
+                }
                 this.id = row.id
                 this.status = row.status
                 this.$confirm('确认调整该账号的状态?', '提示', {
@@ -260,22 +266,28 @@
                 })
             },
             passwordHandle(id) {
-                this.classData.employeeId = id
-                this.classData.oldPwd = ''
-                this.classData.newPwd = ''
-                this.classData.dialogVisible = true
+                console.log(id)
+                if (String(id) === '1') {
+                    this.$message.error('无法修改超级管理员密码！')
+                } else {
+                    
+                    this.classData.employeeId = id
+                    this.classData.oldPwd = ''
+                    this.classData.newPwd = ''
+                    this.classData.dialogVisible = true
+                }
+                
             },
             //密码修改
-            passwordUpdate(row) {
-                this.id = row.id
+            passwordUpdate() {
                 updatteEmployeePassword({
-                    'employeeId': row.classData.employeeId,
-                    'oldPwd': row.classData.oldPwd,
-                    'newPwd': row.classData.newPwd
+                    'employeeId': this.classData.employeeId,
+                    'oldPwd': this.classData.oldPwd,
+                    'newPwd': this.classData.newPwd,
                 }).then(res => {
-                    console.log('enableOrDisableEmployee', res)
-                    if (String(res.code) === '1') {
-                        this.$message.success(res.message)
+                    console.log('updatteEmployeePassword', res)
+                    if (res.code === 1) {
+                        this.$message.success(res.data)
                         this.handleQuery()
                     }
                 }).catch(err => {

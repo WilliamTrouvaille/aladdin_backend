@@ -18,15 +18,6 @@ public class Employee implements Serializable {
      */
     private Long id;
     
-    /**
-     * 所属门店
-     */
-    private Long store;
-    
-    /**
-     * 所属门店名称
-     */
-    private String storeName;
     
     /**
      * 姓名

@@ -89,7 +89,7 @@
                         修改密码
                     </el-button>
                     <el-button
-                            :class="{notAdmin:user !== 'admin'}"
+                            :class="{notAdmin:userInfo.name !== 'admin'}"
                             @click="addMemberHandle(scope.row.id)"
                             class="blueBug"
                             size="small"
@@ -103,9 +103,10 @@
                             size="small"
                             type="text"
                     >
-                        <v-slot scope="scope">
+                        
+                        <template v-slot="scope">
                             {{ scope.row.status == '1' ? '禁用' : '启用' }}
-                        </v-slot>
+                        </template>
                     </el-button>
                 </template>
             </el-table-column>
@@ -182,6 +183,7 @@
                 tableData: [],
                 id: '',
                 status: '',
+                userInfo: {},
                 classData: {
                     'title': '修改员工密码',
                     'dialogVisible': false,
@@ -194,7 +196,10 @@
         computed: {},
         created() {
             this.init()
-            this.user = JSON.parse(localStorage.getItem('userInfo')).username
+            const userInfo = window.localStorage.getItem('userInfo')
+            if (userInfo) {
+                this.userInfo = JSON.parse(userInfo)
+            }
         },
         mounted() {
         },
@@ -205,14 +210,15 @@
                     pageSize: this.pageSize,
                     name: this.input ? this.input : undefined
                 }
-                await getMemberList(params).then(res => {
-                    if (String(res.code) === '1') {
-                        this.tableData = res.data.records || []
-                        this.counts = res.data.total
+                try {
+                    const {data, code} = await getMemberList(params);
+                    if (String(code) === '1') {
+                        this.tableData = data.records || []
+                        this.counts = data.total
                     }
-                }).catch(err => {
+                } catch (err) {
                     this.$message.error('请求出错了：' + err)
-                })
+                }
             },
             handleQuery() {
                 this.page = 1;

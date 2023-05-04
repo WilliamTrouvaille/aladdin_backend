@@ -25,8 +25,8 @@
         <div class="divUser">
             <img src="../images/headPage.png" />
             <div class="desc">
-                <div class="divName">蔡徐坤 <img src="../images/women.png" /></div>
-                <div class="divPhone">{{userPhone}}</div>
+                <div class="divName">{{userInfo.name}} <img src="../images/women.png" /></div>
+                <div class="divPhone">{{userInfo.userPhone}}</div>
             </div>
         </div>
     </div>
@@ -41,6 +41,12 @@
             <div @click="toOrderPage" class="item">
                 <img src="../images/orders.png" />
                 <span>历史订单</span>
+                <i class="el-icon-arrow-right"></i>
+            </div>
+            <div class="divSplit"></div>
+            <div @click="toOrderPage" class="item">
+                <img src="../images/user.png" />
+                <span>用户中心</span>
                 <i class="el-icon-arrow-right"></i>
             </div>
         </div>
@@ -88,6 +94,7 @@
         el: "#user",
         data() {
             return {
+                userInfo: {},
                 form: {
                     phone: '',
                     code: ''
@@ -107,7 +114,10 @@
         },
         computed: {},
         created() {
-            this.userPhone = sessionStorage.getItem("userPhone")
+            const userInfo = window.localStorage.getItem('userInfo')
+            if (userInfo) {
+                this.userInfo = JSON.parse(userInfo)
+            }
             this.initData()
         },
         mounted() {

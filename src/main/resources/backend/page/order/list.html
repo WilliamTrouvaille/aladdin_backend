@@ -126,7 +126,7 @@
         <el-pagination
                 :current-page.sync="page"
                 :page-size="pageSize"
-                :page-sizes="[10, 20, 30, 40]"
+                :page-sizes="[5, 10]"
                 :total="counts"
                 @current-change="handleCurrentChange"
                 @size-change="handleSizeChange"
@@ -202,7 +202,7 @@
                 endTime: '',
                 counts: 0,
                 page: 1,
-                pageSize: 10,
+                pageSize: 5,
                 tableData: [],
                 dialogVisible: false,
                 diaForm: {},

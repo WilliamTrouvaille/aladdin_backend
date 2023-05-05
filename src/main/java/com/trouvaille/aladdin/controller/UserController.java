@@ -37,7 +37,7 @@ public class UserController {
     private UserService userService;
     
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate redisTemplate;
     
     /**
      * @param user:
@@ -127,11 +127,21 @@ public class UserController {
     @GetMapping ("/page")
     public R<Page<User>> page (int page , int pageSize , String name) {
         log.info("User-page:name, page, pageSize==>{},{},{}" , name , page , pageSize);
+        
+        String redisKey = "User:page:" + page + ":" + pageSize + ":" + name;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((Page<User>) this.redisTemplate.opsForValue().get(redisKey));
+        }
+        
         Page<User> pageInfo = new Page<>(page , pageSize);
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
         lqw.like(name != null , User::getName , name);
         lqw.orderByDesc(User::getCreateTime);
         this.userService.page(pageInfo , lqw);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , pageInfo , 60L , TimeUnit.MINUTES);
+        
         return R.success(pageInfo);
         
     }
@@ -150,6 +160,10 @@ public class UserController {
         User user = this.userService.getById(id);
         user.setStatus(status);
         boolean flag = this.userService.updateById(user);
+        
+        String redisKey = "User*";
+        this.redisTemplate.delete(redisKey);
+        
         return flag ? R.success("用户状态已经更改成功！") : R.error("用户状态更改失败,请重试!");
     }
     
@@ -167,6 +181,10 @@ public class UserController {
         } else {
             user.setPassword(DigestUtils.md5DigestAsHex(newPwd.getBytes()));
             boolean flag = this.userService.updateById(user);
+            
+            String redisKey = "User*";
+            this.redisTemplate.delete(redisKey);
+            
             return flag ? R.success("密码修改成功!") : R.error("密码修改失败,请重试!");
         }
         

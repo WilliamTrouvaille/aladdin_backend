@@ -87,18 +87,6 @@ public class Commodity implements Serializable {
     
     
     /**
-     * 供应商id
-     */
-    private Long supplierId;
-    
-    
-    /**
-     * 供应商名称
-     */
-    private String supplierName;
-    
-    
-    /**
      * 0 停售 1 起售
      */
     private Integer status;

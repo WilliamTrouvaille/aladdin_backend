@@ -16,10 +16,12 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,10 @@ public class SalesController {
     
     @Autowired
     private CommodityService commodityService;
+    
+    
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
 /**
@@ -78,29 +84,40 @@ public class SalesController {
     /**
      * @param page:
      * @param pageSize:
-     * @param id:
      * @param beginTime:
      * @param endTime:
-     * @return R < Page  <  SalesDto>>
-     * @description 分页查询
+     * @return R < Page < SalesDto>>
      * @author willi
-     * @date 2023/04/22 16:39
+     * @description 管理端查询销售记录
+     * @since 2023/05/05 12:05
      */
     @GetMapping ("/page")
-    public R<Page<SalesDto>> page (int page , int pageSize , Long id , String beginTime ,
-                                   String endTime) {
-        log.info("Sales - Page:id, page, pageSize,beginTime,endTime==>{},{},{}" , id , page ,
+    public R<Page<SalesDto>> page (int page , int pageSize , String beginTime , String endTime) {
+        log.info("Sales - Page:id, page, pageSize,beginTime,endTime==>{},{},{}" , page ,
                 pageSize , beginTime , endTime);
+        
+        String redisKey = "Sales:page:" + page + ":" + pageSize + ":" + beginTime + ":" + endTime;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            List<SalesDto> salesDtos = (List<SalesDto>) this.redisTemplate.opsForValue().get(redisKey);
+            return R.success(new Page<SalesDto>(page , pageSize , salesDtos.size()).setRecords(salesDtos));
+        }
+        
+        
         Page<Sales> pageInfo = new Page<>(page , pageSize);
         Page<SalesDto> pageDtoInfo = new Page<>(page , pageSize);
         
         LambdaQueryWrapper<Sales> lqw = new LambdaQueryWrapper<>();
-        lqw.like(id != null , Sales::getId , id);
         lqw.orderByDesc(Sales::getCheckoutTime);
         lqw.ge(beginTime != null , Sales::getCheckoutTime , beginTime);
         lqw.le(endTime != null , Sales::getCheckoutTime , endTime);
         
-        return this.pageR(lqw , pageInfo , pageDtoInfo);
+        R<Page<SalesDto>> pageR = this.pageR(lqw , pageInfo , pageDtoInfo);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , pageR.getData().getRecords() , 60L , TimeUnit.MINUTES);
+        
+        
+        return pageR;
     }
     
     /**
@@ -113,7 +130,13 @@ public class SalesController {
     @PostMapping ("/submit")
     public R<String> submit (@RequestBody Sales sales) {
         log.info("订单数据：{}" , sales);
+        
+        String redisKey = "Sales*";
+        
         boolean flag = this.salesService.submit(sales);
+        
+        this.redisTemplate.delete(redisKey);
+        
         return R.flag(flag);
     }
     
@@ -123,6 +146,11 @@ public class SalesController {
 
 //        获取当前用户id
         Long userId = BaseContext.getCurrentId();
+        
+        String redisKey = "sales:userPage:userId:" + userId + ":" + page + ":" + pageSize;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((Page<SalesDto>) this.redisTemplate.opsForValue().get(redisKey));
+        }
 
 //        最终返回的分页对象
         Page<SalesDto> pageDtoInfo = new Page<>(page , pageSize);
@@ -132,7 +160,13 @@ public class SalesController {
         lqw.orderByDesc(Sales::getCheckoutTime);
         lqw.eq(Objects.nonNull(userId) , Sales::getUserId , userId);
         
-        return this.pageR(lqw , pageInfo , pageDtoInfo);
+        R<Page<SalesDto>> pageR = this.pageR(lqw , pageInfo , pageDtoInfo);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , pageR , 60L , TimeUnit.MINUTES);
+        
+        
+        return pageR;
         
     }
     

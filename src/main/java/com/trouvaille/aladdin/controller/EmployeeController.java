@@ -16,11 +16,13 @@ import com.trouvaille.aladdin.entity.Employee;
 import com.trouvaille.aladdin.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -29,6 +31,10 @@ public class EmployeeController {
     
     @Autowired
     private EmployeeService employeeService;
+    
+    
+    @Autowired
+    private RedisTemplate redisTemplate;
     
     
     /**
@@ -90,12 +96,24 @@ public class EmployeeController {
     @GetMapping ("/page")
     public R<Page<Employee>> page (int page , int pageSize , String name) {
         log.info("Employee:name, page, pageSize==>{},{},{}" , name , page , pageSize);
+        
+        String redisKey = "Employee:page:" + page + ":" + pageSize + ":" + name;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((Page<Employee>) this.redisTemplate.opsForValue().get(redisKey));
+        }
+        
+        
         Page<Employee> pageInfo = new Page<>(page , pageSize);
         LambdaQueryWrapper<Employee> lqw = new LambdaQueryWrapper<>();
         lqw.like(name != null , Employee::getName , name);
         lqw.orderByDesc(Employee::getUpdateTime);
         this.employeeService.page(pageInfo , lqw);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , pageInfo , 60L , TimeUnit.MINUTES);
+        
         return R.success(pageInfo);
+        
     }
     
     
@@ -116,6 +134,8 @@ public class EmployeeController {
         boolean save = this.employeeService.save(employee);
         
         if (save) {
+            String redisKey = "Employee*";
+            this.redisTemplate.delete(redisKey);
             return R.success("添加员工成功");
         } else {
             return R.error("添加员工失败!请重试!");
@@ -150,6 +170,9 @@ public class EmployeeController {
         String password = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
         employee.setPassword(password);
         
+        String redisKey = "Employee*";
+        this.redisTemplate.delete(redisKey);
+        
         
         return R.flag(true , "员工信息更改成功!" , "员工信息更改失败,请重试!");
     }
@@ -166,6 +189,10 @@ public class EmployeeController {
     public R<String> status (Long id , int status) {
         log.info("更改员工状态:ids==>{},status==>{}" , id , status);
         boolean flag = this.employeeService.updateStatus(id , status);
+        
+        
+        String redisKey = "Employee*";
+        this.redisTemplate.delete(redisKey);
         return flag ? R.success("员工状态已经更改成功！") : R.error("员工状态更改失败,请重试!");
         
     }
@@ -200,6 +227,8 @@ public class EmployeeController {
         boolean flag = this.employeeService.updateById(employee);
         
         
+        String redisKey = "Employee*";
+        this.redisTemplate.delete(redisKey);
         return flag ? R.success("密码更改成功！") : R.error("密码更改失败,请重试!");
     }
     

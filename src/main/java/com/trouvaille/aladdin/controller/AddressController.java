@@ -39,10 +39,16 @@ public class AddressController {
     public R<List<Address>> list () {
         Long userId = BaseContext.getCurrentId();
         log.info("当前用户id为==>{}" , userId);
+        
+        String redisKey = "address:list:" + userId;
+        
         LambdaQueryWrapper<Address> lqw = new LambdaQueryWrapper();
         lqw.eq(Address::getUserId , userId);
         lqw.orderByDesc(Address::getUpdateTime);
-        return R.success(this.addressService.list(lqw));
+        List<Address> addressList = this.addressService.list(lqw);
+        
+        
+        return R.success(addressList);
     }
     
     /**
@@ -55,9 +61,13 @@ public class AddressController {
     @PostMapping ("/save")
     public R<String> save (@RequestBody Address address) {
         Long userId = BaseContext.getCurrentId();
+        log.info("当前用户id为==>{}" , userId);
+        
+        
         address.setUserId(userId);
         log.info("Address--save: address==>{}" , address);
-        boolean save = addressService.save(address);
+        boolean save = this.addressService.save(address);
+        
         return R.flag(save , "新增信息成功!" , "新增信息失败,请重试!");
     }
     
@@ -72,7 +82,9 @@ public class AddressController {
     @PutMapping ("/update")
     public R<String> update (@RequestBody Address address) {
         log.info("Address--update: address==>{}" , address);
-        boolean update = addressService.updateById(address);
+        
+        boolean update = this.addressService.updateById(address);
+        
         return R.flag(update , "更改信息成功!" , "更改信息失败,请重试!");
     }
     
@@ -89,7 +101,7 @@ public class AddressController {
         log.info("Address--delete: id==>{}" , id);
 //        Address address = addressService.getById(id);
 //        address.setIsDeleted(1);
-        boolean delete = addressService.removeById(id);
+        boolean delete = this.addressService.removeById(id);
         return R.flag(delete , "删除信息成功!" , "删除信息失败,请重试!");
         
     }
@@ -105,7 +117,7 @@ public class AddressController {
     @GetMapping ("/{id}")
     public R<Address> getById (@PathVariable Long id) {
         log.info("Address--getById:id==>{}" , id);
-        Address address = addressService.getById(id);
+        Address address = this.addressService.getById(id);
         return R.success(address);
     }
     

@@ -8,9 +8,11 @@ import com.trouvaille.aladdin.entity.Category;
 import com.trouvaille.aladdin.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 商品分类表(Category)表控制层
@@ -27,21 +29,45 @@ public class CategoryController {
     private CategoryService categoryService;
     
     
+    @Autowired
+    private RedisTemplate redisTemplate;
+    
+    
     @GetMapping ("/list")
     public R<List<Category>> list () {
         
-        List<Category> category = categoryService.list(null);
+        List<Category> category = this.categoryService.list(null);
+        
+        String redisKey = "Category:list";
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((List<Category>) this.redisTemplate.opsForValue().get(redisKey));
+        }
+        
         log.info("Category--list===>{}" , category);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , category , 60L , TimeUnit.MINUTES);
+        
         return R.success(category);
     }
     
     @GetMapping ("/page")
     public R<Page<Category>> page (int page , int pageSize) {
         log.info("Category--page:page, pageSize==>{},{}" , page , pageSize);
+        
+        String redisKey = "Category:page:" + page + ":" + pageSize;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((Page<Category>) this.redisTemplate.opsForValue().get(redisKey));
+        }
+        
         Page<Category> pageInfo = new Page<>(page , pageSize);
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(Category::getSort);
-        categoryService.page(pageInfo , lqw);
+        this.categoryService.page(pageInfo , lqw);
+        
+        
+        this.redisTemplate.opsForValue().set(redisKey , pageInfo , 60L , TimeUnit.MINUTES);
+        
         return R.success(pageInfo);
     }
     
@@ -49,7 +75,13 @@ public class CategoryController {
     @GetMapping ("/{id}")
     public R<Category> getById (@PathVariable Long id) {
         log.info("Category--getById:id==>{}" , id);
-        Category category = categoryService.getById(id);
+        String redisKey = "Category:getById:" + id;
+        if (this.redisTemplate.hasKey(redisKey)) {
+            return R.success((Category) this.redisTemplate.opsForValue().get(redisKey));
+        }
+        Category category = this.categoryService.getById(id);
+        this.redisTemplate.opsForValue().set(redisKey , category , 60L , TimeUnit.MINUTES);
+        
         return R.success(category);
     }
     
@@ -57,7 +89,9 @@ public class CategoryController {
     @PostMapping ("/save")
     public R<String> save (@RequestBody Category category) {
         log.info("Category--save: category==>{}" , category);
-        boolean save = categoryService.save(category);
+        boolean save = this.categoryService.save(category);
+        String redisKey = "Category*";
+        this.redisTemplate.delete(redisKey);
         return R.flag(save , "新增信息成功!" , "新增信息失败,请重试!");
     }
     
@@ -65,7 +99,9 @@ public class CategoryController {
     @PutMapping ("/update")
     public R<String> update (@RequestBody Category category) {
         log.info("Category--update: category==>{}" , category);
-        boolean update = categoryService.updateById(category);
+        boolean update = this.categoryService.updateById(category);
+        String redisKey = "Category*";
+        this.redisTemplate.delete(redisKey);
         return R.flag(update , "更改信息成功!" , "更改信息失败,请重试!");
     }
     
@@ -73,7 +109,9 @@ public class CategoryController {
     @DeleteMapping ("/{id}")
     public R<String> delete (@PathVariable Long id) {
         log.info("Category--delete: id==>{}" , id);
-        boolean delete = categoryService.removeById(id);
+        boolean delete = this.categoryService.removeById(id);
+        String redisKey = "Category*";
+        this.redisTemplate.delete(redisKey);
         return R.flag(delete , "删除信息成功!" , "删除信息失败,请重试!");
         
     }

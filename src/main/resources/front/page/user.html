@@ -22,7 +22,7 @@
         <div class="divTitle">
             <i @click="goBack" class="el-icon-arrow-left"></i>个人中心
         </div>
-        <div class="divUser">
+        <div class="divUser" @click="toSetteings">
             <img src="../images/headPage.png" />
             <div class="desc">
                 <div class="divName">{{userInfo.name}} <img src="../images/women.png" /></div>
@@ -41,12 +41,6 @@
             <div @click="toOrderPage" class="item">
                 <img src="../images/orders.png" />
                 <span>历史订单</span>
-                <i class="el-icon-arrow-right"></i>
-            </div>
-            <div class="divSplit"></div>
-            <div @click="toOrderPage" class="item">
-                <img src="../images/user.png" />
-                <span>用户中心</span>
                 <i class="el-icon-arrow-right"></i>
             </div>
         </div>
@@ -134,6 +128,11 @@
             toOrderPage() {
                 window.requestAnimationFrame(() => {
                     window.location.href = 'order.html'
+                })
+            },
+            toSetteings() {
+                window.requestAnimationFrame(() => {
+                    window.location.href = 'settings.html'
                 })
             },
             initData() {

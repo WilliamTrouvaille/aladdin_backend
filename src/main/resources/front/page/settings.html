@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui"
+          name="viewport">
+    <title>Aladdin便利店</title>
+    <link href="../images/favico.ico" rel="icon">
+    <!--不同屏幕尺寸根字体设置-->
+    <script src="../js/base.js"></script>
+    <!--element-ui的样式-->
+    <link href="../../backend/plugins/element-ui/index.css" rel="stylesheet" />
+    <!-- 引入样式  -->
+    <link href="../styles/index.css" rel="stylesheet" />
+    <!--引入vant样式-->
+    <link href="../styles/vant.min.css" rel="stylesheet" />
+    <!--本页面内容的样式-->
+    <link href="../styles/order.css" rel="stylesheet" />
+</head>
+<body>
+<div class="app" id="order">
+    <div class="divHead">
+        <div class="divTitle">
+            <i @click="goBack" class="el-icon-arrow-left"></i>设置中心
+        </div>
+    </div>
+    <div class="divBody" v-if="salesList.length > 0">
+        <van-list
+                :finished="finished"
+                @load="getList"
+                finished-text="没有更多了"
+                v-model="loading"
+        >
+            <van-cell :key="index" class="item" v-for="(sales,index) in salesList">
+                <div class="timeStatus">
+                    <span>{{sales.orderTime}}</span>
+                    <span>{{getStatus(sales.status)}}</span>
+                    <!-- <span>正在派送</span> -->
+                </div>
+                <div class="dishList">
+                    <div :key="index" class="item" v-for="(item,index) in sales.commodityList">
+                        <span>{{item.name}}</span>
+                        <span>x{{item.number}}</span>
+                    </div>
+                </div>
+                <div class="result">
+                    <span>共{{sales.sumNum}} 件商品,实付</span><span
+                        class="price">￥{{sales.amount}}</span>
+                </div>
+                <div class="btn" v-if="sales.status === 4">
+                    <div @click="addOrderAgain(sales)" class="btnAgain">再来一单</div>
+                </div>
+            </van-cell>
+        </van-list>
+    </div>
+    <div class="divNoData" v-else>
+        <div class="divContainer">
+            <img src="../images/no_order.png" />
+            <div>暂无订单</div>
+        </div>
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="../../backend/plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="../../backend/plugins/element-ui/index.js"></script>
+<!-- 引入vant组件 -->
+<script src="../js/vant.min.js"></script>
+<!-- 引入axios -->
+<script src="../../backend/plugins/axios/axios.min.js"></script>
+<script src="../js/request.js"></script>
+<script src="../api/sales.js"></script>
+<script>
+    new Vue({
+        el: "#settings",
+        data() {
+        },
+    })
+</script>

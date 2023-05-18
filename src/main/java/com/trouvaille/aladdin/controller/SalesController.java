@@ -140,6 +140,19 @@ public class SalesController {
         return R.flag(flag);
     }
     
+    @GetMapping ("/again/{salesId}")
+    public R<String> again (@PathVariable Long salesId) {
+        Sales sales = this.salesService.getById(salesId);
+        log.info("订单数据：{}" , sales);
+        
+        String redisKey = "Sales*";
+        
+        boolean flag = this.salesService.submit(sales);
+        
+        this.redisTemplate.delete(redisKey);
+        return R.flag(flag);
+    }
+    
     @GetMapping ("/userPage")
     public R<Page<SalesDto>> userPage (int page , int pageSize) {
         log.info("Sales - userPage: page, pageSize==>{},{}" , page , pageSize);

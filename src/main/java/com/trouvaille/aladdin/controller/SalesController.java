@@ -149,7 +149,8 @@ public class SalesController {
         
         String redisKey = "sales:userPage:userId:" + userId + ":" + page + ":" + pageSize;
         if (this.redisTemplate.hasKey(redisKey)) {
-            return R.success((Page<SalesDto>) this.redisTemplate.opsForValue().get(redisKey));
+            List<SalesDto> salesDtos = (List<SalesDto>) this.redisTemplate.opsForValue().get(redisKey);
+            return R.success(new Page<SalesDto>(page , pageSize , salesDtos.size()).setRecords(salesDtos));
         }
 
 //        最终返回的分页对象
@@ -163,7 +164,7 @@ public class SalesController {
         R<Page<SalesDto>> pageR = this.pageR(lqw , pageInfo , pageDtoInfo);
         
         
-        this.redisTemplate.opsForValue().set(redisKey , pageR , 60L , TimeUnit.MINUTES);
+        this.redisTemplate.opsForValue().set(redisKey , pageR.getData().getRecords() , 60L , TimeUnit.MINUTES);
         
         
         return pageR;

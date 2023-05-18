@@ -64,6 +64,9 @@
             <div class="btn" v-if="order[0].status === 4">
                 <div @click="addOrderAgain" class="btnAgain">再来一单</div>
             </div>
+            <div class="btn" v-if="order[0].status === 1 || order[0].status === 2 || order[0].status === 3">
+                <div @click="addOrderAgain" class="btnAgain">取消订单</div>
+            </div>
         </div>
         <div @click="toPageLogin" class="quitLogin">
             退出登录
@@ -96,7 +99,7 @@
                 msgFlag: false,
                 order: [{
                     orderTime: '',//下单时间
-                    status: undefined,//订单状态 1已结账，2未结账，3已退单，4已完成，5已取消
+                    status: undefined,
                     orderDetails: [{
                         name: '',//商品名称
                         number: undefined,//数量
@@ -161,13 +164,13 @@
                 let str = ''
                 switch (status) {
                     case 1:
-                        str = '待付款'
+                        str = '已付款'
                         break;
                     case 2:
-                        str = '正在派送'
+                        str = '等待骑手接单'
                         break;
                     case 3:
-                        str = '已派送'
+                        str = '正在派送'
                         break;
                     case 4:
                         str = '已完成'

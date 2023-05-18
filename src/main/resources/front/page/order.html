@@ -51,6 +51,9 @@
                 <div class="btn" v-if="sales.status === 4">
                     <div @click="addOrderAgain(sales)" class="btnAgain">再来一单</div>
                 </div>
+                <div class="btn" v-if="sales.status === 1 || sales.status === 2 || sales.status === 3">
+                    <div @click="addOrderAgain(sales)" class="btnAgain">取消订单</div>
+                </div>
             </van-cell>
         </van-list>
     </div>
@@ -149,13 +152,13 @@
                 let str = ''
                 switch (status) {
                     case 1:
-                        str = '待付款'
+                        str = '已付款'
                         break;
                     case 2:
-                        str = '待发货'
+                        str = '等待骑手接单'
                         break;
                     case 3:
-                        str = '待收货'
+                        str = '正在派送'
                         break;
                     case 4:
                         str = '已完成'
@@ -166,7 +169,7 @@
                     
                 }
                 return str
-            }
+            },
         }
     })
 </script>

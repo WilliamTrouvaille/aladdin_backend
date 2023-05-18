@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
             User user = (User) this.userService.getById(userid);
             Long addressId = sales.getAddressId();
             Address address = (Address) this.addressService.getById(addressId);
-            List<Commodity> commodities = null;
+            List<Commodity> commodities = new ArrayList<>();
             if (address == null) {
                 flag = false;
                 throw new CustomException("地址信息有误,不能下单!");

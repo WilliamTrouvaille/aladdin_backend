@@ -35,9 +35,10 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
     private AddressService addressService;
     @Autowired
     private ShoppingCartService shoppingCartService;
-    
     @Autowired
     private SalesDetailService saleDetailService;
+    @Autowired
+    private CommodityService commodityService;
     
     @Override
     public boolean submit (Sales sales) {
@@ -60,6 +61,7 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
             User user = (User) this.userService.getById(userid);
             Long addressId = sales.getAddressId();
             Address address = (Address) this.addressService.getById(addressId);
+            List<Commodity> commodities = null;
             if (address == null) {
                 flag = false;
                 throw new CustomException("地址信息有误,不能下单!");
@@ -67,6 +69,9 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
                 long salesId = IdWorker.getId();
                 List<SalesDetail> salesDetails = (List) shoppingCarts.stream().map((item) -> {
                     SalesDetail salesDetail = new SalesDetail();
+                    Commodity commodity = this.commodityService.getById(item.getCommodityId());
+                    commodity.setNumber(commodity.getNumber() - item.getNumber());
+                    commodity.setSaleNum(commodity.getSaleNum() + 1L);
                     salesDetail.setSalesId(salesId);
                     salesDetail.setNumber(item.getNumber());
                     salesDetail.setCommodityId(item.getCommodityId());
@@ -74,12 +79,13 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
                     salesDetail.setImage(item.getImage());
                     salesDetail.setAmount(item.getAmount());
                     amount.addAndGet(item.getAmount().multiply(new BigDecimal(item.getNumber())).intValue());
+                    commodities.add(commodity);
                     return salesDetail;
                 }).collect(Collectors.toList());
                 sales.setId(salesId);
                 sales.setOrderTime(LocalDateTime.now());
                 sales.setCheckoutTime(LocalDateTime.now());
-                sales.setStatus(4);
+                sales.setStatus(2);
                 sales.setAmount(new BigDecimal(amount.get()));
                 sales.setUserId(userid);
                 sales.setNumber(String.valueOf(salesId));

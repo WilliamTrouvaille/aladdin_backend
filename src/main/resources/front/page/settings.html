@@ -19,7 +19,7 @@
     <link href="../styles/order.css" rel="stylesheet" />
 </head>
 <body>
-<div class="app" id="order">
+<div class="app" id="settings">
     <div class="divHead">
         <div class="divTitle">
             <i @click="goBack" class="el-icon-arrow-left"></i>设置中心
@@ -75,6 +75,23 @@
     new Vue({
         el: "#settings",
         data() {
+            return {}
+        },
+        created() {
+        },
+        
+        methods: {
+            goBack() {
+                const url = document.referrer
+                //表示是从订单页面跳转过来的
+                if (url.includes('success')) {
+                    window.requestAnimationFrame(() => {
+                        window.location.href = '../index.html'
+                    })
+                } else {
+                    history.go(-1)
+                }
+            },
         },
     })
 </script>

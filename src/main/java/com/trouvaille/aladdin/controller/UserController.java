@@ -105,9 +105,11 @@ public class UserController {
                 user.setStatus(1);
                 user.setCreateTime(LocalDateTime.now());
                 user.setName("用户" + phone.substring(7));
+                log.info("用户{}注册" , user);
                 this.userService.save(user);
             }
             session.setAttribute("user" , user.getId());
+            log.info("用户{}登录" , user);
             
             this.redisTemplate.delete(phone);
             return R.success(user);

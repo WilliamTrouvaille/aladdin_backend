@@ -2,6 +2,7 @@ package com.trouvaille.aladdin.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.BaseContext;
 import com.trouvaille.aladdin.common.R;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -129,9 +131,9 @@ public class SalesController {
      */
     @PostMapping ("/submit")
     public R<String> submit (@RequestBody Sales sales) {
-        log.info("订单数据：{}" , sales);
+        log.info("提交--订单数据：{}" , sales);
         
-        String redisKey = "Sales*";
+        Set<String> redisKey = this.redisTemplate.keys("Sales" + "*");
         
         boolean flag = this.salesService.submit(sales);
         
@@ -142,12 +144,30 @@ public class SalesController {
     
     @GetMapping ("/again/{salesId}")
     public R<String> again (@PathVariable Long salesId) {
-        Sales sales = this.salesService.getById(salesId);
-        log.info("订单数据：{}" , sales);
+        log.info("再来一单--订单Id：{}" , salesId);
         
-        String redisKey = "Sales*";
+        Set<String> redisKey = this.redisTemplate.keys("Sales" + "*");
         
-        boolean flag = this.salesService.submit(sales);
+        boolean flag = this.salesService.again(salesId);
+        
+        this.redisTemplate.delete(redisKey);
+        return R.flag(flag);
+    }
+    
+    @GetMapping ("/cancel/{salesId}")
+    public R<String> cancel (@PathVariable Long salesId) {
+        log.info("订单取消--订单Id：{}" , salesId);
+        
+        Sales sales = new Sales();
+        sales.setStatus(5);
+        
+        QueryWrapper<Sales> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id" , salesId);
+        
+        boolean flag = this.salesService.update(sales , queryWrapper);
+
+//        String redisKey = "Sales*";
+        Set<String> redisKey = this.redisTemplate.keys("Sales" + "*");
         
         this.redisTemplate.delete(redisKey);
         return R.flag(flag);
@@ -160,7 +180,7 @@ public class SalesController {
 //        获取当前用户id
         Long userId = BaseContext.getCurrentId();
         
-        String redisKey = "sales:userPage:userId:" + userId + ":" + page + ":" + pageSize;
+        String redisKey = "Sales:userPage:userId:" + userId + ":" + page + ":" + pageSize;
         if (this.redisTemplate.hasKey(redisKey)) {
             List<SalesDto> salesDtos = (List<SalesDto>) this.redisTemplate.opsForValue().get(redisKey);
             return R.success(new Page<SalesDto>(page , pageSize , salesDtos.size()).setRecords(salesDtos));

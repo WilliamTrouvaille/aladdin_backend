@@ -10,6 +10,9 @@ import com.trouvaille.aladdin.entity.ShoppingCart;
  * @since 2022-07-30 12:05:18
  */
 public interface ShoppingCartService extends IService<ShoppingCart> {
-
+    
+    ShoppingCart add (ShoppingCart shoppingCart);
+    
+    
 }
 

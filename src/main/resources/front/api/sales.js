@@ -31,3 +31,11 @@ function orderAgainApi(data) {
         'method': 'get',
     })
 }
+
+// 取消订单
+function cancelOrderApi(data) {
+    return $axios({
+        'url': `/sales/cancel/${data.id}`,
+        'method': 'get',
+    })
+}

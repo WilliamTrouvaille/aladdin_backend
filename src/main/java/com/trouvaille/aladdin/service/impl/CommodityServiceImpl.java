@@ -26,7 +26,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         luw.in(Commodity::getId , ids);
         luw.eq(Commodity::getStatus , 1 - status);
         luw.set(Commodity::getStatus , status);
-        return update(luw);
+        return this.update(luw);
     }
     
     

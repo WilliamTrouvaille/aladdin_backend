@@ -64,7 +64,6 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
             Address address = (Address) this.addressService.getById(addressId);
             List<Commodity> commodities = new ArrayList<>();
             if (address == null) {
-                flag = false;
                 throw new CustomException("地址信息有误,不能下单!");
             } else {
                 long salesId = IdWorker.getId();
@@ -100,11 +99,34 @@ public class SalesServiceImpl extends ServiceImpl<SalesMapper, Sales> implements
                 return flag && save && saveBatch;
             }
         } else {
-            flag = false;
             throw new CustomException("购物车为空,不能下单!");
         }
         
         
+    }
+    
+    @Override
+    public boolean again (Long salesId) {
+        LambdaQueryWrapper<SalesDetail> lqw = new LambdaQueryWrapper();
+        lqw.eq(SalesDetail::getSalesId , salesId);
+        List<SalesDetail> salesDetails = this.saleDetailService.list(lqw);
+        List<ShoppingCart> shoppingCarts = (List) salesDetails.stream().map((item) -> {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setName(item.getName());
+            shoppingCart.setImage(item.getImage());
+            shoppingCart.setAmount(item.getAmount());
+            shoppingCart.setCommodityId(item.getCommodityId());
+            shoppingCart.setId(IdWorker.getId());
+            shoppingCart.setNumber(item.getNumber());
+            shoppingCart.setUserId(BaseContext.getCurrentId());
+            
+            
+            return shoppingCart;
+        }).collect(Collectors.toList());
+        this.shoppingCartService.saveBatch(shoppingCarts);
+        boolean submit = this.submit((Sales) this.getById(salesId));
+        
+        return submit;
     }
 }
 

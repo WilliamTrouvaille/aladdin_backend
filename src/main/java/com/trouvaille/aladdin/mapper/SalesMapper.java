@@ -16,5 +16,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SalesMapper extends BaseMapper<Sales> {
 
+
+//    @Select ("SELECT id,name,image,user_id,commodity_id,number,amount,create_time FROM shopping_cart WHERE id = #{id}")
+//    Sales selectById (Long id);
 }
 

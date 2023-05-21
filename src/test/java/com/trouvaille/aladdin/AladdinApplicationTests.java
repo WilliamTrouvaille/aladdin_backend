@@ -1,6 +1,9 @@
 package com.trouvaille.aladdin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.trouvaille.aladdin.entity.Sales;
 import com.trouvaille.aladdin.service.EmployeeService;
+import com.trouvaille.aladdin.service.SalesService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ class AladdinApplicationTests {
     
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private SalesService salesService;
     
     @Test
     void contextLoads () {
@@ -28,8 +33,8 @@ class AladdinApplicationTests {
 //        System.out.println(employees);
 //    }
 //
-
-//    @Test
+    
+    //    @Test
 //    void testRedisKey () {
 //        String redisKey = "Test:test:1";
 //        if (this.redisTemplate.hasKey(redisKey)) {
@@ -46,5 +51,16 @@ class AladdinApplicationTests {
 //            this.redisTemplate.delete(redisKey);
 //        }
 //    }
+    @Test
+    void updateSaleById () {
+        Sales sales = new Sales();
+        sales.setStatus(5);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("id" , 1660100224204447745L);
+        boolean flag = this.salesService.update(sales , queryWrapper);
+        log.info(String.valueOf(flag));
+        
+    }
+    
     
 }

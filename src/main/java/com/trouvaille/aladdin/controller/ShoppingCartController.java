@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -76,31 +75,10 @@ public class ShoppingCartController {
     @PostMapping ("/add")
     public R<ShoppingCart> add (@RequestBody ShoppingCart shoppingCart) {
         log.info("添加购物车信息==.{}" , shoppingCart.toString());
-        
-        Long userId = BaseContext.getCurrentId();
-        shoppingCart.setUserId(userId);
-        
-        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(ShoppingCart::getUserId , shoppingCart.getUserId());
-        lqw.eq(ShoppingCart::getCommodityId , shoppingCart.getCommodityId());
-        
-        ShoppingCart cartServiceOne = this.shoppingCartService.getOne(lqw);
-        
-        if (cartServiceOne != null) {
-            Integer number = cartServiceOne.getNumber();
-            cartServiceOne.setNumber(number + 1);
-            this.shoppingCartService.updateById(cartServiceOne);
-        } else {
-            shoppingCart.setNumber(1);
-            shoppingCart.setCreateTime(LocalDateTime.now());
-            this.shoppingCartService.save(shoppingCart);
-            
-            cartServiceOne = shoppingCart;
-        }
+        ShoppingCart cartServiceOne = this.shoppingCartService.add(shoppingCart);
         return R.success(cartServiceOne);
     }
     
-    //    TODO
     @PostMapping ("/sub")
     public R<ShoppingCart> sub (@RequestBody ShoppingCart shoppingCart) {
         log.info("减少购物车商品信息==.{}" , shoppingCart.toString());

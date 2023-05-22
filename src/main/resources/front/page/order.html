@@ -48,14 +48,20 @@
                     <span>共{{sales.sumNum}} 件商品,实付</span><span
                         class="price">￥{{sales.amount}}</span>
                 </div>
-                <div class="btn" v-if="sales.status === 4 || sales.status === 5">
+                <div class="btn btnAgain" v-if="sales.status === 4 || sales.status === 5">
                     <div @click="addOrderAgain(sales)" class="btnAgain">再来一单</div>
+                </div>
+                <div class="btn confirm"
+                     v-if="sales.status === 1 ||
+                      sales.status === 2 ||
+                       sales.status === 3">
+                    <div @click="confirmOrder(sales)" class="confirm">确认收货</div>
                 </div>
                 <div class="btn"
                      v-if="sales.status === 1 ||
                       sales.status === 2 ||
                        sales.status === 3">
-                    <div @click="cancelOrderAgain(sales)" class="btnAgain">取消订单</div>
+                    <div @click="cancelOrder(sales)" class="cancel">取消订单</div>
                 </div>
             </van-cell>
         </van-list>
@@ -154,7 +160,7 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
-            async cancelOrderAgain(order) {
+            async cancelOrder(order) {
                 const res = await cancelOrderApi({id: order.id})
                 if (res.code === 1) {
                     // this.$notify({type: 'success', message: res.msg});
@@ -166,6 +172,32 @@
                     this.$notify({type: 'warning', message: res.msg});
                 }
             },
+            async confirmOrder(order) {
+                const res = await confirmOrderApi({id: order.id})
+                if (res.code === 1) {
+                    // this.$notify({type: 'success', message: res.msg});
+                    // this.reload()
+                    window.requestAnimationFrame(() => {
+                        window.location.href = '../index.html'
+                    })
+                } else {
+                    this.$notify({type: 'warning', message: res.msg});
+                }
+            },
+            
+            
+            // async confirmOrder(order) {
+            //     const res = await confirmOrderApi({id: order.id})
+            //     if (res.code === 1) {
+            //         // this.$notify({type: 'success', message: res.msg});
+            //         // this.reload()
+            //         window.requestAnimationFrame(() => {
+            //             window.location.href = '../index.html'
+            //         })
+            //     } else {
+            //         this.$notify({type: 'warning', message: res.msg});
+            //     }
+            // },
             getStatus(status) {
                 let str = ''
                 switch (status) {

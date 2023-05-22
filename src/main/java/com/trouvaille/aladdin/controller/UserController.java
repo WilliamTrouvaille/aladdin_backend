@@ -112,8 +112,9 @@ public class UserController {
             session.setAttribute("user" , user.getId());
             log.info("用户{}登录" , user);
             
-            this.redisTemplate.delete(phone);
-            this.redisTemplate.delete(this.redisTemplate.keys("User" + "*"));
+            Set<String> redisKey = this.redisTemplate.keys("*");
+            this.redisTemplate.delete(redisKey);
+            
             return R.success(user);
         }
         return R.error("登录失败");

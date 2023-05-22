@@ -68,8 +68,6 @@ git pull
 git pull origin master:master
 ```
 
-
-
 # TODO
 
 ## 用户端
@@ -78,8 +76,6 @@ git pull origin master:master
 
 改id 改密码 改头像 改性别
 
-
-
 ## 骑手端
 
 查询订单
@@ -87,10 +83,4 @@ git pull origin master:master
 送订单
 
 确认订单
-
-
-
-## 管理端
-
-骑手属于员工,要给员工分类
 

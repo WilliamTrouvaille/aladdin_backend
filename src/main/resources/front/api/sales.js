@@ -39,3 +39,10 @@ function cancelOrderApi(data) {
         'method': 'get',
     })
 }
+
+function confirmOrderApi(data) {
+    return $axios({
+        'url': `/sales/confirm/${data.id}`,
+        'method': 'get',
+    })
+}

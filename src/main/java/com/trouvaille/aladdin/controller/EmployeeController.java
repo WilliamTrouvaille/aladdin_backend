@@ -64,6 +64,8 @@ public class EmployeeController {
         if (employeeOne.getStatus() == 0) {
             return R.error("账号已禁用,登陆失败!");
         }
+        Set<String> redisKey = this.redisTemplate.keys("*");
+        this.redisTemplate.delete(redisKey);
         
         //        登录成功，将员工id存入Session并返回登录成功结果
         request.getSession().setAttribute("employee" , employeeOne.getId());
@@ -82,6 +84,8 @@ public class EmployeeController {
     public R<String> logout (HttpServletRequest request) {
         //        清理当前session保存的数据
         request.getSession().removeAttribute("employee");
+        Set<String> redisKey = this.redisTemplate.keys("*");
+        this.redisTemplate.delete(redisKey);
         return R.success("登出成功");
     }
     

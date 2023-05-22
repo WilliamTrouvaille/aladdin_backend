@@ -173,6 +173,25 @@ public class SalesController {
         return R.flag(flag);
     }
     
+    @GetMapping ("/distribute/{salesId}")
+    public R<String> distribute (@PathVariable Long salesId) {
+        log.info("订单配送--订单Id：{}" , salesId);
+        
+        Sales sales = new Sales();
+        sales.setStatus(3);
+        
+        QueryWrapper<Sales> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id" , salesId);
+        
+        boolean flag = this.salesService.update(sales , queryWrapper);
+
+//        String redisKey = "Sales*";
+        Set<String> redisKey = this.redisTemplate.keys("Sales" + "*");
+        
+        this.redisTemplate.delete(redisKey);
+        return R.flag(flag);
+    }
+    
     @GetMapping ("/confirm/{salesId}")
     public R<String> confirm (@PathVariable Long salesId) {
         log.info("订单确认--订单Id：{}" , salesId);

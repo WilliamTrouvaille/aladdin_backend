@@ -50,6 +50,11 @@ public class Employee implements Serializable {
     private String idNumber;
     
     /**
+     * 职位身份
+     */
+    private String identity;
+    
+    /**
      * 状态 0:禁用，1:正常
      */
     private Integer status;

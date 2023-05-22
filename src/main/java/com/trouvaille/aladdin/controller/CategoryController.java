@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -90,7 +91,7 @@ public class CategoryController {
     public R<String> save (@RequestBody Category category) {
         log.info("Category--save: category==>{}" , category);
         boolean save = this.categoryService.save(category);
-        String redisKey = "Category*";
+        Set<String> redisKey = this.redisTemplate.keys("Category" + "*");
         this.redisTemplate.delete(redisKey);
         return R.flag(save , "新增信息成功!" , "新增信息失败,请重试!");
     }
@@ -100,7 +101,7 @@ public class CategoryController {
     public R<String> update (@RequestBody Category category) {
         log.info("Category--update: category==>{}" , category);
         boolean update = this.categoryService.updateById(category);
-        String redisKey = "Category*";
+        Set<String> redisKey = this.redisTemplate.keys("Category" + "*");
         this.redisTemplate.delete(redisKey);
         return R.flag(update , "更改信息成功!" , "更改信息失败,请重试!");
     }
@@ -110,7 +111,7 @@ public class CategoryController {
     public R<String> delete (@PathVariable Long id) {
         log.info("Category--delete: id==>{}" , id);
         boolean delete = this.categoryService.removeById(id);
-        String redisKey = "Category*";
+        Set<String> redisKey = this.redisTemplate.keys("Category" + "*");
         this.redisTemplate.delete(redisKey);
         return R.flag(delete , "删除信息成功!" , "删除信息失败,请重试!");
         

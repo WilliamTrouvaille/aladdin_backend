@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -134,7 +135,8 @@ public class EmployeeController {
         boolean save = this.employeeService.save(employee);
         
         if (save) {
-            String redisKey = "Employee*";
+//            String redisKey = "Employee*";
+            Set<String> redisKey = this.redisTemplate.keys("Employee" + "*");
             this.redisTemplate.delete(redisKey);
             return R.success("添加员工成功");
         } else {
@@ -166,11 +168,8 @@ public class EmployeeController {
     public R<String> update (@RequestBody Employee employee) {
         log.info("更改员工信息,员工信息==>{}" , employee.toString());
         
-        String pwd = employee.getPassword();
-        String password = DigestUtils.md5DigestAsHex(pwd.getBytes(StandardCharsets.UTF_8));
-        employee.setPassword(password);
-        
-        String redisKey = "Employee*";
+        boolean flag = this.employeeService.updateById(employee);
+        Set<String> redisKey = this.redisTemplate.keys("Employee" + "*");
         this.redisTemplate.delete(redisKey);
         
         
@@ -191,7 +190,7 @@ public class EmployeeController {
         boolean flag = this.employeeService.updateStatus(id , status);
         
         
-        String redisKey = "Employee*";
+        Set<String> redisKey = this.redisTemplate.keys("Employee" + "*");
         this.redisTemplate.delete(redisKey);
         return flag ? R.success("员工状态已经更改成功！") : R.error("员工状态更改失败,请重试!");
         
@@ -227,7 +226,7 @@ public class EmployeeController {
         boolean flag = this.employeeService.updateById(employee);
         
         
-        String redisKey = "Employee*";
+        Set<String> redisKey = this.redisTemplate.keys("Employee" + "*");
         this.redisTemplate.delete(redisKey);
         return flag ? R.success("密码更改成功！") : R.error("密码更改失败,请重试!");
     }

@@ -24,6 +24,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -110,7 +111,7 @@ public class CommodityController {
         log.info("新增商品:{}" , commodity);
         boolean save = this.commodityService.save(commodity);
         
-        String redisKey = "Commodity*";
+        Set<String> redisKey = this.redisTemplate.keys("Commodity" + "*");
         this.redisTemplate.delete(redisKey);
         
         return R.flag(save);
@@ -141,7 +142,7 @@ public class CommodityController {
         log.info("更改售卖状态:ids==>{},status==>{}" , ids , status);
         boolean flag = this.commodityService.updateStatus(ids , status);
         
-        String redisKey = "Commodity*";
+        Set<String> redisKey = this.redisTemplate.keys("Commodity" + "*");
         this.redisTemplate.delete(redisKey);
         
         return flag ? R.success("商品状态已经更改成功！") : R.error("商品状态更改失败,请重试!");
@@ -152,7 +153,7 @@ public class CommodityController {
     public R<String> delete (@RequestParam List<Long> ids) {
         boolean flag = this.commodityService.removeByIds(ids);
         
-        String redisKey = "Commodity*";
+        Set<String> redisKey = this.redisTemplate.keys("Commodity" + "*");
         this.redisTemplate.delete(redisKey);
         
         return flag ? R.success("删除成功!") : R.error("删除失败,请重试!");

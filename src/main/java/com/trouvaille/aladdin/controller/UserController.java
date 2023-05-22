@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -112,6 +113,7 @@ public class UserController {
             log.info("用户{}登录" , user);
             
             this.redisTemplate.delete(phone);
+            this.redisTemplate.delete(this.redisTemplate.keys("User" + "*"));
             return R.success(user);
         }
         return R.error("登录失败");
@@ -163,7 +165,7 @@ public class UserController {
         user.setStatus(status);
         boolean flag = this.userService.updateById(user);
         
-        String redisKey = "User*";
+        Set<String> redisKey = this.redisTemplate.keys("User" + "*");
         this.redisTemplate.delete(redisKey);
         
         return flag ? R.success("用户状态已经更改成功！") : R.error("用户状态更改失败,请重试!");
@@ -184,7 +186,7 @@ public class UserController {
             user.setPassword(DigestUtils.md5DigestAsHex(newPwd.getBytes()));
             boolean flag = this.userService.updateById(user);
             
-            String redisKey = "User*";
+            Set<String> redisKey = this.redisTemplate.keys("User" + "*");
             this.redisTemplate.delete(redisKey);
             
             return flag ? R.success("密码修改成功!") : R.error("密码修改失败,请重试!");

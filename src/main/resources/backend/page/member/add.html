@@ -58,6 +58,24 @@
                         v-model="ruleForm.phone"></el-input>
             </el-form-item>
             <el-form-item
+                    label="职位:"
+                    prop="identity"
+            >
+                <template>
+                    <el-select
+                            placeholder="请选择员工职位"
+                            v-model="ruleForm.identity">
+                        
+                        <el-option
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                                v-for="item in identityOptions">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item
                     label="性别:"
                     prop="sex"
             >
@@ -124,11 +142,23 @@
                 options: [],
                 value: [],
                 list: [],
+                identityOptions: [
+                    {
+                        label: '售货员',
+                        value: '售货员'
+                    },
+                    {
+                        label: '骑手',
+                        value: '骑手'
+                    },
+                ],
                 ruleForm: {
                     'name': '',
                     'phone': '',
                     'sex': '男',
                     'idNumber': '',
+                    'identity': '',
+                    identity: '',
                     username: ''
                 }
             }
@@ -231,6 +261,15 @@
                     name: '员工管理'
                 }, false)
             },
+            // identityOperator: function (val) {
+            //     let obj = {};
+            //     obj = this.identityOptions.find(item => {
+            //         return item.value === val
+            //     });
+            //     this.ruleForm.identityName = obj.label;
+            //     this.ruleForm.identityId = obj.value;
+            //     console.log(this.ruleForm);
+            // },
             getStore() {
                 getStoreListTest().then(res => {
                     console.log(res);

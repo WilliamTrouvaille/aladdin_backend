@@ -91,7 +91,7 @@
             return {
                 paging: {
                     page: 1,
-                    pageSize: 5
+                    pageSize: 1
                 },
                 salesList: [],
                 loading: false,
@@ -127,17 +127,6 @@
                 const res = await orderPagingApi(this.paging)
                 if (res.code === 1) {
                     this.salesList.push(...res.data.records)
-                    console.log(this.salesList)
-                    // let records = res.data.records
-                    // if (records && Array.isArray(records)) {
-                    //     records.forEach(item => {
-                    // let number = 0
-                    // item.orderDetails.forEach(ele => {
-                    //     number += ele.number
-                    // })
-                    // item.sumNum = number
-                    // })
-                    // }
                     this.loading = false;
                     if (this.paging.page > res.data.pages) {
                         this.finished = true;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge"
+          http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
+    <title>404页面</title>
+    <!-- 引入样式 -->
+    <link href="../../plugins/element-ui/index.css"
+          rel="stylesheet" />
+    <link href="../../styles/common.css"
+          rel="stylesheet" />
+    <link href="../../styles/page.css"
+          rel="stylesheet" />
+
+</head>
+<body>
+
+<div class="dashboard-container" id="no_wifi">
+    <div class="divContent">
+        <img src="./../images/404-images/404.png" />
+        <div class="divDesc">访问异常</div>
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="../../plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="../../plugins/element-ui/index.js"></script>
+<!-- 引入axios -->
+<script src="../../plugins/axios/axios.min.js"></script>
+<script src="../../js/request.js"></script>
+<script src="../../api/order.js"></script>
+<script>
+    new Vue({
+        el: "#notfound",
+        data() {
+            return {}
+        },
+        computed: {},
+        created() {
+        
+        },
+        mounted() {
+        },
+        methods: {
+            goBack() {
+                history.go(-1)
+            },
+            toPagePrev() {
+                history.go(-1)
+            }
+        }
+    })
+</script>
+</body>
+</html>

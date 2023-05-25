@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trouvaille.aladdin.common.R;
 import com.trouvaille.aladdin.entity.User;
 import com.trouvaille.aladdin.service.UserService;
+import com.trouvaille.aladdin.utils.SmsUtils;
 import com.trouvaille.aladdin.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -54,13 +55,11 @@ public class UserController {
         if (StringUtils.isNotEmpty(phone)) {
             
             String code = ValidateCodeUtils.generateValidateCode(6).toString();
-            log.info("sendMsg---code==>{}" , code);
-
-//            SmsUtils.singleSend(phone, code);
-            
-            
+            log.info("sendMsg---code,phone==>{},{}" , code , phone);
             this.redisTemplate.opsForValue().set(phone , code , 10 , TimeUnit.MINUTES);
             
+            
+            SmsUtils.singleSend(phone , code);
             return R.success("验证码短信发送成功!");
         }
         

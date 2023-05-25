@@ -9,6 +9,7 @@
  */
 package com.trouvaille.aladdin.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class SmsUtils {
     public static final String BaseUrl = "http://api01.monyun.cn:7901/sms/v2/std/";
     
@@ -78,13 +80,13 @@ public class SmsUtils {
             result = strber.toString();
             
             if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                System.out.println("请求服务器成功，做相应处理");
+                log.info("请求服务器成功，做相应处理");
             } else {
-                System.out.println("请求服务端失败");
+                log.info("请求服务端失败");
             }
             
         } catch (Exception e) {
-            System.out.println("请求异常");
+            log.info("请求异常");
             throw new RuntimeException(e);
         }
         

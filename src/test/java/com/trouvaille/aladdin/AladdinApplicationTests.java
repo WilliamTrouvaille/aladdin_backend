@@ -1,9 +1,8 @@
 package com.trouvaille.aladdin;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.trouvaille.aladdin.entity.Sales;
 import com.trouvaille.aladdin.service.EmployeeService;
 import com.trouvaille.aladdin.service.SalesService;
+import com.trouvaille.aladdin.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +50,21 @@ class AladdinApplicationTests {
 //            this.redisTemplate.delete(redisKey);
 //        }
 //    }
-    @Test
-    void updateSaleById () {
-        Sales sales = new Sales();
-        sales.setStatus(5);
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("id" , 1660100224204447745L);
-        boolean flag = this.salesService.update(sales , queryWrapper);
-        log.info(String.valueOf(flag));
-        
-    }
+//    @Test
+//    void updateSaleById () {
+//        Sales sales = new Sales();
+//        sales.setStatus(5);
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.eq("id" , 1660100224204447745L);
+//        boolean flag = this.salesService.update(sales , queryWrapper);
+//        log.info(String.valueOf(flag));
+//
+//    }
     
+    
+    @Test
+    void testSMS () {
+        SmsUtils.singleSend("13982051594" , "123456");
+    }
     
 }

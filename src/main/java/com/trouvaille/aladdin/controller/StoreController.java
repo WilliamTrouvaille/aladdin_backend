@@ -24,7 +24,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping ("/store")
-
+/**
+ * @deprecated
+ * 已弃用!!!!!!!!
+ */
+@Deprecated
 public class StoreController {
     
     @Autowired

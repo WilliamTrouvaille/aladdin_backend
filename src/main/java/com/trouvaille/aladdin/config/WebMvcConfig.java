@@ -40,4 +40,15 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //将上面的消息转换器利象追加到MVC框架前转换器缤合中
         converters.add(0 , mappingJackson2HttpMessageConverter);
     }
+
+//    @Override
+//    public void addViewControllers (ViewControllerRegistry registry) {
+//        // 处理/backend/*下未定义页面的请求，重定向到/backend/404.html
+//        registry.addViewController("/backend/**")
+//                .setViewName("redirect:backend/page/404.html");
+//
+//        // 处理/front/*下未定义页面的请求，重定向到/front/404.html
+//        registry.addViewController("/front/**")
+//                .setViewName("redirect:/front/page/error.html");
+//    }
 }

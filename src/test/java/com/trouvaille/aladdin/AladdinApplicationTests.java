@@ -2,7 +2,6 @@ package com.trouvaille.aladdin;
 
 import com.trouvaille.aladdin.service.EmployeeService;
 import com.trouvaille.aladdin.service.SalesService;
-import com.trouvaille.aladdin.utils.SmsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +59,11 @@ class AladdinApplicationTests {
 //        log.info(String.valueOf(flag));
 //
 //    }
-    
-    
-    @Test
-    void testSMS () {
-        SmsUtils.singleSend("13982051594" , "123456");
-    }
-    
+
+
+//    @Test
+//    void testSMS () {
+//        SmsUtils.singleSend("13982051594" , "123456");
+//    }
+//
 }
